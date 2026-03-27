@@ -36,10 +36,6 @@ struct SidebarPage: View {
                 },
                 selectedTaskID: appModel.selectedTaskID,
                 onAdd: pickFolder,
-                onNewTask: { projectID in
-                    newTaskProject = projects.first { $0.persistentModelID == projectID }
-                    showNewTaskSheet = true
-                },
                 onSelectTask: { id in
                     appModel.selectedTaskID = id
                 },
@@ -65,11 +61,6 @@ struct SidebarPage: View {
                 } label: {
                     Label("Add Project", systemImage: "plus")
                 }
-            }
-        }
-        .sheet(isPresented: $showNewTaskSheet) {
-            if let project = newTaskProject {
-                NewTaskSheet(project: project)
             }
         }
         .onDrop(of: [.fileURL], isTargeted: nil) { providers in

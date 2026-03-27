@@ -19,7 +19,6 @@ struct ProjectListSection: View {
     let projects: [ProjectInfo]
     let selectedTaskID: PersistentIdentifier?
     let onAdd: () -> Void
-    let onNewTask: (PersistentIdentifier) -> Void
     let onSelectTask: (PersistentIdentifier) -> Void
     let onDelete: (PersistentIdentifier) -> Void
 
@@ -43,25 +42,14 @@ struct ProjectListSection: View {
             } else {
                 ForEach(projects) { project in
                     DisclosureGroup {
-                        if project.tasks.isEmpty {
-                            Button {
-                                onNewTask(project.id)
-                            } label: {
-                                Label("Créer une nouvelle tâche", systemImage: "plus.circle")
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondary)
-                            }
-                            .buttonStyle(.plain)
-                        } else {
-                            ForEach(project.tasks) { task in
-                                SidebarTaskRow(
-                                    title: task.title,
-                                    status: task.status,
-                                    isSelected: task.id == selectedTaskID
-                                )
-                                .tag(task.id)
-                                .onTapGesture { onSelectTask(task.id) }
-                            }
+                        ForEach(project.tasks) { task in
+                            SidebarTaskRow(
+                                title: task.title,
+                                status: task.status,
+                                isSelected: task.id == selectedTaskID
+                            )
+                            .tag(task.id)
+                            .onTapGesture { onSelectTask(task.id) }
                         }
                     } label: {
                         ProjectRow(
@@ -101,7 +89,6 @@ struct ProjectListSection: View {
             projects: [],
             selectedTaskID: nil,
             onAdd: {},
-            onNewTask: { _ in },
             onSelectTask: { _ in },
             onDelete: { _ in }
         )
