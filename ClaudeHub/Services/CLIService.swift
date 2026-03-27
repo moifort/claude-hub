@@ -4,6 +4,7 @@ enum CLIService {
     static func claudePath() -> String? {
         let candidates = [
             "/Applications/cmux.app/Contents/Resources/bin/claude",
+            "/opt/homebrew/bin/claude",
             "/usr/local/bin/claude",
             NSHomeDirectory() + "/.claude/bin/claude",
         ]
@@ -65,7 +66,7 @@ enum CLIService {
         process.executableURL = URL(fileURLWithPath: claude)
         process.arguments = ["--print", "-s", systemPrompt, prompt]
         process.currentDirectoryURL = URL(fileURLWithPath: projectPath)
-        process.environment = ProcessInfo.processInfo.environment
+        process.environment = enrichedEnvironment()
 
         let stdoutPipe = Pipe()
         let stderrPipe = Pipe()
@@ -112,6 +113,18 @@ enum CLIService {
           5. git branch -d task/\(slug)
         - If the merge fails, rebase your branch first: git rebase main
         """
+    }
+
+    static func enrichedEnvironment() -> [String: String] {
+        var env = ProcessInfo.processInfo.environment
+        let extraPaths = [
+            "/opt/homebrew/bin",
+            "/usr/local/bin",
+            NSHomeDirectory() + "/.claude/bin",
+        ]
+        let currentPath = env["PATH"] ?? "/usr/bin:/bin:/usr/sbin:/sbin"
+        env["PATH"] = (extraPaths + [currentPath]).joined(separator: ":")
+        return env
     }
 
     private static func parseDecomposedTasks(from output: String) throws -> [DecomposedTask] {

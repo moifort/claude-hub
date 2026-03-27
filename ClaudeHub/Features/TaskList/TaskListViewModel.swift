@@ -23,8 +23,7 @@ final class TaskListViewModel {
 
         let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug)
 
-        // Inherit current environment for PATH, etc.
-        let env = ProcessInfo.processInfo.environment.map { "\($0.key)=\($0.value)" }
+        let env = CLIService.enrichedEnvironment().map { "\($0.key)=\($0.value)" }
 
         sessionManager.registerSession(
             for: task.persistentModelID,
