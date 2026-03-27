@@ -92,7 +92,7 @@ enum GitService {
                 } else if ref.hasPrefix("tag: ") {
                     let name = String(ref.dropFirst("tag: ".count))
                     return GitRef(name: name, kind: .tag, isCurrent: false)
-                } else if ref.contains("/") {
+                } else if ref.hasPrefix("origin/") {
                     return GitRef(name: ref, kind: .remoteBranch, isCurrent: false)
                 } else {
                     return GitRef(name: ref, kind: .localBranch, isCurrent: false)
