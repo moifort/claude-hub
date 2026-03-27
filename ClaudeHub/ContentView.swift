@@ -48,6 +48,7 @@ struct ContentView: View {
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .toolbar(removing: .title)
         }
         .inspector(isPresented: $appModel.showGitTree) {
             if let project = currentProject {
