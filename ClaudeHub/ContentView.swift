@@ -50,7 +50,7 @@ struct ContentView: View {
                 if appModel.showGitTree, let project = currentProject {
                     gitTreeDivider
 
-                    GitTreePanel(repoPath: project.path, projectName: project.name)
+                    GitTreePanel(repoPath: project.path, projectName: project.name, refreshTrigger: appModel.gitTreeRefreshTrigger)
                         .frame(width: appModel.gitTreeWidth)
                 }
             }
@@ -144,6 +144,7 @@ struct ContentView: View {
         pushState = .pushing
         do {
             try await GitService.pushMain(repoPath: repoPath)
+            appModel.gitTreeRefreshTrigger += 1
             pushState = .success
             try? await Task.sleep(for: .seconds(2))
             if pushState == .success { pushState = .idle }

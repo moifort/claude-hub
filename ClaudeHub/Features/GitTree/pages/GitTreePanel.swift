@@ -3,6 +3,7 @@ import SwiftUI
 struct GitTreePanel: View {
     let repoPath: String
     let projectName: String
+    var refreshTrigger: Int = 0
 
     @State private var viewModel = GitTreeViewModel()
 
@@ -10,6 +11,9 @@ struct GitTreePanel: View {
         content
         .task(id: repoPath) {
             await viewModel.load(repoPath: repoPath)
+        }
+        .onChange(of: refreshTrigger) {
+            Task { await viewModel.refresh() }
         }
         .onDisappear {
             viewModel.stopWatching()
