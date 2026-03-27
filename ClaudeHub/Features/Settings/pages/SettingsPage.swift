@@ -3,12 +3,13 @@ import SwiftUI
 struct SettingsPage: View {
     @AppStorage("skipPermissions") private var skipPermissions = true
     @AppStorage("claudeBinaryPath") private var claudeBinaryPath = ""
+    @AppStorage("preferredIDE") private var preferredIDE = IDE.intellij.rawValue
     @AppStorage("taskSystemPrompt") private var taskSystemPrompt = DefaultSystemPrompt.taskSystemPrompt
 
     var body: some View {
         TabView {
             Tab("General", systemImage: "gear") {
-                GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath)
+                GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath, preferredIDE: $preferredIDE)
                     .padding(Constants.standardPadding)
             }
 

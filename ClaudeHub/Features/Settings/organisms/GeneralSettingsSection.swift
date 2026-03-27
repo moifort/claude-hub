@@ -3,6 +3,7 @@ import SwiftUI
 struct GeneralSettingsSection: View {
     @Binding var skipPermissions: Bool
     @Binding var claudeBinaryPath: String
+    @Binding var preferredIDE: String
 
     private var resolvedPath: String? {
         let path = claudeBinaryPath.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -16,12 +17,39 @@ struct GeneralSettingsSection: View {
         CLIService.claudePath() ?? "Not found"
     }
 
+    private var selectedIDE: Binding<IDE> {
+        Binding(
+            get: { IDE(rawValue: preferredIDE) ?? .intellij },
+            set: { preferredIDE = $0.rawValue }
+        )
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
+            ideSection
+            Divider()
             permissionsSection
             Divider()
             binaryPathSection
         }
+    }
+
+    private var ideSection: some View {
+        Picker(selection: selectedIDE) {
+            ForEach(IDE.allCases) { ide in
+                Label(ide.displayName, systemImage: ide.iconName)
+                    .tag(ide)
+            }
+        } label: {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Preferred IDE")
+                    .font(.headline)
+                Text("The IDE opened when clicking the toolbar button.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .pickerStyle(.menu)
     }
 
     private var permissionsSection: some View {
@@ -96,8 +124,9 @@ struct GeneralSettingsSection: View {
 #Preview {
     @Previewable @State var skipPermissions = true
     @Previewable @State var claudeBinaryPath = ""
+    @Previewable @State var preferredIDE = IDE.intellij.rawValue
 
-    GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath)
+    GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath, preferredIDE: $preferredIDE)
         .padding()
         .frame(width: 600)
 }

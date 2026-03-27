@@ -11,6 +11,7 @@ struct ContentView: View {
     @State private var viewModel = TaskListViewModel()
     @State private var dragStartWidth: CGFloat?
     @State private var dragCurrentWidth: CGFloat?
+    @AppStorage("preferredIDE") private var preferredIDE = IDE.intellij.rawValue
     @State private var pushState: PushState = .idle
     @State private var pushErrorMessage: String?
 
@@ -93,6 +94,18 @@ struct ContentView: View {
             ToolbarItem(placement: .automatic) {
                 if let project = currentProject {
                     pushButton(repoPath: project.path)
+                }
+            }
+
+            ToolbarItem(placement: .automatic) {
+                if let project = currentProject {
+                    let ide = IDE(rawValue: preferredIDE) ?? .intellij
+                    Button {
+                        ide.open(path: project.path)
+                    } label: {
+                        Label(ide.displayName, systemImage: ide.iconName)
+                    }
+                    .help("Open in \(ide.displayName)")
                 }
             }
 
