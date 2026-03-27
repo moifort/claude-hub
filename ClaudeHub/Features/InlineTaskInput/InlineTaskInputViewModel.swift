@@ -21,10 +21,15 @@ final class InlineTaskInputViewModel {
         let trimmed = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
 
-        isSummarizing = true
         errorMessage = nil
 
-        let title = await SummarizationService.summarize(prompt: trimmed)
+        let title: String
+        if trimmed.count <= 250 {
+            title = trimmed
+        } else {
+            isSummarizing = true
+            title = await SummarizationService.summarize(prompt: trimmed)
+        }
         let slug = TaskItem.generateSlug(from: title)
         let task = TaskItem(
             title: title,
