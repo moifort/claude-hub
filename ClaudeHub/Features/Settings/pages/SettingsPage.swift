@@ -10,7 +10,7 @@ struct SettingsPage: View {
                     .padding(Constants.standardPadding)
             }
         }
-        .frame(width: 600, minHeight: 500)
+        .frame(width: 600, height: 500)
     }
 }
 
