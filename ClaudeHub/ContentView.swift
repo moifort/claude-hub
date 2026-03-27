@@ -173,7 +173,7 @@ struct ContentView: View {
             case .working:
                 if task.taskStatus != .running { task.taskStatus = .running }
             case .done:
-                break // handled by processTerminated
+                viewModel.completeTask(task)
             }
         }
     }
