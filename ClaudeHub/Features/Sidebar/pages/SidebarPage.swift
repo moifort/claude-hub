@@ -26,6 +26,7 @@ struct SidebarPage: View {
                         hasRunningTask: project.runningTaskCount > 0
                     )
                 },
+                onAdd: pickFolder,
                 onDelete: deleteProject
             )
 

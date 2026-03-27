@@ -10,14 +10,26 @@ struct ProjectListSection: View {
     }
 
     let projects: [ProjectInfo]
+    let onAdd: () -> Void
     let onDelete: (PersistentIdentifier) -> Void
 
     var body: some View {
-        Section("Projects") {
+        Section {
             if projects.isEmpty {
-                Text("No projects yet")
-                    .foregroundStyle(.secondary)
-                    .font(.subheadline)
+                VStack(spacing: 12) {
+                    Image(systemName: "folder.badge.plus")
+                        .font(.system(size: 28))
+                        .foregroundStyle(.secondary)
+
+                    Text("No projects yet")
+                        .foregroundStyle(.secondary)
+                        .font(.subheadline)
+
+                    Button("Add Project", action: onAdd)
+                        .buttonStyle(.bordered)
+                }
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 20)
             } else {
                 ForEach(projects) { project in
                     NavigationLink(value: project.id) {
@@ -34,17 +46,49 @@ struct ProjectListSection: View {
                     }
                 }
             }
+        } header: {
+            HStack {
+                Text("Projects")
+                Spacer()
+                Button {
+                    onAdd()
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.caption)
+                }
+                .buttonStyle(.plain)
+                .foregroundStyle(.secondary)
+            }
         }
     }
 }
 
-#Preview {
+#Preview("Empty") {
     @Previewable @State var selection: PersistentIdentifier?
 
     NavigationSplitView {
         List(selection: $selection) {
             ProjectListSection(
                 projects: [],
+                onAdd: {},
+                onDelete: { _ in }
+            )
+        }
+    } detail: {
+        Text("Detail")
+    }
+    .modelContainer(for: [Project.self, TaskItem.self], inMemory: true)
+    .frame(width: 600, height: 400)
+}
+
+#Preview("With projects") {
+    @Previewable @State var selection: PersistentIdentifier?
+
+    NavigationSplitView {
+        List(selection: $selection) {
+            ProjectListSection(
+                projects: [],
+                onAdd: {},
                 onDelete: { _ in }
             )
         }
