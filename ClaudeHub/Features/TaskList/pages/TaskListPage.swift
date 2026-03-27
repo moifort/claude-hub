@@ -3,6 +3,7 @@ import SwiftData
 
 struct TaskListPage: View {
     @Environment(AppModel.self) private var appModel
+    @Environment(TerminalSessionManager.self) private var sessionManager
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \TaskItem.createdAt, order: .reverse) private var allTasks: [TaskItem]
 
@@ -37,18 +38,30 @@ struct TaskListPage: View {
             },
             onLaunch: { id in
                 guard let task = projectTasks.first(where: { $0.persistentModelID == id }) else { return }
-                Task { await viewModel.launchTask(task) }
+                Task { await viewModel.launchTask(task, sessionManager: sessionManager) }
             }
         )
         .navigationTitle(project.name)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
-                Button {
-                    showNewTaskSheet = true
-                } label: {
-                    Label("New Task", systemImage: "plus")
+                HStack(spacing: 8) {
+                    if projectTasks.contains(where: { $0.taskStatus == .pending }) {
+                        Button {
+                            Task {
+                                await viewModel.launchAllPending(for: project, sessionManager: sessionManager)
+                            }
+                        } label: {
+                            Label("Launch All", systemImage: "play.fill")
+                        }
+                    }
+
+                    Button {
+                        showNewTaskSheet = true
+                    } label: {
+                        Label("New Task", systemImage: "plus")
+                    }
+                    .keyboardShortcut("n", modifiers: .command)
                 }
-                .keyboardShortcut("n", modifiers: .command)
             }
         }
         .sheet(isPresented: $showNewTaskSheet) {
@@ -59,12 +72,14 @@ struct TaskListPage: View {
 
 #Preview {
     @Previewable @State var appModel = AppModel()
+    @Previewable @State var sessionManager = TerminalSessionManager()
 
     NavigationSplitView {
         Text("Sidebar")
     } detail: {
         TaskListPage(project: Project(name: "my-project", path: "/tmp/my-project"))
             .environment(appModel)
+            .environment(sessionManager)
     }
     .modelContainer(for: [Project.self, TaskItem.self], inMemory: true)
     .frame(width: 800, height: 500)
