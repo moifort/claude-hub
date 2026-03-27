@@ -10,7 +10,6 @@ struct TaskListPage: View {
     let project: Project
 
     @State private var viewModel = TaskListViewModel()
-    @State private var showNewTaskSheet = false
 
     private var projectTasks: [TaskItem] {
         allTasks.filter { $0.project?.persistentModelID == project.persistentModelID && $0.taskStatus != .archived }
@@ -56,16 +55,13 @@ struct TaskListPage: View {
                     }
 
                     Button {
-                        showNewTaskSheet = true
+                        appModel.selectedTaskID = nil
                     } label: {
                         Label("New Task", systemImage: "plus")
                     }
                     .keyboardShortcut("n", modifiers: .command)
                 }
             }
-        }
-        .sheet(isPresented: $showNewTaskSheet) {
-            NewTaskSheet(project: project)
         }
     }
 }
