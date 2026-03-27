@@ -2,10 +2,15 @@ import Foundation
 
 enum CLIService {
     static func claudePath() -> String? {
+        let custom = UserDefaults.standard.string(forKey: "claudeBinaryPath")?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !custom.isEmpty, FileManager.default.isExecutableFile(atPath: custom) {
+            return custom
+        }
+
         let candidates = [
-            "/Applications/cmux.app/Contents/Resources/bin/claude",
-            "/opt/homebrew/bin/claude",
             "/usr/local/bin/claude",
+            "/opt/homebrew/bin/claude",
             NSHomeDirectory() + "/.claude/bin/claude",
         ]
 

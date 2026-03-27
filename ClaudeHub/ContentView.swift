@@ -193,9 +193,16 @@ struct ContentView: View {
         let customPrompt = UserDefaults.standard.string(forKey: "taskSystemPrompt")
         let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug, customPrompt: customPrompt)
         let env = CLIService.enrichedEnvironment().map { "\($0.key)=\($0.value)" }
+        let skipPermissions = UserDefaults.standard.object(forKey: "skipPermissions") as? Bool ?? true
+        var arguments = [String]()
+        if skipPermissions {
+            arguments.append("--allow-dangerously-skip-permissions")
+        }
+        arguments.append(contentsOf: ["--permission-mode", "plan", "--system-prompt", systemPrompt, task.prompt])
+
         let info = TerminalSessionManager.SessionInfo(
             executable: claudePath,
-            arguments: ["--allow-dangerously-skip-permissions", "--permission-mode", "plan", "--system-prompt", systemPrompt, task.prompt],
+            arguments: arguments,
             workingDirectory: project.path,
             environment: env
         )

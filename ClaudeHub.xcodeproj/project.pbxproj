@@ -47,6 +47,7 @@
 		C8BCBC863E5B3C5758C64481 /* GitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF932402F1B25CB4477312E /* GitService.swift */; };
 		CB423AD6623A450E29CCF1E0 /* TerminalContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED45712762D42D25FE30D76A /* TerminalContainer.swift */; };
 		D78718F6A9A87DBEF6E5E43C /* DefaultSystemPrompt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526C19C95C06A0A67866D848 /* DefaultSystemPrompt.swift */; };
+		D83418A5CB985B4693B46C33 /* GeneralSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFA05A2B23C53C6939EA1FC8 /* GeneralSettingsSection.swift */; };
 		D958B4E1391DE84DBE54C73D /* InlineTaskInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081E05C1391569EA2E495C52 /* InlineTaskInputViewModel.swift */; };
 		E0A2DEF17E11DA77A52F400E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C00405DCDCA41363DF0F182 /* AppModel.swift */; };
 		EED680F91CED634EC791E9DC /* TaskSettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 655789890351C71100F34FC8 /* TaskSettingsSection.swift */; };
@@ -107,6 +108,7 @@
 		FDF5B536725F3FE0F5CB3C75 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		FE73BC9E92DC0E9B433E9A50 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FF66B7C1860EB074669874E8 /* CommitNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitNode.swift; sourceTree = "<group>"; };
+		FFA05A2B23C53C6939EA1FC8 /* GeneralSettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsSection.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 		22B5B30DBBCB6F4A20F662D9 /* organisms */ = {
 			isa = PBXGroup;
 			children = (
+				FFA05A2B23C53C6939EA1FC8 /* GeneralSettingsSection.swift */,
 				655789890351C71100F34FC8 /* TaskSettingsSection.swift */,
 			);
 			path = organisms;
@@ -521,6 +524,7 @@
 				41997149EED6C2E476174945 /* ContentView.swift in Sources */,
 				8900A3F61A327FDF732A6856 /* CountdownBadge.swift in Sources */,
 				D78718F6A9A87DBEF6E5E43C /* DefaultSystemPrompt.swift in Sources */,
+				D83418A5CB985B4693B46C33 /* GeneralSettingsSection.swift in Sources */,
 				5E8508C6317A542BEEB4CE22 /* GitCommit.swift in Sources */,
 				78D9A54EC8E84A0B948DAE65 /* GitGraph.swift in Sources */,
 				C8BCBC863E5B3C5758C64481 /* GitService.swift in Sources */,
