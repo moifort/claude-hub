@@ -1,8 +1,7 @@
-import SwiftData
 import SwiftUI
 
 struct TerminalContainer: View {
-    let taskPersistentID: PersistentIdentifier
+    let taskSlug: String
     let taskTitle: String
     let status: TaskStatus
     let projectName: String
@@ -14,7 +13,7 @@ struct TerminalContainer: View {
 
     var body: some View {
         TerminalRepresentable(
-            taskPersistentID: taskPersistentID,
+            taskSlug: taskSlug,
             executable: executable,
             arguments: arguments,
             workingDirectory: workingDirectory,

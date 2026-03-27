@@ -23,9 +23,9 @@ final class TaskListViewModel {
         let env = CLIService.enrichedEnvironment().map { "\($0.key)=\($0.value)" }
 
         sessionManager.registerSession(
-            for: task.persistentModelID,
+            for: task.slug,
             executable: claudePath,
-            arguments: ["--dangerously-skip-permissions", "--system-prompt", systemPrompt, task.prompt],
+            arguments: ["--dangerously-skip-permissions", "--plan", "--system-prompt", systemPrompt, task.prompt],
             workingDirectory: worktreeDir,
             environment: env
         )

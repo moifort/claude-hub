@@ -181,11 +181,35 @@ struct ContentView: View {
             }
     }
 
+    private func reconstructSession(
+        for task: TaskItem,
+        project: Project
+    ) -> TerminalSessionManager.SessionInfo? {
+        guard let claudePath = CLIService.claudePath() else { return nil }
+        let worktreeDir = GitService.worktreePath(repoPath: project.path, slug: task.slug)
+        let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug)
+        let env = CLIService.enrichedEnvironment().map { "\($0.key)=\($0.value)" }
+        let info = TerminalSessionManager.SessionInfo(
+            executable: claudePath,
+            arguments: ["--dangerously-skip-permissions", "--plan", "--system-prompt", systemPrompt, task.prompt],
+            workingDirectory: worktreeDir,
+            environment: env
+        )
+        sessionManager.registerSession(
+            for: task.slug,
+            executable: info.executable,
+            arguments: info.arguments,
+            workingDirectory: info.workingDirectory,
+            environment: info.environment
+        )
+        return info
+    }
+
     @ViewBuilder
     private func detailView(for task: TaskItem) -> some View {
-        if let session = sessionManager.session(for: task.persistentModelID) {
+        if let session = sessionManager.session(for: task.slug) {
             TerminalContainer(
-                taskPersistentID: task.persistentModelID,
+                taskSlug: task.slug,
                 taskTitle: task.title,
                 status: task.taskStatus,
                 projectName: task.project?.name ?? "Unknown",
@@ -193,6 +217,21 @@ struct ContentView: View {
                 arguments: session.arguments,
                 workingDirectory: session.workingDirectory,
                 environment: session.environment,
+                onProcessTerminated: { _ in
+                    viewModel.completeTask(task)
+                }
+            )
+        } else if task.taskStatus == .running, let project = task.project,
+                  let reconstructed = reconstructSession(for: task, project: project) {
+            TerminalContainer(
+                taskSlug: task.slug,
+                taskTitle: task.title,
+                status: task.taskStatus,
+                projectName: project.name,
+                executable: reconstructed.executable,
+                arguments: reconstructed.arguments,
+                workingDirectory: reconstructed.workingDirectory,
+                environment: reconstructed.environment,
                 onProcessTerminated: { _ in
                     viewModel.completeTask(task)
                 }

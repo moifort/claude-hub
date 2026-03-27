@@ -1,5 +1,4 @@
 import Foundation
-import SwiftData
 import SwiftTerm
 
 @Observable @MainActor
@@ -11,17 +10,17 @@ final class TerminalSessionManager {
         let environment: [String]?
     }
 
-    private(set) var activeSessions: [PersistentIdentifier: SessionInfo] = [:]
-    private var terminalViews: [PersistentIdentifier: LocalProcessTerminalView] = [:]
+    private(set) var activeSessions: [String: SessionInfo] = [:]
+    private var terminalViews: [String: LocalProcessTerminalView] = [:]
 
     func registerSession(
-        for taskID: PersistentIdentifier,
+        for slug: String,
         executable: String,
         arguments: [String],
         workingDirectory: String,
         environment: [String]?
     ) {
-        activeSessions[taskID] = SessionInfo(
+        activeSessions[slug] = SessionInfo(
             executable: executable,
             arguments: arguments,
             workingDirectory: workingDirectory,
@@ -29,21 +28,21 @@ final class TerminalSessionManager {
         )
     }
 
-    func session(for taskID: PersistentIdentifier) -> SessionInfo? {
-        activeSessions[taskID]
+    func session(for slug: String) -> SessionInfo? {
+        activeSessions[slug]
     }
 
-    func cachedTerminalView(for taskID: PersistentIdentifier) -> LocalProcessTerminalView? {
-        terminalViews[taskID]
+    func cachedTerminalView(for slug: String) -> LocalProcessTerminalView? {
+        terminalViews[slug]
     }
 
-    func storeTerminalView(_ view: LocalProcessTerminalView, for taskID: PersistentIdentifier) {
-        terminalViews[taskID] = view
+    func storeTerminalView(_ view: LocalProcessTerminalView, for slug: String) {
+        terminalViews[slug] = view
     }
 
-    func removeSession(for taskID: PersistentIdentifier) {
-        activeSessions[taskID] = nil
-        terminalViews[taskID] = nil
+    func removeSession(for slug: String) {
+        activeSessions[slug] = nil
+        terminalViews[slug] = nil
     }
 
     func removeAll() {

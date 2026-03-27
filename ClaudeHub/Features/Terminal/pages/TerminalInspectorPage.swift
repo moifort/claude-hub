@@ -13,9 +13,9 @@ struct TerminalInspectorPage: View {
 
     var body: some View {
         if let task = selectedTask,
-           let session = sessionManager.session(for: task.persistentModelID) {
+           let session = sessionManager.session(for: task.slug) {
             TerminalContainer(
-                taskPersistentID: task.persistentModelID,
+                taskSlug: task.slug,
                 taskTitle: task.title,
                 status: task.taskStatus,
                 projectName: task.project?.name ?? "Unknown",

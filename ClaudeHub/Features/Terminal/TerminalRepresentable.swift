@@ -1,9 +1,8 @@
-import SwiftData
 import SwiftUI
 import SwiftTerm
 
 struct TerminalRepresentable: NSViewRepresentable {
-    let taskPersistentID: PersistentIdentifier
+    let taskSlug: String
     let executable: String
     let arguments: [String]
     let workingDirectory: String
@@ -13,7 +12,7 @@ struct TerminalRepresentable: NSViewRepresentable {
     @Environment(TerminalSessionManager.self) private var sessionManager
 
     func makeNSView(context: Context) -> LocalProcessTerminalView {
-        if let cached = sessionManager.cachedTerminalView(for: taskPersistentID) {
+        if let cached = sessionManager.cachedTerminalView(for: taskSlug) {
             cached.processDelegate = context.coordinator
             return cached
         }
@@ -26,7 +25,7 @@ struct TerminalRepresentable: NSViewRepresentable {
             environment: environment,
             currentDirectory: workingDirectory
         )
-        sessionManager.storeTerminalView(terminal, for: taskPersistentID)
+        sessionManager.storeTerminalView(terminal, for: taskSlug)
         return terminal
     }
 
