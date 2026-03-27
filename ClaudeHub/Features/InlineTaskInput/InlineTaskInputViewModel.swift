@@ -43,9 +43,12 @@ final class InlineTaskInputViewModel {
         isSummarizing = false
 
         await taskViewModel.launchTask(task, sessionManager: sessionManager)
-        appModel.selectedItemID = task.persistentModelID
 
         prompt = ""
         errorMessage = nil
+
+        // Yield to let @Query process the newly saved task before selecting
+        await Task.yield()
+        appModel.selectedItemID = task.persistentModelID
     }
 }
