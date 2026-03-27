@@ -26,8 +26,8 @@ struct SyncBadge: View {
         Image(systemName: icon)
             .font(.caption2)
             .foregroundStyle(tintColor)
-            .padding(.horizontal, 4)
-            .padding(.vertical, 2)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 4)
             .background(tintColor.opacity(0.12), in: .capsule)
     }
 }
