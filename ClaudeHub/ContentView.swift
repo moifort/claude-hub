@@ -1,7 +1,10 @@
 import SwiftUI
+import SwiftData
 
 struct ContentView: View {
     @Environment(AppModel.self) private var appModel
+    @Environment(\.modelContext) private var modelContext
+    @Query private var projects: [Project]
 
     var body: some View {
         @Bindable var appModel = appModel
@@ -9,8 +12,9 @@ struct ContentView: View {
         NavigationSplitView {
             SidebarPage()
         } detail: {
-            if appModel.selectedProjectID != nil {
-                Text("Task List")
+            if let selectedID = appModel.selectedProjectID,
+               let project = projects.first(where: { $0.persistentModelID == selectedID }) {
+                TaskListPage(project: project)
             } else {
                 ContentUnavailableView(
                     "No Project Selected",
