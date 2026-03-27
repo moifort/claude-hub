@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0766D34B12C78A45C0C5D92B /* TerminalPromptField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18014169C34D61F64450543D /* TerminalPromptField.swift */; };
 		08099CE9D3B5C32B32E96A8C /* TerminalHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C511A21CD674D4BACC8A1 /* TerminalHeader.swift */; };
 		0BDEAD5A1226EB06EBA16712 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF5B536725F3FE0F5CB3C75 /* Project.swift */; };
 		138AEE93EB4453A0FC730BF0 /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463E2CD018A851163DC0BFF /* TaskRow.swift */; };
@@ -15,7 +16,6 @@
 		1E0C648AE37738822ECADC20 /* InlineTaskInputPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB253C0BF77D06E53BEA7174 /* InlineTaskInputPage.swift */; };
 		24B010251B9D5021AF47F5CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7D5ABD7B5CEE983C86E68FD /* Assets.xcassets */; };
 		2C2F337009E30D2CB4FEA593 /* SidebarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBEAF21D37141F6B8D2393 /* SidebarPage.swift */; };
-		328C95D163225C5ED9FE9337 /* PromptField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544B76A3BCDADBA53A54E050 /* PromptField.swift */; };
 		3A0BFE40CF72E4B8AAEE2285 /* TerminalInspectorPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A944B35A9A485DBB56AF2FA8 /* TerminalInspectorPage.swift */; };
 		3B44D196AEDB165070BF8BE0 /* TerminalSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADCB1F3E0F61A581448C7BF /* TerminalSessionManager.swift */; };
 		3E35FEE67D0DCB8887336645 /* ProjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */; };
@@ -23,7 +23,6 @@
 		3FFE0C163D6BB489B3DE7270 /* TerminalRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3C0ADF53A23AEEB07F8523 /* TerminalRepresentable.swift */; };
 		41997149EED6C2E476174945 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE73BC9E92DC0E9B433E9A50 /* ContentView.swift */; };
 		4A921B4C0F307DA1E739B27C /* TaskListContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25AA62CD78CBFE36C2B8564 /* TaskListContent.swift */; };
-		4B1951D8F4AFE039FC48F1EE /* SubmitButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D8DAA7DDB51D2EB6A485A33 /* SubmitButton.swift */; };
 		52F36CE6C8BE7CA5D14F2662 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA1A24612A9B3469CB96DF4 /* Constants.swift */; };
 		67819BA976E1A0C456B97301 /* ClaudeHubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D90907D5270EB87B19ECF /* ClaudeHubApp.swift */; };
 		7A2A1D3507D95985FB3DF8FD /* CollapsibleSidebarRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78854F7C6DE2744894F6BE7 /* CollapsibleSidebarRow.swift */; };
@@ -40,6 +39,7 @@
 		CB423AD6623A450E29CCF1E0 /* TerminalContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED45712762D42D25FE30D76A /* TerminalContainer.swift */; };
 		D958B4E1391DE84DBE54C73D /* InlineTaskInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081E05C1391569EA2E495C52 /* InlineTaskInputViewModel.swift */; };
 		E0A2DEF17E11DA77A52F400E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C00405DCDCA41363DF0F182 /* AppModel.swift */; };
+		EFD55E57F8CB129118D35009 /* TerminalCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668511567CEE0DFC295D2181 /* TerminalCursor.swift */; };
 		F0FA4A31C6FAE5C78E486FB1 /* ArchivesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10BC07779766A4E8B53E495 /* ArchivesSection.swift */; };
 		FB91DC301654458805219BC4 /* DecomposedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3673B9E2AFD3D9E4AD59E73 /* DecomposedTask.swift */; };
 		FCA454AB74DF9834F5BA7A17 /* TaskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2AF83F33A48348EF5D4E6E /* TaskStatus.swift */; };
@@ -53,19 +53,19 @@
 		0A4C0DD93BFBD75D3AEF1C71 /* ClaudeHub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClaudeHub.entitlements; sourceTree = "<group>"; };
 		148C511A21CD674D4BACC8A1 /* TerminalHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalHeader.swift; sourceTree = "<group>"; };
 		16FEE6CD846DC3E551CE199B /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
+		18014169C34D61F64450543D /* TerminalPromptField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalPromptField.swift; sourceTree = "<group>"; };
 		1B3C0ADF53A23AEEB07F8523 /* TerminalRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalRepresentable.swift; sourceTree = "<group>"; };
 		411E9E2BA44BB6A0F68CFE20 /* ProjectListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListSection.swift; sourceTree = "<group>"; };
-		544B76A3BCDADBA53A54E050 /* PromptField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromptField.swift; sourceTree = "<group>"; };
 		54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRow.swift; sourceTree = "<group>"; };
 		55FDD00586136099B80DCB2A /* CLIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIService.swift; sourceTree = "<group>"; };
 		580D90907D5270EB87B19ECF /* ClaudeHubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeHubApp.swift; sourceTree = "<group>"; };
 		5FA1A24612A9B3469CB96DF4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		668511567CEE0DFC295D2181 /* TerminalCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalCursor.swift; sourceTree = "<group>"; };
 		66FBEAF21D37141F6B8D2393 /* SidebarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarPage.swift; sourceTree = "<group>"; };
 		75F0B52AE076996305ABCD4F /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
 		7D2AF83F33A48348EF5D4E6E /* TaskStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatus.swift; sourceTree = "<group>"; };
 		8CF932402F1B25CB4477312E /* GitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitService.swift; sourceTree = "<group>"; };
 		9C00405DCDCA41363DF0F182 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
-		9D8DAA7DDB51D2EB6A485A33 /* SubmitButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubmitButton.swift; sourceTree = "<group>"; };
 		9F3E3E2321CE92167A28A373 /* ClaudeHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudeHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A21B6D427A052A4EF4AE568F /* GlassStatusChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassStatusChip.swift; sourceTree = "<group>"; };
 		A3673B9E2AFD3D9E4AD59E73 /* DecomposedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecomposedTask.swift; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 			isa = PBXGroup;
 			children = (
 				AFC63176CEDA80A22F4BEF71 /* InlineDecompositionProgress.swift */,
-				544B76A3BCDADBA53A54E050 /* PromptField.swift */,
+				18014169C34D61F64450543D /* TerminalPromptField.swift */,
 			);
 			path = molecules;
 			sourceTree = "<group>";
@@ -319,7 +319,7 @@
 		E87B8A9B2DBDF1F0A0438637 /* atoms */ = {
 			isa = PBXGroup;
 			children = (
-				9D8DAA7DDB51D2EB6A485A33 /* SubmitButton.swift */,
+				668511567CEE0DFC295D2181 /* TerminalCursor.swift */,
 			);
 			path = atoms;
 			sourceTree = "<group>";
@@ -417,11 +417,9 @@
 				0BDEAD5A1226EB06EBA16712 /* Project.swift in Sources */,
 				9AE7FB9E67D6769EFE23ABB6 /* ProjectListSection.swift in Sources */,
 				3E35FEE67D0DCB8887336645 /* ProjectRow.swift in Sources */,
-				328C95D163225C5ED9FE9337 /* PromptField.swift in Sources */,
 				2C2F337009E30D2CB4FEA593 /* SidebarPage.swift in Sources */,
 				7B59E767E36D438FBC758242 /* SidebarTaskRow.swift in Sources */,
 				9A05F492DFCD127C068F2DFA /* StatusBadge.swift in Sources */,
-				4B1951D8F4AFE039FC48F1EE /* SubmitButton.swift in Sources */,
 				9A4BED3FD596CFA03D772A30 /* TaskItem.swift in Sources */,
 				4A921B4C0F307DA1E739B27C /* TaskListContent.swift in Sources */,
 				A2BEEFFA0869FD8BA3D66C1B /* TaskListPage.swift in Sources */,
@@ -429,8 +427,10 @@
 				138AEE93EB4453A0FC730BF0 /* TaskRow.swift in Sources */,
 				FCA454AB74DF9834F5BA7A17 /* TaskStatus.swift in Sources */,
 				CB423AD6623A450E29CCF1E0 /* TerminalContainer.swift in Sources */,
+				EFD55E57F8CB129118D35009 /* TerminalCursor.swift in Sources */,
 				08099CE9D3B5C32B32E96A8C /* TerminalHeader.swift in Sources */,
 				3A0BFE40CF72E4B8AAEE2285 /* TerminalInspectorPage.swift in Sources */,
+				0766D34B12C78A45C0C5D92B /* TerminalPromptField.swift in Sources */,
 				3FFE0C163D6BB489B3DE7270 /* TerminalRepresentable.swift in Sources */,
 				3B44D196AEDB165070BF8BE0 /* TerminalSessionManager.swift in Sources */,
 			);
