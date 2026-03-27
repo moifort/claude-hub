@@ -7,7 +7,6 @@ final class TerminalStateMonitor {
 
     private var timer: Timer?
     private weak var sessionManager: TerminalSessionManager?
-    private var lastCursorPositions: [String: (x: Int, y: Int)] = [:]
 
     enum DetectedState: Sendable {
         case working
@@ -33,7 +32,6 @@ final class TerminalStateMonitor {
 
     func removeState(for slug: String) {
         detectedStates[slug] = nil
-        lastCursorPositions[slug] = nil
     }
 
     private func scanAllSessions() {
@@ -83,17 +81,6 @@ final class TerminalStateMonitor {
             }
         }
 
-        if let lastMarkerState { return lastMarkerState }
-
-        // 2. Cursor stability fallback — stable cursor = waiting for input
-        let cursorPos = terminal.getCursorLocation()
-        let lastPos = lastCursorPositions[slug]
-        lastCursorPositions[slug] = cursorPos
-
-        if let lastPos, lastPos.x == cursorPos.x, lastPos.y == cursorPos.y {
-            return .waiting
-        }
-
-        return nil
+        return lastMarkerState
     }
 }
