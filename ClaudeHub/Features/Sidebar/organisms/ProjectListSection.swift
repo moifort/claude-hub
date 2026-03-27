@@ -5,7 +5,6 @@ struct ProjectListSection: View {
     struct TaskInfo: Identifiable {
         let id: PersistentIdentifier
         let title: String
-        let summary: String?
         let status: TaskStatus
         let createdAt: Date
     }
@@ -40,7 +39,6 @@ struct ProjectListSection: View {
             ForEach(project.tasks) { task in
                 SidebarTaskRow(
                     title: task.title,
-                    summary: task.summary,
                     status: task.status,
                     createdAt: task.createdAt,
                     isSelected: task.id == selectedItemID

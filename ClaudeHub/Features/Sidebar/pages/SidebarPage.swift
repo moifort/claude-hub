@@ -25,8 +25,7 @@ struct SidebarPage: View {
                         tasks: project.activeTasks.map { task in
                             .init(
                                 id: task.persistentModelID,
-                                title: task.title,
-                                summary: task.summary,
+                                title: task.summary ?? task.title,
                                 status: task.taskStatus,
                                 createdAt: task.createdAt
                             )

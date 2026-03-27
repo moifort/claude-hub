@@ -2,13 +2,12 @@ import SwiftUI
 
 struct SidebarTaskRow: View {
     let title: String
-    let summary: String?
     let status: TaskStatus
     let createdAt: Date
     let isSelected: Bool
 
     var body: some View {
-        HStack(alignment: .center, spacing: 10) {
+        HStack(alignment: .top, spacing: 10) {
             Image(systemName: status.iconName)
                 .font(.system(size: 20))
                 .foregroundStyle(status.tintColor)
@@ -18,11 +17,6 @@ struct SidebarTaskRow: View {
                 Text(title)
                     .font(.subheadline)
                     .fontWeight(.medium)
-                    .lineLimit(1)
-
-                Text(summary ?? title)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
                     .lineLimit(2)
 
                 Text(createdAt, style: .relative)
@@ -39,22 +33,19 @@ struct SidebarTaskRow: View {
 #Preview {
     List {
         SidebarTaskRow(
-            title: "Add OAuth2 auth",
-            summary: "Implement OAuth2 authentication flow with refresh tokens",
+            title: "Implement OAuth2 authentication flow with refresh tokens",
             status: .running,
             createdAt: .now.addingTimeInterval(-3600),
             isSelected: false
         )
         SidebarTaskRow(
             title: "Write unit tests",
-            summary: nil,
             status: .pending,
             createdAt: .now.addingTimeInterval(-120),
             isSelected: true
         )
         SidebarTaskRow(
-            title: "Fix migration",
-            summary: "Fix database migration for v2 schema changes",
+            title: "Fix database migration for v2 schema changes",
             status: .completed,
             createdAt: .now.addingTimeInterval(-86400),
             isSelected: false
