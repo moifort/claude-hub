@@ -7,7 +7,7 @@ struct SidebarTaskRow: View {
     let isSelected: Bool
 
     var body: some View {
-        HStack(alignment: .center, spacing: 10) {
+        HStack(alignment: .top, spacing: 10) {
             Image(systemName: "circle.fill")
                 .font(.system(size: 6))
                 .foregroundStyle(status.tintColor)
