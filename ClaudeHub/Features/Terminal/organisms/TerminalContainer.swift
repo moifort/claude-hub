@@ -12,24 +12,14 @@ struct TerminalContainer: View {
     let onProcessTerminated: @MainActor @Sendable (Int32?) -> Void
 
     var body: some View {
-        VStack(spacing: 0) {
-            TerminalHeader(
-                taskTitle: taskTitle,
-                status: status,
-                projectName: projectName
-            )
-
-            Divider()
-
-            TerminalRepresentable(
-                taskID: taskID,
-                executable: executable,
-                arguments: arguments,
-                workingDirectory: workingDirectory,
-                environment: environment,
-                onProcessTerminated: onProcessTerminated
-            )
-        }
+        TerminalRepresentable(
+            taskID: taskID,
+            executable: executable,
+            arguments: arguments,
+            workingDirectory: workingDirectory,
+            environment: environment,
+            onProcessTerminated: onProcessTerminated
+        )
     }
 }
 

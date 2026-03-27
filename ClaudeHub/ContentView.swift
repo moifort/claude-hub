@@ -150,12 +150,6 @@ struct ContentView: View {
             )
         } else {
             VStack(spacing: 16) {
-                TerminalHeader(
-                    taskTitle: task.title,
-                    status: task.taskStatus,
-                    projectName: task.project?.name ?? "Unknown"
-                )
-
                 Spacer()
 
                 if task.taskStatus == .pending {
