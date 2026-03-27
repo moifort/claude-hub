@@ -10,8 +10,6 @@ struct GitTreeList: View {
                 ForEach(rows) { row in
                     HStack(spacing: 0) {
                         GraphRowSegment(
-                            isMerge: row.commit.isMerge,
-                            isHead: row.commit.isLocalHead,
                             isFirst: row.isFirst,
                             isLast: row.isLast,
                             color: color
