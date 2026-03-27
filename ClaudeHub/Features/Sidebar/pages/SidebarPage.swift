@@ -24,7 +24,6 @@ struct SidebarPage: View {
                         id: project.persistentModelID,
                         name: project.name,
                         taskCount: project.activeTasks.count,
-                        hasRunningTask: project.runningTaskCount > 0,
                         tasks: project.activeTasks.map { task in
                             .init(
                                 id: task.persistentModelID,

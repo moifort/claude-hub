@@ -13,7 +13,6 @@ struct ProjectListSection: View {
         let id: PersistentIdentifier
         let name: String
         let taskCount: Int
-        let hasRunningTask: Bool
         let tasks: [TaskInfo]
     }
 
@@ -26,8 +25,7 @@ struct ProjectListSection: View {
         ForEach(projects) { project in
             ProjectRow(
                 name: project.name,
-                taskCount: project.taskCount,
-                hasRunningTask: project.hasRunningTask
+                taskCount: project.taskCount
             )
             .tag(project.id)
             .contextMenu {

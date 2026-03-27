@@ -7,11 +7,12 @@ struct SidebarTaskRow: View {
     let isSelected: Bool
 
     var body: some View {
-        HStack(alignment: .top, spacing: 10) {
+        HStack(alignment: .firstTextBaseline, spacing: 10) {
             Image(systemName: "circle.fill")
                 .font(.system(size: 6))
                 .foregroundStyle(status.tintColor)
                 .symbolEffect(.pulse, isActive: status == .running)
+                .alignmentGuide(.firstTextBaseline) { d in d[VerticalAlignment.center] }
                 .frame(width: 12)
 
             VStack(alignment: .leading, spacing: 2) {
