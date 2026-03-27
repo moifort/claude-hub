@@ -47,7 +47,6 @@ struct GeneralSettingsSection: View {
                         Text(resolvedPath)
                             .font(.system(.body, design: .monospaced))
                             .foregroundColor(resolvedPathExists ? .primary : .red)
-                            .frame(maxWidth: .infinity, alignment: .leading)
                             .textSelection(.enabled)
 
                         pathStatusIcon
