@@ -48,27 +48,19 @@ struct ContentView: View {
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
 
-                if appModel.showGitTree, let project = currentProject {
+                if let project = currentProject {
                     gitTreeDivider
+                        .opacity(appModel.showGitTree ? 1 : 0)
 
                     GitTreePanel(repoPath: project.path, projectName: project.name, refreshTrigger: appModel.gitTreeRefreshTrigger)
-                        .frame(width: appModel.gitTreeWidth)
+                        .frame(width: appModel.showGitTree ? appModel.gitTreeWidth : 0)
+                        .clipped()
                 }
             }
         }
         .onAppear {
             if appModel.selectedItemID == nil, let first = allProjects.first {
                 appModel.selectedItemID = first.persistentModelID
-            }
-        }
-        .onChange(of: allTasks.map(\.status)) {
-            guard let id = appModel.selectedItemID else { return }
-            let taskStillVisible = allTasks.contains { $0.persistentModelID == id && $0.taskStatus != .archived }
-            let isProject = allProjects.contains { $0.persistentModelID == id }
-            if !taskStillVisible && !isProject {
-                // Selected task was archived — fall back to its project or first project
-                let parentProject = allTasks.first { $0.persistentModelID == id }?.project
-                appModel.selectedItemID = parentProject?.persistentModelID ?? allProjects.first?.persistentModelID
             }
         }
         .toolbar {
@@ -105,7 +97,9 @@ struct ContentView: View {
 
             ToolbarItem(placement: .automatic) {
                 Button {
-                    appModel.showGitTree.toggle()
+                    withAnimation(.easeInOut(duration: 0.25)) {
+                        appModel.showGitTree.toggle()
+                    }
                 } label: {
                     Label(
                         "Git Tree",
