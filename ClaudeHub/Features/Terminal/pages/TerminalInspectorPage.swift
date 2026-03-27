@@ -7,7 +7,7 @@ struct TerminalInspectorPage: View {
     @Query private var allTasks: [TaskItem]
 
     private var selectedTask: TaskItem? {
-        guard let id = appModel.selectedTaskID else { return nil }
+        guard let id = appModel.selectedItemID else { return nil }
         return allTasks.first { $0.persistentModelID == id }
     }
 

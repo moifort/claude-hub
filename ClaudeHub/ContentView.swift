@@ -11,12 +11,12 @@ struct ContentView: View {
     @State private var viewModel = TaskListViewModel()
 
     private var selectedTask: TaskItem? {
-        guard let id = appModel.selectedTaskID else { return nil }
+        guard let id = appModel.selectedItemID else { return nil }
         return allTasks.first { $0.persistentModelID == id }
     }
 
     private var selectedProject: Project? {
-        guard let id = appModel.selectedProjectID else { return nil }
+        guard let id = appModel.selectedItemID else { return nil }
         return allProjects.first { $0.persistentModelID == id }
     }
 
@@ -58,12 +58,14 @@ struct ContentView: View {
                         }
                     }
 
-                    Button {
-                        appModel.selectedTaskID = nil
-                    } label: {
-                        Label("New Task", systemImage: "plus")
+                    if let project = task.project {
+                        Button {
+                            appModel.selectedItemID = project.persistentModelID
+                        } label: {
+                            Label("New Task", systemImage: "plus")
+                        }
+                        .keyboardShortcut("n", modifiers: .command)
                     }
-                    .keyboardShortcut("n", modifiers: .command)
                 }
             }
         }

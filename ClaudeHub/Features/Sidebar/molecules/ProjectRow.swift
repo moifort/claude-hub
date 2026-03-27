@@ -7,7 +7,7 @@ struct ProjectRow: View {
 
     var body: some View {
         HStack {
-            Image(systemName: "folder.fill")
+            Image(systemName: "folder")
                 .font(.system(size: 14))
                 .foregroundStyle(.secondary)
 

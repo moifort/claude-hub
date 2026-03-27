@@ -17,21 +17,17 @@ struct ProjectListSection: View {
     }
 
     let projects: [ProjectInfo]
-    let selectedTaskID: PersistentIdentifier?
-    let onSelectProject: (PersistentIdentifier) -> Void
-    let onSelectTask: (PersistentIdentifier) -> Void
+    let selectedItemID: PersistentIdentifier?
     let onDelete: (PersistentIdentifier) -> Void
 
     var body: some View {
         ForEach(projects) { project in
-            Button { onSelectProject(project.id) } label: {
-                ProjectRow(
-                    name: project.name,
-                    taskCount: project.taskCount,
-                    hasRunningTask: project.hasRunningTask
-                )
-            }
-            .buttonStyle(.plain)
+            ProjectRow(
+                name: project.name,
+                taskCount: project.taskCount,
+                hasRunningTask: project.hasRunningTask
+            )
+            .tag(project.id)
             .contextMenu {
                 Button("Remove Project", role: .destructive) {
                     onDelete(project.id)
@@ -42,10 +38,9 @@ struct ProjectListSection: View {
                 SidebarTaskRow(
                     title: task.title,
                     status: task.status,
-                    isSelected: task.id == selectedTaskID
+                    isSelected: task.id == selectedItemID
                 )
                 .tag(task.id)
-                .onTapGesture { onSelectTask(task.id) }
                 .padding(.leading, 8)
             }
         }
@@ -56,9 +51,7 @@ struct ProjectListSection: View {
     List {
         ProjectListSection(
             projects: [],
-            selectedTaskID: nil,
-            onSelectProject: { _ in },
-            onSelectTask: { _ in },
+            selectedItemID: nil,
             onDelete: { _ in }
         )
     }

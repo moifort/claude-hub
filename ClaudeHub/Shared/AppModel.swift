@@ -3,10 +3,7 @@ import SwiftData
 
 @Observable @MainActor
 final class AppModel {
-    var selectedProjectID: PersistentIdentifier?
-    var selectedTaskID: PersistentIdentifier?
+    var selectedItemID: PersistentIdentifier?
     var showInspector = false
     var windowSize: CGSize = .zero
-
-    var hasTaskSelection: Bool { selectedTaskID != nil }
 }

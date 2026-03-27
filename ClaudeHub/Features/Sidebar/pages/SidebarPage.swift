@@ -14,7 +14,7 @@ struct SidebarPage: View {
     var body: some View {
         @Bindable var appModel = appModel
 
-        List(selection: $appModel.selectedTaskID) {
+        List(selection: $appModel.selectedItemID) {
             ProjectListSection(
                 projects: projects.map { project in
                     .init(
@@ -31,14 +31,7 @@ struct SidebarPage: View {
                         }
                     )
                 },
-                selectedTaskID: appModel.selectedTaskID,
-                onSelectProject: { id in
-                    appModel.selectedProjectID = id
-                    appModel.selectedTaskID = nil
-                },
-                onSelectTask: { id in
-                    appModel.selectedTaskID = id
-                },
+                selectedItemID: appModel.selectedItemID,
                 onDelete: deleteProject
             )
 
@@ -94,8 +87,8 @@ struct SidebarPage: View {
     private func deleteProject(_ id: PersistentIdentifier) {
         guard let project = projects.first(where: { $0.persistentModelID == id }) else { return }
         modelContext.delete(project)
-        if appModel.selectedProjectID == id {
-            appModel.selectedProjectID = nil
+        if appModel.selectedItemID == id {
+            appModel.selectedItemID = nil
         }
     }
 

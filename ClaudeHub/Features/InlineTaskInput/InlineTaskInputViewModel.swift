@@ -67,7 +67,7 @@ final class InlineTaskInputViewModel {
         }
 
         if let first = tasks.first {
-            appModel.selectedTaskID = first.persistentModelID
+            appModel.selectedItemID = first.persistentModelID
         }
 
         prompt = ""

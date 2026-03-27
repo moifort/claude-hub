@@ -26,9 +26,9 @@ struct TaskListPage: View {
                     completedAt: task.completedAt
                 )
             },
-            selectedTaskID: appModel.selectedTaskID,
+            selectedTaskID: appModel.selectedItemID,
             onSelect: { id in
-                appModel.selectedTaskID = id
+                appModel.selectedItemID = id
                 appModel.showInspector = true
             },
             onPin: { id in
@@ -55,7 +55,7 @@ struct TaskListPage: View {
                     }
 
                     Button {
-                        appModel.selectedTaskID = nil
+                        appModel.selectedItemID = nil
                     } label: {
                         Label("New Task", systemImage: "plus")
                     }
