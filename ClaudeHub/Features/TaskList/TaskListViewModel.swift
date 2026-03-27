@@ -16,10 +16,7 @@ final class TaskListViewModel {
             worktreeDir = project.path
         }
 
-        guard let claudePath = CLIService.claudePath() else {
-            task.taskStatus = .running
-            return
-        }
+        guard let claudePath = CLIService.claudePath() else { return }
 
         let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug)
 
