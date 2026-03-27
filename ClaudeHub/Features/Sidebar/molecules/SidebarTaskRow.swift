@@ -12,7 +12,7 @@ struct SidebarTaskRow: View {
                 .font(.system(size: 6))
                 .foregroundStyle(status.tintColor)
                 .symbolEffect(.pulse, isActive: status == .running)
-                .alignmentGuide(.firstTextBaseline) { d in d[VerticalAlignment.center] }
+                .alignmentGuide(.firstTextBaseline) { d in d[VerticalAlignment.center] + 2 }
                 .frame(width: 12)
 
             VStack(alignment: .leading, spacing: 2) {
