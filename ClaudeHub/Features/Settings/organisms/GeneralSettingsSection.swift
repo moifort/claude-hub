@@ -6,14 +6,6 @@ struct GeneralSettingsSection: View {
     @Binding var preferredIDE: String
     @Binding var gitPanelOpenByDefault: Bool
 
-    private var resolvedPath: String? {
-        let path = claudeBinaryPath.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !path.isEmpty {
-            return FileManager.default.isExecutableFile(atPath: path) ? path : nil
-        }
-        return CLIService.claudePath()
-    }
-
     private var detectedPath: String {
         CLIService.claudePath() ?? "Not found"
     }
@@ -26,90 +18,38 @@ struct GeneralSettingsSection: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            ideSection
-            Divider()
-            gitPanelSection
-            Divider()
-            permissionsSection
-            Divider()
-            binaryPathSection
-        }
-    }
-
-    private var ideSection: some View {
-        Picker(selection: selectedIDE) {
-            ForEach(IDE.allCases) { ide in
-                Label(ide.displayName, systemImage: ide.iconName)
-                    .tag(ide)
-            }
-        } label: {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Preferred IDE")
-                    .font(.headline)
-                Text("The IDE opened when clicking the toolbar button.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-        }
-        .pickerStyle(.menu)
-    }
-
-    private var gitPanelSection: some View {
-        Toggle(isOn: $gitPanelOpenByDefault) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Git Panel Open by Default")
-                    .font(.headline)
-                Text("Show the git tree panel when opening a project.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-        }
-        .toggleStyle(.switch)
-    }
-
-    private var permissionsSection: some View {
-        Toggle(isOn: $skipPermissions) {
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Skip Permissions")
-                    .font(.headline)
-                Text("Pass --allow-dangerously-skip-permissions to Claude CLI. Allows Claude to run without interactive permission prompts.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
-        }
-        .toggleStyle(.switch)
-    }
-
-    private var binaryPathSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Claude Binary Path")
-                        .font(.headline)
-                    Text("Path to the Claude CLI executable. Leave empty to auto-detect.")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+        Form {
+            Picker("Preferred IDE", selection: selectedIDE) {
+                ForEach(IDE.allCases) { ide in
+                    Label(ide.displayName, systemImage: ide.iconName)
+                        .tag(ide)
                 }
-
-                Spacer()
-
-                Button("Auto-detect") {
-                    claudeBinaryPath = ""
-                }
-                .buttonStyle(.bordered)
-                .controlSize(.small)
-                .disabled(claudeBinaryPath.isEmpty)
             }
 
-            HStack(spacing: 8) {
-                TextField("Auto-detect: \(detectedPath)", text: $claudeBinaryPath)
-                    .font(.system(.body, design: .monospaced))
-                    .textFieldStyle(.roundedBorder)
+            Toggle("Git Panel Open by Default", isOn: $gitPanelOpenByDefault)
 
-                pathStatusIcon
+            Section {
+                Toggle("Skip Permissions", isOn: $skipPermissions)
+                    .help("Pass --allow-dangerously-skip-permissions to Claude CLI.")
+
+                LabeledContent("Binary Path") {
+                    HStack(spacing: 8) {
+                        TextField("Auto-detect: \(detectedPath)", text: $claudeBinaryPath)
+                            .font(.system(.body, design: .monospaced))
+
+                        pathStatusIcon
+
+                        Button("Auto-detect") {
+                            claudeBinaryPath = ""
+                        }
+                        .disabled(claudeBinaryPath.isEmpty)
+                    }
+                }
+            } header: {
+                Text("Claude CLI")
             }
         }
+        .formStyle(.grouped)
     }
 
     @ViewBuilder
@@ -144,6 +84,5 @@ struct GeneralSettingsSection: View {
     @Previewable @State var gitPanelOpenByDefault = true
 
     GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath, preferredIDE: $preferredIDE, gitPanelOpenByDefault: $gitPanelOpenByDefault)
-        .padding()
-        .frame(width: 600)
+        .frame(width: 500, height: 300)
 }

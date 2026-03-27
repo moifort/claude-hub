@@ -11,12 +11,10 @@ struct SettingsPage: View {
         TabView {
             Tab("General", systemImage: "gear") {
                 GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath, preferredIDE: $preferredIDE, gitPanelOpenByDefault: $gitPanelOpenByDefault)
-                    .padding(Constants.standardPadding)
             }
 
             Tab("Tasks", systemImage: "terminal") {
                 TaskSettingsSection(systemPrompt: $taskSystemPrompt)
-                    .padding(Constants.standardPadding)
             }
         }
         .frame(width: 600, height: 500)
