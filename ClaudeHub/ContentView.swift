@@ -24,15 +24,8 @@ struct ContentView: View {
             }
         }
         .inspector(isPresented: $appModel.showInspector) {
-            if appModel.selectedTaskID != nil {
-                Text("Terminal")
-            } else {
-                ContentUnavailableView(
-                    "No Task Selected",
-                    systemImage: "terminal",
-                    description: Text("Select a task to view its terminal.")
-                )
-            }
+            TerminalInspectorPage()
+                .inspectorColumnWidth(min: 400, ideal: 500, max: 800)
         }
     }
 }
