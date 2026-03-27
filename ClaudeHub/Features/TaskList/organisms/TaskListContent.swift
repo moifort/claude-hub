@@ -25,6 +25,10 @@ struct TaskListContent: View {
         }
     }
 
+    private var hasCountdown: Bool {
+        tasks.contains { $0.status == .completed && !$0.isPinned && $0.completedAt != nil }
+    }
+
     var body: some View {
         if tasks.isEmpty {
             ContentUnavailableView(
@@ -33,25 +37,28 @@ struct TaskListContent: View {
                 description: Text("Create a task to start working.")
             )
         } else {
-            List(selection: Binding(
-                get: { selectedTaskID },
-                set: { if let id = $0 { onSelect(id) } }
-            )) {
-                ForEach(groupedTasks, id: \.0) { sectionTitle, sectionTasks in
-                    Section(sectionTitle) {
-                        ForEach(sectionTasks) { task in
-                            TaskRow(
-                                title: task.title,
-                                status: task.status,
-                                isPinned: task.isPinned,
-                                remainingSeconds: remainingSeconds(for: task),
-                                onPin: { onPin(task.id) },
-                                onSelect: { onSelect(task.id) }
-                            )
-                            .tag(task.id)
-                            .contextMenu {
-                                if task.status == .pending {
-                                    Button("Launch") { onLaunch(task.id) }
+            TimelineView(.periodic(from: .now, by: hasCountdown ? 1 : 60)) { timeline in
+                let _ = timeline.date // Force re-evaluation every tick
+                List(selection: Binding(
+                    get: { selectedTaskID },
+                    set: { if let id = $0 { onSelect(id) } }
+                )) {
+                    ForEach(groupedTasks, id: \.0) { sectionTitle, sectionTasks in
+                        Section(sectionTitle) {
+                            ForEach(sectionTasks) { task in
+                                TaskRow(
+                                    title: task.title,
+                                    status: task.status,
+                                    isPinned: task.isPinned,
+                                    remainingSeconds: remainingSeconds(for: task),
+                                    onPin: { onPin(task.id) },
+                                    onSelect: { onSelect(task.id) }
+                                )
+                                .tag(task.id)
+                                .contextMenu {
+                                    if task.status == .pending {
+                                        Button("Launch") { onLaunch(task.id) }
+                                    }
                                 }
                             }
                         }
