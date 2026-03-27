@@ -6,3 +6,5 @@ DerivedData/
 *.swp
 *.swo
 .env
+task/
+.idea/
