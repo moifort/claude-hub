@@ -8,6 +8,12 @@ struct CommitRowDetail: View {
 
     var body: some View {
         HStack(spacing: 6) {
+            Text(subject)
+                .font(.caption)
+                .lineLimit(1)
+                .truncationMode(.tail)
+                .foregroundStyle(.primary)
+
             if isLocalHead {
                 SyncBadge(position: .local)
             }
@@ -15,12 +21,6 @@ struct CommitRowDetail: View {
             if isRemoteHead {
                 SyncBadge(position: .remote)
             }
-
-            Text(subject)
-                .font(.caption)
-                .lineLimit(1)
-                .truncationMode(.tail)
-                .foregroundStyle(.primary)
 
             Spacer(minLength: 4)
 
