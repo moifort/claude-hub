@@ -9,7 +9,7 @@ struct CommitRowDetail: View {
     var body: some View {
         HStack(spacing: 6) {
             Text(subject)
-                .font(.caption)
+                .font(.callout)
                 .fontWeight(.bold)
                 .lineLimit(1)
                 .truncationMode(.tail)
