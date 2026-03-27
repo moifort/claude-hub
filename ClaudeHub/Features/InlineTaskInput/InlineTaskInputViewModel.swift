@@ -38,6 +38,7 @@ final class InlineTaskInputViewModel {
             project: project
         )
         context.insert(task)
+        try? context.save()
 
         isSummarizing = false
 
