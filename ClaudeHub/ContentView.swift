@@ -132,9 +132,11 @@ struct ContentView: View {
         case .pushing:
             ProgressView()
                 .controlSize(.small)
+                .frame(width: Constants.toolbarItemSize, height: Constants.toolbarItemSize)
         case .success:
-            Label("Pushed", systemImage: "checkmark")
+            Image(systemName: "checkmark.circle.fill")
                 .foregroundStyle(.green)
+                .frame(width: Constants.toolbarItemSize, height: Constants.toolbarItemSize)
         }
     }
 
