@@ -64,7 +64,7 @@ enum CLIService {
 
         let process = Process()
         process.executableURL = URL(fileURLWithPath: claude)
-        process.arguments = ["--print", "-s", systemPrompt, prompt]
+        process.arguments = ["--print", "--system-prompt", systemPrompt, prompt]
         process.currentDirectoryURL = URL(fileURLWithPath: projectPath)
         process.environment = enrichedEnvironment()
 
@@ -76,19 +76,20 @@ enum CLIService {
 
         try process.run()
 
-        // Non-blocking wait with 60s timeout
+        // Read pipe data before waiting (avoids deadlock if pipe buffer fills)
+        let stdoutData = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
+        let stderrData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
+
         let status: Int32 = await withCheckedContinuation { continuation in
             process.terminationHandler = { proc in
                 continuation.resume(returning: proc.terminationStatus)
             }
         }
 
-        let data = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
-        let output = String(data: data, encoding: .utf8) ?? ""
+        let output = String(data: stdoutData, encoding: .utf8) ?? ""
 
         guard status == 0 else {
-            let errData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
-            let stderr = String(data: errData, encoding: .utf8) ?? ""
+            let stderr = String(data: stderrData, encoding: .utf8) ?? ""
             throw CLIError.decompositionFailed(stderr.isEmpty ? output : stderr)
         }
 
