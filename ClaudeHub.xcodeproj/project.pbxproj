@@ -8,17 +8,22 @@
 
 /* Begin PBXBuildFile section */
 		0BDEAD5A1226EB06EBA16712 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF5B536725F3FE0F5CB3C75 /* Project.swift */; };
+		20852522C7E507174B5DD4CA /* NewTaskSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C008078041EC6D4C9CB409 /* NewTaskSheet.swift */; };
 		24B010251B9D5021AF47F5CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7D5ABD7B5CEE983C86E68FD /* Assets.xcassets */; };
 		2C2F337009E30D2CB4FEA593 /* SidebarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBEAF21D37141F6B8D2393 /* SidebarPage.swift */; };
+		2CE5024DBE00ABADA647BB4B /* NewTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06C713EBB36F6EB13B8637C /* NewTaskViewModel.swift */; };
 		3E35FEE67D0DCB8887336645 /* ProjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */; };
+		3FB44F341F7C5C3C2FCE8577 /* CLIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FDD00586136099B80DCB2A /* CLIService.swift */; };
 		41997149EED6C2E476174945 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE73BC9E92DC0E9B433E9A50 /* ContentView.swift */; };
 		52F36CE6C8BE7CA5D14F2662 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA1A24612A9B3469CB96DF4 /* Constants.swift */; };
+		65DB6FAC95FB5431F8602BDE /* DecompositionProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487F4B10B10B99583F09BFF /* DecompositionProgress.swift */; };
 		67819BA976E1A0C456B97301 /* ClaudeHubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D90907D5270EB87B19ECF /* ClaudeHubApp.swift */; };
 		8FF8BBF32C482DF95D39605D /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = C99E2F394C1577041B89B00C /* SwiftTerm */; };
 		958E79649C8C02C5A200824E /* ArchivedTaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */; };
 		9A4BED3FD596CFA03D772A30 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F0B52AE076996305ABCD4F /* TaskItem.swift */; };
 		9AE7FB9E67D6769EFE23ABB6 /* ProjectListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411E9E2BA44BB6A0F68CFE20 /* ProjectListSection.swift */; };
 		C8BCBC863E5B3C5758C64481 /* GitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF932402F1B25CB4477312E /* GitService.swift */; };
+		DF187D4485030F7361D81AD0 /* TaskPromptEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2B23D248C8AA8EB80EEF3 /* TaskPromptEditor.swift */; };
 		E0A2DEF17E11DA77A52F400E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C00405DCDCA41363DF0F182 /* AppModel.swift */; };
 		F0FA4A31C6FAE5C78E486FB1 /* ArchivesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10BC07779766A4E8B53E495 /* ArchivesSection.swift */; };
 		FB91DC301654458805219BC4 /* DecomposedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3673B9E2AFD3D9E4AD59E73 /* DecomposedTask.swift */; };
@@ -28,10 +33,13 @@
 /* Begin PBXFileReference section */
 		0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedTaskRow.swift; sourceTree = "<group>"; };
 		0A4C0DD93BFBD75D3AEF1C71 /* ClaudeHub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClaudeHub.entitlements; sourceTree = "<group>"; };
+		10C008078041EC6D4C9CB409 /* NewTaskSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskSheet.swift; sourceTree = "<group>"; };
 		411E9E2BA44BB6A0F68CFE20 /* ProjectListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListSection.swift; sourceTree = "<group>"; };
 		54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRow.swift; sourceTree = "<group>"; };
+		55FDD00586136099B80DCB2A /* CLIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIService.swift; sourceTree = "<group>"; };
 		580D90907D5270EB87B19ECF /* ClaudeHubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeHubApp.swift; sourceTree = "<group>"; };
 		5FA1A24612A9B3469CB96DF4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		5FE2B23D248C8AA8EB80EEF3 /* TaskPromptEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPromptEditor.swift; sourceTree = "<group>"; };
 		66FBEAF21D37141F6B8D2393 /* SidebarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarPage.swift; sourceTree = "<group>"; };
 		75F0B52AE076996305ABCD4F /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
 		7D2AF83F33A48348EF5D4E6E /* TaskStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatus.swift; sourceTree = "<group>"; };
@@ -39,7 +47,9 @@
 		9C00405DCDCA41363DF0F182 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		9F3E3E2321CE92167A28A373 /* ClaudeHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudeHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3673B9E2AFD3D9E4AD59E73 /* DecomposedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecomposedTask.swift; sourceTree = "<group>"; };
+		D06C713EBB36F6EB13B8637C /* NewTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewModel.swift; sourceTree = "<group>"; };
 		E10BC07779766A4E8B53E495 /* ArchivesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivesSection.swift; sourceTree = "<group>"; };
+		E487F4B10B10B99583F09BFF /* DecompositionProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecompositionProgress.swift; sourceTree = "<group>"; };
 		F7D5ABD7B5CEE983C86E68FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDF5B536725F3FE0F5CB3C75 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		FE73BC9E92DC0E9B433E9A50 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -136,9 +146,19 @@
 		8496BCAD2F7DE2A566228064 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				55FDD00586136099B80DCB2A /* CLIService.swift */,
 				8CF932402F1B25CB4477312E /* GitService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		97694458BAABFEC31A273C2F /* molecules */ = {
+			isa = PBXGroup;
+			children = (
+				E487F4B10B10B99583F09BFF /* DecompositionProgress.swift */,
+				5FE2B23D248C8AA8EB80EEF3 /* TaskPromptEditor.swift */,
+			);
+			path = molecules;
 			sourceTree = "<group>";
 		};
 		A1652200FC4506FF868B526F /* Models */ = {
@@ -152,33 +172,45 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		BA63C9C9036D8CD68E3683A3 /* pages */ = {
+			isa = PBXGroup;
+			children = (
+				10C008078041EC6D4C9CB409 /* NewTaskSheet.swift */,
+			);
+			path = pages;
+			sourceTree = "<group>";
+		};
 		DEFF488EE37FEC092CC6E66D /* Features */ = {
 			isa = PBXGroup;
 			children = (
+				E49B01A652C5D468385D5B67 /* NewTask */,
 				1D0473F92D50F6914C5D91ED /* Sidebar */,
 			);
 			path = Features;
 			sourceTree = "<group>";
 		};
-		"TEMP_1628FF47-3C45-44B5-A303-24431B44D97F" /* NewTask */ = {
+		E49B01A652C5D468385D5B67 /* NewTask */ = {
 			isa = PBXGroup;
 			children = (
+				D06C713EBB36F6EB13B8637C /* NewTaskViewModel.swift */,
+				97694458BAABFEC31A273C2F /* molecules */,
+				BA63C9C9036D8CD68E3683A3 /* pages */,
 			);
 			path = NewTask;
 			sourceTree = "<group>";
 		};
-		"TEMP_238D4E62-06B4-4CD0-A440-F1522F5F40A8" /* TaskList */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = TaskList;
-			sourceTree = "<group>";
-		};
-		"TEMP_745E553C-5BC0-453D-8140-112665055DF9" /* Terminal */ = {
+		"TEMP_36505334-DFE9-420A-8949-161976A74F69" /* Terminal */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = Terminal;
+			sourceTree = "<group>";
+		};
+		"TEMP_B48C77F5-80A5-4E65-B438-84D92163F6C6" /* TaskList */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = TaskList;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -259,16 +291,21 @@
 				E0A2DEF17E11DA77A52F400E /* AppModel.swift in Sources */,
 				958E79649C8C02C5A200824E /* ArchivedTaskRow.swift in Sources */,
 				F0FA4A31C6FAE5C78E486FB1 /* ArchivesSection.swift in Sources */,
+				3FB44F341F7C5C3C2FCE8577 /* CLIService.swift in Sources */,
 				67819BA976E1A0C456B97301 /* ClaudeHubApp.swift in Sources */,
 				52F36CE6C8BE7CA5D14F2662 /* Constants.swift in Sources */,
 				41997149EED6C2E476174945 /* ContentView.swift in Sources */,
 				FB91DC301654458805219BC4 /* DecomposedTask.swift in Sources */,
+				65DB6FAC95FB5431F8602BDE /* DecompositionProgress.swift in Sources */,
 				C8BCBC863E5B3C5758C64481 /* GitService.swift in Sources */,
+				20852522C7E507174B5DD4CA /* NewTaskSheet.swift in Sources */,
+				2CE5024DBE00ABADA647BB4B /* NewTaskViewModel.swift in Sources */,
 				0BDEAD5A1226EB06EBA16712 /* Project.swift in Sources */,
 				9AE7FB9E67D6769EFE23ABB6 /* ProjectListSection.swift in Sources */,
 				3E35FEE67D0DCB8887336645 /* ProjectRow.swift in Sources */,
 				2C2F337009E30D2CB4FEA593 /* SidebarPage.swift in Sources */,
 				9A4BED3FD596CFA03D772A30 /* TaskItem.swift in Sources */,
+				DF187D4485030F7361D81AD0 /* TaskPromptEditor.swift in Sources */,
 				FCA454AB74DF9834F5BA7A17 /* TaskStatus.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
