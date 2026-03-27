@@ -53,6 +53,11 @@ struct ContentView: View {
                 }
             }
         }
+        .onAppear {
+            if appModel.selectedItemID == nil, let first = allProjects.first {
+                appModel.selectedItemID = first.persistentModelID
+            }
+        }
         .toolbar {
             if let task = selectedTask {
                 ToolbarItemGroup(placement: .primaryAction) {
