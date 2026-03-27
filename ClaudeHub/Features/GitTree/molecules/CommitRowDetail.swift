@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct CommitRowDetail: View {
+struct CommitRowDetail: View, Equatable {
     let subject: String
     let date: Date
     let isLocalHead: Bool

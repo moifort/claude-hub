@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct GraphRowSegment: View {
+struct GraphRowSegment: View, Equatable {
     let isFirst: Bool
     let isLast: Bool
     let color: Color
