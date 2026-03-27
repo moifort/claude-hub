@@ -9,8 +9,6 @@ struct ContentView: View {
     @Query private var allProjects: [Project]
 
     @State private var viewModel = TaskListViewModel()
-    @State private var dragStartWidth: CGFloat?
-    @State private var dragCurrentWidth: CGFloat?
     @AppStorage("preferredIDE") private var preferredIDE = IDE.intellij.rawValue
     @State private var pushState: PushState = .idle
     @State private var pushErrorMessage: String?
@@ -30,36 +28,31 @@ struct ContentView: View {
     }
 
     var body: some View {
+        @Bindable var appModel = appModel
+
         NavigationSplitView {
             SidebarPage()
                 .navigationSplitViewColumnWidth(min: 220, ideal: 260, max: 360)
         } detail: {
-            HStack(spacing: 0) {
-                Group {
-                    if let task = selectedTask {
-                        detailView(for: task)
-                    } else if let project = selectedProject {
-                        InlineTaskInputPage(project: project)
-                    } else {
-                        ContentUnavailableView(
-                            "Select a Project",
-                            systemImage: "folder",
-                            description: Text("Add a project from the sidebar to get started.")
-                        )
-                    }
+            Group {
+                if let task = selectedTask {
+                    detailView(for: task)
+                } else if let project = selectedProject {
+                    InlineTaskInputPage(project: project)
+                } else {
+                    ContentUnavailableView(
+                        "Select a Project",
+                        systemImage: "folder",
+                        description: Text("Add a project from the sidebar to get started.")
+                    )
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-
-                if let project = currentProject {
-                    gitTreeDivider
-                        .opacity(appModel.showGitTree ? 1 : 0)
-
-                    GitTreePanel(repoPath: project.path, projectName: project.name, refreshTrigger: appModel.gitTreeRefreshTrigger)
-                        .frame(width: appModel.gitTreeWidth, alignment: .leading)
-                        .drawingGroup()
-                        .frame(width: appModel.showGitTree ? (dragCurrentWidth ?? appModel.gitTreeWidth) : 0)
-                        .clipped()
-                }
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        }
+        .inspector(isPresented: $appModel.showGitTree) {
+            if let project = currentProject {
+                GitTreePanel(repoPath: project.path, projectName: project.name, refreshTrigger: appModel.gitTreeRefreshTrigger)
+                    .inspectorColumnWidth(min: 250, ideal: 380, max: 600)
             }
         }
         .onAppear {
@@ -113,9 +106,7 @@ struct ContentView: View {
 
             ToolbarItem(placement: .automatic) {
                 Button {
-                    withAnimation(.easeInOut(duration: 0.25)) {
-                        appModel.showGitTree.toggle()
-                    }
+                    appModel.showGitTree.toggle()
                 } label: {
                     Label(
                         "Git Tree",
@@ -166,38 +157,6 @@ struct ContentView: View {
             pushState = .idle
             pushErrorMessage = error.localizedDescription
         }
-    }
-
-    private var gitTreeDivider: some View {
-        Rectangle()
-            .fill(Color.gray.opacity(0.2))
-            .frame(width: 1)
-            .padding(.vertical, 4)
-            .contentShape(Rectangle().inset(by: -4))
-            .gesture(
-                DragGesture(minimumDistance: 0)
-                    .onChanged { value in
-                        if dragStartWidth == nil {
-                            dragStartWidth = dragCurrentWidth ?? appModel.gitTreeWidth
-                        }
-                        let newWidth = (dragStartWidth ?? appModel.gitTreeWidth) - value.translation.width
-                        dragCurrentWidth = max(300, min(newWidth, 600))
-                    }
-                    .onEnded { _ in
-                        if let final = dragCurrentWidth {
-                            appModel.gitTreeWidth = final
-                        }
-                        dragStartWidth = nil
-                        dragCurrentWidth = nil
-                    }
-            )
-            .onHover { hovering in
-                if hovering {
-                    NSCursor.resizeLeftRight.push()
-                } else {
-                    NSCursor.pop()
-                }
-            }
     }
 
     private func reconstructSession(
