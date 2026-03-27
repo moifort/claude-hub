@@ -22,58 +22,33 @@ struct ProjectListSection: View {
     let onSelectTask: (PersistentIdentifier) -> Void
     let onDelete: (PersistentIdentifier) -> Void
 
-    @State private var expandedProjects: Set<PersistentIdentifier> = []
-    @State private var initialized = false
-
     var body: some View {
         ForEach(projects) { project in
-            CollapsibleSidebarRow(isExpanded: expandedBinding(for: project.id), onTap: { onSelectProject(project.id) }) {
+            Button { onSelectProject(project.id) } label: {
                 ProjectRow(
                     name: project.name,
                     taskCount: project.taskCount,
                     hasRunningTask: project.hasRunningTask
                 )
-            } content: {
-                ForEach(project.tasks) { task in
-                    SidebarTaskRow(
-                        title: task.title,
-                        status: task.status,
-                        isSelected: task.id == selectedTaskID
-                    )
-                    .tag(task.id)
-                    .onTapGesture { onSelectTask(task.id) }
-                    .padding(.leading, 8)
-                }
             }
+            .buttonStyle(.plain)
             .contextMenu {
                 Button("Remove Project", role: .destructive) {
                     onDelete(project.id)
                 }
             }
-        }
-        .onAppear {
-            guard !initialized else { return }
-            expandedProjects = Set(projects.map(\.id))
-            initialized = true
-        }
-        .onChange(of: projects.map(\.id)) { _, newIDs in
-            for id in newIDs where !expandedProjects.contains(id) {
-                expandedProjects.insert(id)
-            }
-        }
-    }
 
-    private func expandedBinding(for id: PersistentIdentifier) -> Binding<Bool> {
-        Binding(
-            get: { expandedProjects.contains(id) },
-            set: { isExpanded in
-                if isExpanded {
-                    expandedProjects.insert(id)
-                } else {
-                    expandedProjects.remove(id)
-                }
+            ForEach(project.tasks) { task in
+                SidebarTaskRow(
+                    title: task.title,
+                    status: task.status,
+                    isSelected: task.id == selectedTaskID
+                )
+                .tag(task.id)
+                .onTapGesture { onSelectTask(task.id) }
+                .padding(.leading, 8)
             }
-        )
+        }
     }
 }
 
