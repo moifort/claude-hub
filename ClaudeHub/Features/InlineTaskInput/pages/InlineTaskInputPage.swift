@@ -4,7 +4,6 @@ import SwiftData
 struct InlineTaskInputPage: View {
     let project: Project
 
-    @AppStorage("decompositionEnabled") private var decompositionEnabled = true
     @Environment(AppModel.self) private var appModel
     @Environment(TerminalSessionManager.self) private var sessionManager
     @Environment(\.modelContext) private var modelContext
@@ -30,31 +29,18 @@ struct InlineTaskInputPage: View {
                     .foregroundStyle(.tertiary)
             }
 
-            VStack(spacing: 8) {
-                TerminalPromptField(
-                    text: $viewModel.prompt,
-                    isDisabled: viewModel.isProcessing,
-                    onSubmit: { submit() }
-                )
-
-                HStack {
-                    Spacer()
-                    Toggle(isOn: $decompositionEnabled) {
-                        Label("Auto-decompose", systemImage: "arrow.triangle.branch")
-                            .font(.system(.caption, design: .monospaced))
-                    }
-                    .toggleStyle(.switch)
-                    .controlSize(.mini)
-                    .foregroundStyle(.secondary)
-                }
-            }
+            TerminalPromptField(
+                text: $viewModel.prompt,
+                isDisabled: viewModel.isSummarizing,
+                onSubmit: { submit() }
+            )
             .frame(maxWidth: 600)
 
-            if let status = viewModel.statusMessage {
+            if viewModel.isSummarizing {
                 HStack(spacing: 8) {
                     ProgressView()
                         .controlSize(.small)
-                    Text(status)
+                    Text("Summarizing...")
                         .font(.system(.caption, design: .monospaced))
                         .foregroundStyle(.green.opacity(0.7))
                 }
@@ -78,8 +64,7 @@ struct InlineTaskInputPage: View {
                 context: modelContext,
                 sessionManager: sessionManager,
                 taskViewModel: taskViewModel,
-                appModel: appModel,
-                decompositionEnabled: decompositionEnabled
+                appModel: appModel
             )
         }
     }
