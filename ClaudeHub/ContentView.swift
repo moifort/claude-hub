@@ -55,6 +55,7 @@ struct ContentView: View {
                         .opacity(appModel.showGitTree ? 1 : 0)
 
                     GitTreePanel(repoPath: project.path, projectName: project.name, refreshTrigger: appModel.gitTreeRefreshTrigger)
+                        .frame(width: appModel.gitTreeWidth, alignment: .leading)
                         .frame(width: appModel.showGitTree ? (dragCurrentWidth ?? appModel.gitTreeWidth) : 0)
                         .clipped()
                 }
