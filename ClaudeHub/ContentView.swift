@@ -30,6 +30,7 @@ struct ContentView: View {
     var body: some View {
         NavigationSplitView {
             SidebarPage()
+                .navigationSplitViewColumnWidth(min: 220, ideal: 260, max: 360)
         } detail: {
             HStack(spacing: 0) {
                 Group {
