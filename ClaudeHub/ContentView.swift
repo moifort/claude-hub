@@ -53,6 +53,7 @@ struct ContentView: View {
         .inspector(isPresented: $appModel.showGitTree) {
             if let project = currentProject {
                 GitTreePanel(repoPath: project.path, projectName: project.name, refreshTrigger: appModel.gitTreeRefreshTrigger)
+                    .ignoresSafeArea(edges: .top)
                     .inspectorColumnWidth(min: 250, ideal: 380, max: 600)
             }
         }
