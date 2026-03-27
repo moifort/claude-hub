@@ -7,41 +7,13 @@ struct GitTreePanel: View {
     @State private var viewModel = GitTreeViewModel()
 
     var body: some View {
-        VStack(spacing: 0) {
-            header
-
-            Divider()
-
-            content
-        }
+        content
         .task(id: repoPath) {
             await viewModel.load(repoPath: repoPath)
         }
         .onDisappear {
             viewModel.stopWatching()
         }
-    }
-
-    private var header: some View {
-        HStack {
-            Label("It's History", systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-
-            Spacer()
-
-            Button {
-                Task { await viewModel.refresh() }
-            } label: {
-                Image(systemName: "arrow.clockwise")
-                    .font(.caption)
-            }
-            .buttonStyle(.plain)
-            .foregroundStyle(.secondary)
-            .disabled(viewModel.isLoading)
-        }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
     }
 
     @ViewBuilder
