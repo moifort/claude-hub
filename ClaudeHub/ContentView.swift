@@ -53,7 +53,6 @@ struct ContentView: View {
         .inspector(isPresented: $appModel.showGitTree) {
             if let project = currentProject {
                 GitTreePanel(repoPath: project.path, projectName: project.name, refreshTrigger: appModel.gitTreeRefreshTrigger)
-                    .ignoresSafeArea(edges: .top)
                     .inspectorColumnWidth(min: 250, ideal: 380, max: 600)
             }
         }
@@ -67,21 +66,17 @@ struct ContentView: View {
             syncTaskStates(newStates)
         }
         .toolbar {
-            ToolbarSpacer(.flexible)
-
             if let task = selectedTask {
-                if task.taskStatus == .pending {
-                    ToolbarItem {
+                ToolbarItemGroup(placement: .primaryAction) {
+                    if task.taskStatus == .pending {
                         Button {
                             viewModel.launchTask(task, sessionManager: sessionManager)
                         } label: {
                             Label("Launch", systemImage: "play.fill")
                         }
                     }
-                }
 
-                if task.taskStatus == .completed {
-                    ToolbarItem {
+                    if task.taskStatus == .completed {
                         Button {
                             viewModel.pinTask(task)
                         } label: {
@@ -92,18 +87,16 @@ struct ContentView: View {
                         }
                     }
                 }
-
-                ToolbarSpacer(.fixed)
             }
 
-            if let project = currentProject {
-                ToolbarItem {
+            ToolbarItem(placement: .automatic) {
+                if let project = currentProject {
                     pushButton(repoPath: project.path)
                 }
+            }
 
-                ToolbarSpacer(.fixed)
-
-                ToolbarItem {
+            ToolbarItem(placement: .automatic) {
+                if let project = currentProject {
                     let ide = IDE(rawValue: preferredIDE) ?? .intellij
                     Button {
                         ide.open(path: project.path)
@@ -112,11 +105,9 @@ struct ContentView: View {
                     }
                     .help("Open in \(ide.displayName)")
                 }
-
-                ToolbarSpacer(.fixed)
             }
 
-            ToolbarItem {
+            ToolbarItem(placement: .automatic) {
                 Button {
                     appModel.showGitTree.toggle()
                 } label: {
@@ -127,7 +118,6 @@ struct ContentView: View {
                 }
             }
         }
-        .toolbar(removing: .title)
         .alert("Push Failed", isPresented: .init(
             get: { pushErrorMessage != nil },
             set: { if !$0 { pushErrorMessage = nil } }
