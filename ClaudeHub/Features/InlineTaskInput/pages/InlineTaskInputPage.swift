@@ -13,7 +13,7 @@ struct InlineTaskInputPage: View {
 
     var body: some View {
         VStack(spacing: 24) {
-            Spacer()
+            Spacer().frame(maxHeight: 200)
 
             VStack(spacing: 8) {
                 Image(systemName: "terminal")
