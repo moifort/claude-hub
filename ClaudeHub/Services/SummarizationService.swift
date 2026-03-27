@@ -1,7 +1,35 @@
 import Foundation
 import FoundationModels
 
+@Generable
+struct TaskSplitResult {
+    @Guide(description: "Each individual task extracted from the input. If the input is a single task with line breaks, return it as one element.")
+    var tasks: [String]
+}
+
 enum SummarizationService {
+
+    static func splitTasks(from prompt: String) async -> [String] {
+        guard prompt.contains("\n") else { return [prompt] }
+
+        do {
+            let session = LanguageModelSession {
+                """
+                Analyze the following text and determine if it contains multiple separate tasks or requests. \
+                If it contains multiple distinct tasks separated by line breaks, split them into individual tasks. \
+                If it is a single task that happens to span multiple lines, return it as one element. \
+                Preserve the original language and wording of each task.
+                """
+            }
+            let response = try await session.respond(to: prompt, generating: TaskSplitResult.self)
+            let tasks = response.content.tasks
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                .filter { !$0.isEmpty }
+            return tasks.isEmpty ? [prompt] : tasks
+        } catch {
+            return [prompt]
+        }
+    }
     static func summarize(prompt: String) async -> String {
         do {
             let session = LanguageModelSession {

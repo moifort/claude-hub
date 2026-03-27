@@ -6,14 +6,14 @@ final class InlineTaskInputViewModel {
     var prompt = ""
     private(set) var isSummarizing = false
     private(set) var errorMessage: String?
-    private(set) var lastCreatedTaskTitle: String?
+    private(set) var lastConfirmationMessage: String?
 
     var canSubmit: Bool {
         !prompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isSummarizing
     }
 
     func clearConfirmation() {
-        lastCreatedTaskTitle = nil
+        lastConfirmationMessage = nil
     }
 
     func submit(
@@ -26,29 +26,42 @@ final class InlineTaskInputViewModel {
         guard !trimmed.isEmpty else { return }
 
         errorMessage = nil
+        isSummarizing = true
 
-        let title: String
-        if trimmed.count <= 250 {
-            title = trimmed
-        } else {
-            isSummarizing = true
-            title = await SummarizationService.summarize(prompt: trimmed)
+        let taskPrompts = await SummarizationService.splitTasks(from: trimmed)
+
+        var createdTasks: [TaskItem] = []
+        for taskPrompt in taskPrompts {
+            let title: String
+            if taskPrompt.count <= 250 {
+                title = taskPrompt
+            } else {
+                title = await SummarizationService.summarize(prompt: taskPrompt)
+            }
+            let slug = TaskItem.generateSlug(from: title)
+            let task = TaskItem(
+                title: title,
+                prompt: taskPrompt,
+                slug: slug,
+                project: project
+            )
+            context.insert(task)
+            createdTasks.append(task)
         }
-        let slug = TaskItem.generateSlug(from: title)
-        let task = TaskItem(
-            title: title,
-            prompt: trimmed,
-            slug: slug,
-            project: project
-        )
-        context.insert(task)
         try? context.save()
 
         isSummarizing = false
         prompt = ""
         errorMessage = nil
-        lastCreatedTaskTitle = title
 
-        await taskViewModel.launchTask(task, sessionManager: sessionManager)
+        if createdTasks.count == 1, let task = createdTasks.first {
+            lastConfirmationMessage = "Task created: \(task.title)"
+        } else {
+            lastConfirmationMessage = "\(createdTasks.count) tasks created"
+        }
+
+        for task in createdTasks {
+            await taskViewModel.launchTask(task, sessionManager: sessionManager)
+        }
     }
 }

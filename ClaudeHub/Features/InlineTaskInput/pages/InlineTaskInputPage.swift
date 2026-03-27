@@ -47,8 +47,8 @@ struct InlineTaskInputPage: View {
                 Text(error)
                     .font(.system(.caption, design: .monospaced))
                     .foregroundStyle(.orange)
-            } else if let title = viewModel.lastCreatedTaskTitle {
-                Text("✓ Task created: \(title)")
+            } else if let message = viewModel.lastConfirmationMessage {
+                Text("✓ \(message)")
                     .font(.system(.caption, design: .monospaced))
                     .foregroundStyle(.green.opacity(0.7))
                     .lineLimit(1)
