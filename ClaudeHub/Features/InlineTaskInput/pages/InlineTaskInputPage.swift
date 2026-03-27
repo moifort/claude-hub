@@ -12,16 +12,16 @@ struct InlineTaskInputPage: View {
     @State private var taskViewModel = TaskListViewModel()
 
     var body: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 20) {
             Spacer()
 
-            VStack(spacing: 8) {
-                Image(systemName: "terminal")
-                    .font(.system(size: 40))
+            VStack(spacing: 6) {
+                Image(systemName: "sparkles")
+                    .font(.system(size: 36))
                     .foregroundStyle(.secondary)
 
                 Text(project.name)
-                    .font(.title2)
+                    .font(.title3)
                     .foregroundStyle(.primary)
 
                 Text("Enter to submit \u{2022} Shift+Enter for new line")
@@ -29,9 +29,10 @@ struct InlineTaskInputPage: View {
                     .foregroundStyle(.tertiary)
             }
 
-            TerminalPromptField(
+            PromptField(
                 text: $viewModel.prompt,
                 isDisabled: viewModel.isDecomposing,
+                isLoading: viewModel.isDecomposing,
                 onSubmit: { submit() }
             )
             .frame(maxWidth: 600)

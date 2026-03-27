@@ -11,13 +11,13 @@ struct InlineDecompositionProgress: View {
                 ProgressView()
                     .controlSize(.small)
                 Text("Analyzing project and decomposing tasks...")
-                    .font(.system(.caption, design: .monospaced))
-                    .foregroundStyle(.green.opacity(0.7))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         } else if let error = errorMessage {
             Text(error)
-                .font(.system(.caption, design: .monospaced))
-                .foregroundStyle(.orange)
+                .font(.caption)
+                .foregroundStyle(.red)
         }
     }
 }
@@ -29,7 +29,7 @@ struct InlineDecompositionProgress: View {
         errorMessage: nil
     )
     .padding()
-    .background(.black)
+    .background(.background)
 }
 
 #Preview("Error") {
@@ -39,5 +39,5 @@ struct InlineDecompositionProgress: View {
         errorMessage: "Decomposition failed — created single task"
     )
     .padding()
-    .background(.black)
+    .background(.background)
 }
