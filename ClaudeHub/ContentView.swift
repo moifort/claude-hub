@@ -136,7 +136,7 @@ struct ContentView: View {
     private func detailView(for task: TaskItem) -> some View {
         if let session = sessionManager.session(for: task.persistentModelID) {
             TerminalContainer(
-                taskID: task.persistentModelID.hashValue.description,
+                taskPersistentID: task.persistentModelID,
                 taskTitle: task.title,
                 status: task.taskStatus,
                 projectName: task.project?.name ?? "Unknown",

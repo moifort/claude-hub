@@ -124,6 +124,7 @@ enum CLIService {
         ]
         let currentPath = env["PATH"] ?? "/usr/bin:/bin:/usr/sbin:/sbin"
         env["PATH"] = (extraPaths + [currentPath]).joined(separator: ":")
+        env["TERM"] = "xterm-256color"
         return env
     }
 

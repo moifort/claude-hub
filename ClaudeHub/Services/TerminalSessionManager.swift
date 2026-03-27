@@ -1,5 +1,6 @@
 import Foundation
 import SwiftData
+import SwiftTerm
 
 @Observable @MainActor
 final class TerminalSessionManager {
@@ -11,6 +12,7 @@ final class TerminalSessionManager {
     }
 
     private(set) var activeSessions: [PersistentIdentifier: SessionInfo] = [:]
+    private var terminalViews: [PersistentIdentifier: LocalProcessTerminalView] = [:]
 
     func registerSession(
         for taskID: PersistentIdentifier,
@@ -31,11 +33,21 @@ final class TerminalSessionManager {
         activeSessions[taskID]
     }
 
+    func cachedTerminalView(for taskID: PersistentIdentifier) -> LocalProcessTerminalView? {
+        terminalViews[taskID]
+    }
+
+    func storeTerminalView(_ view: LocalProcessTerminalView, for taskID: PersistentIdentifier) {
+        terminalViews[taskID] = view
+    }
+
     func removeSession(for taskID: PersistentIdentifier) {
         activeSessions[taskID] = nil
+        terminalViews[taskID] = nil
     }
 
     func removeAll() {
         activeSessions.removeAll()
+        terminalViews.removeAll()
     }
 }

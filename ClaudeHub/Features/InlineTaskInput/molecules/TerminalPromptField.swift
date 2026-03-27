@@ -9,7 +9,8 @@ struct TerminalPromptField: View {
 
     @MainActor private static let monoFont = NSFont.monospacedSystemFont(ofSize: 14, weight: NSFont.Weight.regular)
     @MainActor private static let promptFont = NSFont.monospacedSystemFont(ofSize: 14, weight: NSFont.Weight.medium)
-    private static let green = NSColor(red: 0.40, green: 0.85, blue: 0.45, alpha: 1)
+    private static let promptColor = NSColor(red: 0.40, green: 0.85, blue: 0.45, alpha: 1)
+    private static let textColor = NSColor(red: 0.90, green: 0.91, blue: 0.92, alpha: 1)
     private static let minHeight: CGFloat = 68
     private static let maxHeight: CGFloat = 200
 
@@ -21,7 +22,7 @@ struct TerminalPromptField: View {
         HStack(alignment: .top, spacing: 10) {
             Text("❯")
                 .font(Font(Self.promptFont))
-                .foregroundStyle(Color(Self.green))
+                .foregroundStyle(Color(Self.promptColor))
 
             ZStack(alignment: .topLeading) {
                 if text.isEmpty {
@@ -34,7 +35,7 @@ struct TerminalPromptField: View {
                     text: $text,
                     contentHeight: $contentHeight,
                     font: Self.monoFont,
-                    textColor: Self.green,
+                    textColor: Self.textColor,
                     isDisabled: isDisabled,
                     onSubmit: onSubmit
                 )

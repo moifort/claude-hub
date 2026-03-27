@@ -1,7 +1,8 @@
+import SwiftData
 import SwiftUI
 
 struct TerminalContainer: View {
-    let taskID: String
+    let taskPersistentID: PersistentIdentifier
     let taskTitle: String
     let status: TaskStatus
     let projectName: String
@@ -13,7 +14,7 @@ struct TerminalContainer: View {
 
     var body: some View {
         TerminalRepresentable(
-            taskID: taskID,
+            taskPersistentID: taskPersistentID,
             executable: executable,
             arguments: arguments,
             workingDirectory: workingDirectory,
@@ -23,17 +24,4 @@ struct TerminalContainer: View {
     }
 }
 
-#Preview {
-    TerminalContainer(
-        taskID: "preview",
-        taskTitle: "Add authentication",
-        status: .running,
-        projectName: "my-project",
-        executable: "/bin/bash",
-        arguments: ["-c", "echo 'Hello from ClaudeHub terminal'; sleep 2; echo 'Done'"],
-        workingDirectory: NSHomeDirectory(),
-        environment: nil,
-        onProcessTerminated: { code in print("Exit: \(String(describing: code))") }
-    )
-    .frame(width: 500, height: 400)
-}
+// Preview requires a live ModelContainer for PersistentIdentifier
