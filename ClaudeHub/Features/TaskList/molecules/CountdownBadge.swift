@@ -11,9 +11,10 @@ struct CountdownBadge: View {
                 .foregroundStyle(.secondary)
 
             Button("Keep", action: onKeep)
-                .buttonStyle(.bordered)
+                .buttonStyle(.glass)
                 .controlSize(.mini)
         }
+        .animation(.smooth, value: remainingSeconds)
     }
 }
 

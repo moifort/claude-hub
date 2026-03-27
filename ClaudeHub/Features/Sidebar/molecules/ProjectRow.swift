@@ -14,17 +14,18 @@ struct ProjectRow: View {
 
                 if taskCount > 0 {
                     Text("\(taskCount)")
-                        .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(.primary)
                         .padding(.horizontal, 6)
                         .padding(.vertical, 2)
-                        .background(.quaternary, in: .capsule)
+                        .glassEffect(.regular, in: .capsule)
                 }
 
                 if hasRunningTask {
                     Image(systemName: "circle.fill")
                         .font(.system(size: 6))
                         .foregroundStyle(.green)
+                        .symbolEffect(.pulse, isActive: true)
                 }
             }
         } icon: {

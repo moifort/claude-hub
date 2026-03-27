@@ -42,9 +42,11 @@ struct NewTaskSheet: View {
 
                 if viewModel.subtaskCount != nil {
                     Button("Done") { dismiss() }
+                        .buttonStyle(.glassProminent)
                         .keyboardShortcut(.defaultAction)
                 } else {
                     Button("Submit") { submit() }
+                        .buttonStyle(.glassProminent)
                         .keyboardShortcut(.return, modifiers: .command)
                         .disabled(!viewModel.canSubmit)
                 }

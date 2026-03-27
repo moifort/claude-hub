@@ -27,14 +27,26 @@ struct ContentView: View {
             TerminalInspectorPage()
                 .inspectorColumnWidth(min: 400, ideal: 500, max: 800)
         }
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    appModel.showInspector.toggle()
+                } label: {
+                    Label("Toggle Inspector", systemImage: "sidebar.trailing")
+                }
+                .keyboardShortcut("i", modifiers: .command)
+            }
+        }
     }
 }
 
 #Preview {
     @Previewable @State var appModel = AppModel()
+    @Previewable @State var sessionManager = TerminalSessionManager()
 
     ContentView()
         .environment(appModel)
+        .environment(sessionManager)
         .modelContainer(for: [Project.self, TaskItem.self], inMemory: true)
         .frame(width: 1000, height: 700)
 }

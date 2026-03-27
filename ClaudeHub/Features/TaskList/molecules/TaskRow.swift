@@ -34,6 +34,7 @@ struct TaskRow: View {
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
+        .animation(.smooth, value: status)
         .contextMenu {
             if status == .completed {
                 Button {

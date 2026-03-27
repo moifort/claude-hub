@@ -6,30 +6,32 @@ struct TerminalHeader: View {
     let projectName: String
 
     var body: some View {
-        HStack(spacing: 10) {
-            Image(systemName: "terminal.fill")
-                .foregroundStyle(.secondary)
-
-            VStack(alignment: .leading, spacing: 1) {
-                Text(taskTitle)
-                    .font(.subheadline.weight(.medium))
-                    .lineLimit(1)
-
-                Text(projectName)
-                    .font(.caption)
+        GlassEffectContainer(spacing: Constants.glassSpacing) {
+            HStack(spacing: 10) {
+                Image(systemName: "terminal.fill")
                     .foregroundStyle(.secondary)
+
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(taskTitle)
+                        .font(.subheadline.weight(.medium))
+                        .lineLimit(1)
+
+                    Text(projectName)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+
+                Spacer()
+
+                GlassStatusChip(
+                    label: status.displayName,
+                    icon: status.iconName,
+                    tintColor: status.tintColor
+                )
             }
-
-            Spacer()
-
-            GlassStatusChip(
-                label: status.displayName,
-                icon: status.iconName,
-                tintColor: status.tintColor
-            )
+            .padding(.horizontal, 12)
+            .padding(.vertical, 8)
         }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 8)
     }
 }
 
