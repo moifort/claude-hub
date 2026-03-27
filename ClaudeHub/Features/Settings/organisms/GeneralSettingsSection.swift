@@ -4,6 +4,7 @@ struct GeneralSettingsSection: View {
     @Binding var skipPermissions: Bool
     @Binding var claudeBinaryPath: String
     @Binding var preferredIDE: String
+    @Binding var gitPanelOpenByDefault: Bool
 
     private var resolvedPath: String? {
         let path = claudeBinaryPath.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -28,6 +29,8 @@ struct GeneralSettingsSection: View {
         VStack(alignment: .leading, spacing: 20) {
             ideSection
             Divider()
+            gitPanelSection
+            Divider()
             permissionsSection
             Divider()
             binaryPathSection
@@ -50,6 +53,19 @@ struct GeneralSettingsSection: View {
             }
         }
         .pickerStyle(.menu)
+    }
+
+    private var gitPanelSection: some View {
+        Toggle(isOn: $gitPanelOpenByDefault) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Git Panel Open by Default")
+                    .font(.headline)
+                Text("Show the git tree panel when opening a project.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .toggleStyle(.switch)
     }
 
     private var permissionsSection: some View {
@@ -125,8 +141,9 @@ struct GeneralSettingsSection: View {
     @Previewable @State var skipPermissions = true
     @Previewable @State var claudeBinaryPath = ""
     @Previewable @State var preferredIDE = IDE.intellij.rawValue
+    @Previewable @State var gitPanelOpenByDefault = true
 
-    GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath, preferredIDE: $preferredIDE)
+    GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath, preferredIDE: $preferredIDE, gitPanelOpenByDefault: $gitPanelOpenByDefault)
         .padding()
         .frame(width: 600)
 }

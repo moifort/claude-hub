@@ -5,8 +5,12 @@ import SwiftData
 final class AppModel {
     var selectedItemID: PersistentIdentifier?
     var showInspector = false
-    var showGitTree = true
+    var showGitTree: Bool
     var gitTreeWidth: CGFloat = 380
     var gitTreeRefreshTrigger = 0
     var windowSize: CGSize = .zero
+
+    init() {
+        showGitTree = UserDefaults.standard.object(forKey: "gitPanelOpenByDefault") as? Bool ?? true
+    }
 }
