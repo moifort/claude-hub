@@ -42,7 +42,7 @@ struct ProjectListSection: View {
                     isSelected: task.id == selectedItemID
                 )
                 .tag(task.id)
-                .padding(.leading, 8)
+                .padding(.leading, 4)
                 .contextMenu {
                     Button("Delete Task", role: .destructive) {
                         onDeleteTask(task.id)

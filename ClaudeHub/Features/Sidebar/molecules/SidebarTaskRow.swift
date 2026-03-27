@@ -7,13 +7,13 @@ struct SidebarTaskRow: View {
     let isSelected: Bool
 
     var body: some View {
-        HStack(alignment: .firstTextBaseline, spacing: 10) {
+        HStack(alignment: .firstTextBaseline, spacing: 6) {
             Image(systemName: "circle.fill")
                 .font(.system(size: 6))
                 .foregroundStyle(status.tintColor)
                 .symbolEffect(.pulse, isActive: status == .running)
                 .alignmentGuide(.firstTextBaseline) { d in d[VerticalAlignment.center] + 4 }
-                .frame(width: 12)
+                .frame(width: 8)
 
             VStack(alignment: .leading, spacing: 2) {
                 Text(title)
@@ -25,8 +25,6 @@ struct SidebarTaskRow: View {
                     .font(.caption2)
                     .foregroundStyle(.tertiary)
             }
-
-            Spacer()
         }
         .padding(.vertical, 2)
     }
