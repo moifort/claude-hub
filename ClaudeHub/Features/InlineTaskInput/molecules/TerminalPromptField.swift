@@ -5,13 +5,13 @@ struct TerminalPromptField: View {
     let isDisabled: Bool
     let onSubmit: () -> Void
 
-    @State private var contentHeight: CGFloat = 20
+    @State private var contentHeight: CGFloat = 68
 
     @MainActor private static let monoFont = NSFont.monospacedSystemFont(ofSize: 14, weight: NSFont.Weight.regular)
     @MainActor private static let promptFont = NSFont.monospacedSystemFont(ofSize: 14, weight: NSFont.Weight.medium)
     private static let green = NSColor(red: 0.40, green: 0.85, blue: 0.45, alpha: 1)
-    private static let minHeight: CGFloat = 20
-    private static let maxHeight: CGFloat = 160
+    private static let minHeight: CGFloat = 68
+    private static let maxHeight: CGFloat = 200
 
     private var clampedHeight: CGFloat {
         min(max(contentHeight, Self.minHeight), Self.maxHeight)
