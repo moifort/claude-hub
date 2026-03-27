@@ -8,7 +8,7 @@ struct SettingsPage: View {
     @AppStorage("archiveDelayMinutes") private var archiveDelayMinutes = 5.0
     @AppStorage("taskSystemPrompt") private var taskSystemPrompt = DefaultSystemPrompt.taskSystemPrompt
     @AppStorage("markersWorking") private var markersWorking = "◆ working"
-    @AppStorage("markersWaiting") private var markersWaiting = "◆ waiting"
+    @AppStorage("markersWaiting") private var markersWaiting = "◆ waiting,Chat about this,Skip interview,❯"
     @AppStorage("markersPlanReady") private var markersPlanReady = "Ready to code?,bypass permissions,manually approve edits"
     @AppStorage("markersDone") private var markersDone = "◆ done"
 

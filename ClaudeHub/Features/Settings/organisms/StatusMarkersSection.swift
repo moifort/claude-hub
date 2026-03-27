@@ -10,7 +10,7 @@ struct StatusMarkersSection: View {
         Form {
             Section {
                 markerField("Working", text: $markersWorking, defaultValue: "◆ working")
-                markerField("Waiting", text: $markersWaiting, defaultValue: "◆ waiting")
+                markerField("Waiting", text: $markersWaiting, defaultValue: "◆ waiting,Chat about this,Skip interview,❯")
                 markerField("Plan Ready", text: $markersPlanReady, defaultValue: "Ready to code?,bypass permissions,manually approve edits")
                 markerField("Done", text: $markersDone, defaultValue: "◆ done")
             } header: {
@@ -33,7 +33,7 @@ struct StatusMarkersSection: View {
 
 #Preview {
     @Previewable @State var working = "◆ working"
-    @Previewable @State var waiting = "◆ waiting"
+    @Previewable @State var waiting = "◆ waiting,Chat about this,Skip interview,❯"
     @Previewable @State var planReady = "Ready to code?,bypass permissions,manually approve edits"
     @Previewable @State var done = "◆ done"
 

@@ -50,7 +50,7 @@ final class TerminalStateMonitor {
     private func loadPatterns() -> [(keyword: String, state: DetectedState)] {
         let defaults = UserDefaults.standard
         let working = defaults.string(forKey: "markersWorking") ?? "◆ working"
-        let waiting = defaults.string(forKey: "markersWaiting") ?? "◆ waiting"
+        let waiting = defaults.string(forKey: "markersWaiting") ?? "◆ waiting,Chat about this,Skip interview,❯"
         let planReady = defaults.string(forKey: "markersPlanReady") ?? "Ready to code?,bypass permissions,manually approve edits"
         let done = defaults.string(forKey: "markersDone") ?? "◆ done"
 
