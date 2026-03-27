@@ -5,6 +5,7 @@ struct GeneralSettingsSection: View {
     @Binding var claudeBinaryPath: String
     @Binding var preferredIDE: String
     @Binding var gitPanelOpenByDefault: Bool
+    @Binding var archiveDelayMinutes: Double
 
     private var resolvedPath: String {
         let custom = claudeBinaryPath.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -37,6 +38,16 @@ struct GeneralSettingsSection: View {
             }
 
             Toggle("Git Panel Open by Default", isOn: $gitPanelOpenByDefault)
+
+            LabeledContent("Auto-Archive Delay") {
+                HStack(spacing: 8) {
+                    TextField("5", value: $archiveDelayMinutes, format: .number)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: 60)
+                    Text("min")
+                        .foregroundStyle(.secondary)
+                }
+            }
 
             Section {
                 Toggle("Skip Permissions", isOn: $skipPermissions)
@@ -107,6 +118,8 @@ struct GeneralSettingsSection: View {
     @Previewable @State var preferredIDE = IDE.intellij.rawValue
     @Previewable @State var gitPanelOpenByDefault = true
 
-    GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath, preferredIDE: $preferredIDE, gitPanelOpenByDefault: $gitPanelOpenByDefault)
+    @Previewable @State var archiveDelay = 5.0
+
+    GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath, preferredIDE: $preferredIDE, gitPanelOpenByDefault: $gitPanelOpenByDefault, archiveDelayMinutes: $archiveDelay)
         .frame(width: 500, height: 300)
 }

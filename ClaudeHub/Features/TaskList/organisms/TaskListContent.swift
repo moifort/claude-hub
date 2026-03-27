@@ -73,7 +73,8 @@ struct TaskListContent: View {
             return nil
         }
         let elapsed = Date.now.timeIntervalSince(completedAt)
-        let remaining = Int(Constants.archiveDelay - elapsed)
+        let delay = UserDefaults.standard.object(forKey: "archiveDelayMinutes") as? Double ?? 5.0
+        let remaining = Int(delay * 60 - elapsed)
         return remaining > 0 ? remaining : nil
     }
 }

@@ -72,7 +72,8 @@ final class TaskListViewModel {
         cancelAutoArchive(for: task)
 
         archiveTimers[id] = Task { [weak self] in
-            try? await Task.sleep(for: .seconds(Constants.archiveDelay))
+            let delay = UserDefaults.standard.object(forKey: "archiveDelayMinutes") as? Double ?? 5.0
+            try? await Task.sleep(for: .seconds(delay * 60))
             guard !Task.isCancelled else { return }
             guard !task.isPinned, task.taskStatus == .completed else { return }
             self?.archiveTask(task)

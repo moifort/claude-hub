@@ -5,6 +5,7 @@ struct SettingsPage: View {
     @AppStorage("claudeBinaryPath") private var claudeBinaryPath = ""
     @AppStorage("preferredIDE") private var preferredIDE = IDE.intellij.rawValue
     @AppStorage("gitPanelOpenByDefault") private var gitPanelOpenByDefault = true
+    @AppStorage("archiveDelayMinutes") private var archiveDelayMinutes = 5.0
     @AppStorage("taskSystemPrompt") private var taskSystemPrompt = DefaultSystemPrompt.taskSystemPrompt
     @AppStorage("markersWorking") private var markersWorking = "◆ working"
     @AppStorage("markersWaiting") private var markersWaiting = "◆ waiting"
@@ -14,7 +15,7 @@ struct SettingsPage: View {
     var body: some View {
         TabView {
             Tab("General", systemImage: "gear") {
-                GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath, preferredIDE: $preferredIDE, gitPanelOpenByDefault: $gitPanelOpenByDefault)
+                GeneralSettingsSection(skipPermissions: $skipPermissions, claudeBinaryPath: $claudeBinaryPath, preferredIDE: $preferredIDE, gitPanelOpenByDefault: $gitPanelOpenByDefault, archiveDelayMinutes: $archiveDelayMinutes)
             }
 
             Tab("Tasks", systemImage: "terminal") {
