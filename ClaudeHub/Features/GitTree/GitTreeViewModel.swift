@@ -10,6 +10,7 @@ final class GitTreeViewModel {
     private var currentRepoPath: String?
     private var fileMonitor: (any DispatchSourceFileSystemObject)?
     private var fileDescriptor: Int32 = -1
+    private var debounceTask: Task<Void, Never>?
 
     func load(repoPath: String) async {
         guard repoPath != currentRepoPath || graph == nil else { return }
@@ -30,17 +31,14 @@ final class GitTreeViewModel {
 
     func refresh() async {
         guard let path = currentRepoPath else { return }
-        isLoading = true
-        errorMessage = nil
-
+        // Silent refresh — no isLoading change to avoid view reconstruction
         do {
             let commits = try await GitService.fetchCommitLog(repoPath: path)
             graph = GitService.buildGraph(from: commits)
+            errorMessage = nil
         } catch {
-            errorMessage = error.localizedDescription
+            // Silently ignore refresh errors — keep showing last known graph
         }
-
-        isLoading = false
     }
 
     func stopWatching() {
@@ -67,7 +65,10 @@ final class GitTreeViewModel {
         )
         source.setEventHandler { [weak self] in
             guard let self else { return }
-            Task { @MainActor in
+            self.debounceTask?.cancel()
+            self.debounceTask = Task { @MainActor in
+                try? await Task.sleep(for: .seconds(1))
+                guard !Task.isCancelled else { return }
                 await self.refresh()
             }
         }
