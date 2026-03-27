@@ -1,8 +1,9 @@
 import SwiftUI
+import SwiftData
 
 struct ArchivesSection: View {
     struct ArchiveInfo: Identifiable {
-        let id: String
+        let id: PersistentIdentifier
         let title: String
         let projectName: String
         let archivedAt: Date
@@ -17,6 +18,7 @@ struct ArchivesSection: View {
             CollapsibleSidebarRow(isExpanded: $isExpanded) {
                 HStack(spacing: 6) {
                     Image(systemName: "archivebox")
+                        .font(.system(size: 14))
                         .foregroundStyle(.secondary)
                     Text("Archives")
                 }
@@ -27,6 +29,7 @@ struct ArchivesSection: View {
                         projectName: archive.projectName,
                         archivedAt: archive.archivedAt
                     )
+                    .tag(archive.id)
                     .padding(.leading, 8)
                 }
             }
@@ -34,12 +37,4 @@ struct ArchivesSection: View {
     }
 }
 
-#Preview {
-    List {
-        ArchivesSection(archives: [
-            .init(id: "1", title: "Fix login bug", projectName: "my-app", archivedAt: .now.addingTimeInterval(-120)),
-            .init(id: "2", title: "Add tests", projectName: "lib", archivedAt: .now.addingTimeInterval(-3600)),
-        ])
-    }
-    .frame(width: 260)
-}
+// Preview requires live ModelContainer for PersistentIdentifier

@@ -44,7 +44,7 @@ struct SidebarPage: View {
             ArchivesSection(
                 archives: Array(archivedTasks.prefix(Constants.maxArchivedVisible)).map { task in
                     .init(
-                        id: task.persistentModelID.hashValue.description,
+                        id: task.persistentModelID,
                         title: task.title,
                         projectName: task.project?.name ?? "Unknown",
                         archivedAt: task.archivedAt ?? task.createdAt
