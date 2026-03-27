@@ -27,6 +27,12 @@ enum GitService {
         (repoPath as NSString).appendingPathComponent("task/\(slug)")
     }
 
+    // MARK: - Push
+
+    static func pushMain(repoPath: String) async throws {
+        try await runGit(in: repoPath, args: ["push", "origin", "main"])
+    }
+
     // MARK: - Commit Log
 
     static func fetchCommitLog(repoPath: String, maxCount: Int = 200) async throws -> [GitCommit] {

@@ -10,6 +10,8 @@ struct ContentView: View {
 
     @State private var viewModel = TaskListViewModel()
     @State private var dragStartWidth: CGFloat?
+    @State private var pushState: PushState = .idle
+    @State private var pushErrorMessage: String?
 
     private var selectedTask: TaskItem? {
         guard let id = appModel.selectedItemID else { return nil }
@@ -92,6 +94,12 @@ struct ContentView: View {
             }
 
             ToolbarItem(placement: .automatic) {
+                if let project = currentProject {
+                    pushButton(repoPath: project.path)
+                }
+            }
+
+            ToolbarItem(placement: .automatic) {
                 Button {
                     appModel.showGitTree.toggle()
                 } label: {
@@ -101,6 +109,45 @@ struct ContentView: View {
                     )
                 }
             }
+        }
+        .alert("Push Failed", isPresented: .init(
+            get: { pushErrorMessage != nil },
+            set: { if !$0 { pushErrorMessage = nil } }
+        )) {
+            Button("OK") { pushErrorMessage = nil }
+        } message: {
+            Text(pushErrorMessage ?? "")
+        }
+    }
+
+    @ViewBuilder
+    private func pushButton(repoPath: String) -> some View {
+        switch pushState {
+        case .idle:
+            Button {
+                Task { await performPush(repoPath: repoPath) }
+            } label: {
+                Label("Push", systemImage: "arrow.up")
+            }
+        case .pushing:
+            ProgressView()
+                .controlSize(.small)
+        case .success:
+            Label("Pushed", systemImage: "checkmark")
+                .foregroundStyle(.green)
+        }
+    }
+
+    private func performPush(repoPath: String) async {
+        pushState = .pushing
+        do {
+            try await GitService.pushMain(repoPath: repoPath)
+            pushState = .success
+            try? await Task.sleep(for: .seconds(2))
+            if pushState == .success { pushState = .idle }
+        } catch {
+            pushState = .idle
+            pushErrorMessage = error.localizedDescription
         }
     }
 
@@ -175,6 +222,12 @@ struct ContentView: View {
             }
         }
     }
+}
+
+private enum PushState: Equatable {
+    case idle
+    case pushing
+    case success
 }
 
 #Preview {
