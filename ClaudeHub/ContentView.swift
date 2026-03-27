@@ -10,6 +10,7 @@ struct ContentView: View {
 
     @State private var viewModel = TaskListViewModel()
     @State private var dragStartWidth: CGFloat?
+    @State private var dragCurrentWidth: CGFloat?
     @State private var pushState: PushState = .idle
     @State private var pushErrorMessage: String?
 
@@ -53,7 +54,7 @@ struct ContentView: View {
                         .opacity(appModel.showGitTree ? 1 : 0)
 
                     GitTreePanel(repoPath: project.path, projectName: project.name, refreshTrigger: appModel.gitTreeRefreshTrigger)
-                        .frame(width: appModel.showGitTree ? appModel.gitTreeWidth : 0)
+                        .frame(width: appModel.showGitTree ? (dragCurrentWidth ?? appModel.gitTreeWidth) : 0)
                         .clipped()
                 }
             }
@@ -159,16 +160,20 @@ struct ContentView: View {
             .padding(.vertical, 4)
             .contentShape(Rectangle().inset(by: -4))
             .gesture(
-                DragGesture()
+                DragGesture(minimumDistance: 0)
                     .onChanged { value in
                         if dragStartWidth == nil {
-                            dragStartWidth = appModel.gitTreeWidth
+                            dragStartWidth = dragCurrentWidth ?? appModel.gitTreeWidth
                         }
                         let newWidth = (dragStartWidth ?? appModel.gitTreeWidth) - value.translation.width
-                        appModel.gitTreeWidth = max(300, min(newWidth, 600))
+                        dragCurrentWidth = max(300, min(newWidth, 600))
                     }
                     .onEnded { _ in
+                        if let final = dragCurrentWidth {
+                            appModel.gitTreeWidth = final
+                        }
                         dragStartWidth = nil
+                        dragCurrentWidth = nil
                     }
             )
             .onHover { hovering in
