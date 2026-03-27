@@ -10,6 +10,7 @@ final class TaskItem {
     var createdAt: Date
     var completedAt: Date?
     var archivedAt: Date?
+    var summary: String?
     var parentTaskTitle: String?
     var slug: String
 
@@ -24,12 +25,14 @@ final class TaskItem {
         title: String,
         prompt: String,
         slug: String,
+        summary: String? = nil,
         parentTaskTitle: String? = nil,
         project: Project? = nil
     ) {
         self.title = title
         self.prompt = prompt
         self.slug = slug
+        self.summary = summary
         self.status = TaskStatus.pending.rawValue
         self.isPinned = false
         self.createdAt = .now
