@@ -7,10 +7,12 @@ final class TerminalStateMonitor {
 
     private var timer: Timer?
     private weak var sessionManager: TerminalSessionManager?
+    private var lastCursorPositions: [String: (x: Int, y: Int)] = [:]
 
     enum DetectedState: Sendable {
         case working
         case waiting
+        case planReady
         case done
     }
 
@@ -31,42 +33,67 @@ final class TerminalStateMonitor {
 
     func removeState(for slug: String) {
         detectedStates[slug] = nil
+        lastCursorPositions[slug] = nil
     }
 
     private func scanAllSessions() {
         guard let sessionManager else { return }
         for slug in sessionManager.activeSessions.keys {
             guard let terminalView = sessionManager.cachedTerminalView(for: slug) else { continue }
-            let state = scanBuffer(terminalView)
+            let state = scanBuffer(terminalView, slug: slug)
             if let state {
                 detectedStates[slug] = state
             }
         }
     }
 
-    private static let markerWorking = "◆ working"
-    private static let markerWaiting = "◆ waiting"
-    private static let markerDone = "◆ done"
+    // MARK: - Configurable Patterns
 
-    private func scanBuffer(_ terminalView: LocalProcessTerminalView) -> DetectedState? {
+    private func loadPatterns() -> [(keyword: String, state: DetectedState)] {
+        let defaults = UserDefaults.standard
+        let working = defaults.string(forKey: "markersWorking") ?? "◆ working"
+        let waiting = defaults.string(forKey: "markersWaiting") ?? "◆ waiting"
+        let planReady = defaults.string(forKey: "markersPlanReady") ?? "Ready to code?,bypass permissions,manually approve edits"
+        let done = defaults.string(forKey: "markersDone") ?? "◆ done"
+
+        var result: [(String, DetectedState)] = []
+        for kw in planReady.split(separator: ",") { result.append((kw.trimmingCharacters(in: .whitespaces), .planReady)) }
+        for kw in done.split(separator: ",") { result.append((kw.trimmingCharacters(in: .whitespaces), .done)) }
+        for kw in waiting.split(separator: ",") { result.append((kw.trimmingCharacters(in: .whitespaces), .waiting)) }
+        for kw in working.split(separator: ",") { result.append((kw.trimmingCharacters(in: .whitespaces), .working)) }
+        return result
+    }
+
+    // MARK: - Buffer Scanning
+
+    private func scanBuffer(_ terminalView: LocalProcessTerminalView, slug: String) -> DetectedState? {
         let terminal = terminalView.getTerminal()
         let rows = terminal.rows
         let linesToScan = min(30, rows)
+        let patterns = loadPatterns()
 
+        // 1. Keyword detection — last match in buffer wins
         var lastMarkerState: DetectedState?
-
         for row in (rows - linesToScan)..<rows {
             guard let line = terminal.getLine(row: row) else { continue }
             let text = line.translateToString(trimRight: true)
-            if text.contains(Self.markerDone) {
-                lastMarkerState = .done
-            } else if text.contains(Self.markerWaiting) {
-                lastMarkerState = .waiting
-            } else if text.contains(Self.markerWorking) {
-                lastMarkerState = .working
+            for (keyword, state) in patterns where text.contains(keyword) {
+                lastMarkerState = state
+                break
             }
         }
 
-        return lastMarkerState
+        if let lastMarkerState { return lastMarkerState }
+
+        // 2. Cursor stability fallback — stable cursor = waiting for input
+        let cursorPos = terminal.getCursorLocation()
+        let lastPos = lastCursorPositions[slug]
+        lastCursorPositions[slug] = cursorPos
+
+        if let lastPos, lastPos.x == cursorPos.x, lastPos.y == cursorPos.y {
+            return .waiting
+        }
+
+        return nil
     }
 }

@@ -173,11 +173,13 @@ struct ContentView: View {
     }
 
     private func syncTaskStates(_ states: [String: TerminalStateMonitor.DetectedState]) {
-        for task in allTasks where task.taskStatus == .running || task.taskStatus == .waiting {
+        for task in allTasks where task.taskStatus == .running || task.taskStatus == .waiting || task.taskStatus == .planReady {
             guard let detected = states[task.slug] else { continue }
             switch detected {
             case .waiting:
                 if task.taskStatus != .waiting { task.taskStatus = .waiting }
+            case .planReady:
+                if task.taskStatus != .planReady { task.taskStatus = .planReady }
             case .working:
                 if task.taskStatus != .running { task.taskStatus = .running }
             case .done:
