@@ -26,13 +26,16 @@ struct SidebarPage: View {
                             .init(
                                 id: task.persistentModelID,
                                 title: task.title,
-                                status: task.taskStatus
+                                summary: task.summary,
+                                status: task.taskStatus,
+                                createdAt: task.createdAt
                             )
                         }
                     )
                 },
                 selectedItemID: appModel.selectedItemID,
-                onDelete: deleteProject
+                onDelete: deleteProject,
+                onDeleteTask: deleteTask
             )
 
             ArchivesSection(
@@ -82,6 +85,15 @@ struct SidebarPage: View {
 
         let project = Project(name: name, path: path)
         modelContext.insert(project)
+    }
+
+    private func deleteTask(_ id: PersistentIdentifier) {
+        let allTasks = projects.flatMap(\.tasks)
+        guard let task = allTasks.first(where: { $0.persistentModelID == id }) else { return }
+        modelContext.delete(task)
+        if appModel.selectedItemID == id {
+            appModel.selectedItemID = task.project?.persistentModelID
+        }
     }
 
     private func deleteProject(_ id: PersistentIdentifier) {

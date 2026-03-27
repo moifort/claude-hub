@@ -2,31 +2,63 @@ import SwiftUI
 
 struct SidebarTaskRow: View {
     let title: String
+    let summary: String?
     let status: TaskStatus
+    let createdAt: Date
     let isSelected: Bool
 
     var body: some View {
-        HStack(spacing: 8) {
+        HStack(alignment: .center, spacing: 10) {
             Image(systemName: status.iconName)
-                .font(.system(size: 10))
+                .font(.system(size: 20))
                 .foregroundStyle(status.tintColor)
-                .frame(width: 14)
+                .frame(width: 24)
 
-            Text(title)
-                .font(.subheadline)
-                .lineLimit(1)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .lineLimit(1)
+
+                Text(summary ?? title)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(2)
+
+                Text(createdAt, style: .relative)
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
+            }
 
             Spacer()
         }
+        .padding(.vertical, 2)
     }
 }
 
 #Preview {
     List {
-        SidebarTaskRow(title: "Add OAuth2 auth", status: .running, isSelected: false)
-        SidebarTaskRow(title: "Write unit tests", status: .pending, isSelected: true)
-        SidebarTaskRow(title: "Fix migration", status: .completed, isSelected: false)
-        SidebarTaskRow(title: "Waiting for input", status: .waiting, isSelected: false)
+        SidebarTaskRow(
+            title: "Add OAuth2 auth",
+            summary: "Implement OAuth2 authentication flow with refresh tokens",
+            status: .running,
+            createdAt: .now.addingTimeInterval(-3600),
+            isSelected: false
+        )
+        SidebarTaskRow(
+            title: "Write unit tests",
+            summary: nil,
+            status: .pending,
+            createdAt: .now.addingTimeInterval(-120),
+            isSelected: true
+        )
+        SidebarTaskRow(
+            title: "Fix migration",
+            summary: "Fix database migration for v2 schema changes",
+            status: .completed,
+            createdAt: .now.addingTimeInterval(-86400),
+            isSelected: false
+        )
     }
     .frame(width: 260)
 }
