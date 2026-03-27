@@ -6,28 +6,33 @@ struct ContentView: View {
     @Environment(TerminalSessionManager.self) private var sessionManager
     @Environment(\.modelContext) private var modelContext
     @Query private var allTasks: [TaskItem]
+    @Query private var allProjects: [Project]
 
     @State private var viewModel = TaskListViewModel()
-    @State private var showNewTaskSheet = false
 
     private var selectedTask: TaskItem? {
         guard let id = appModel.selectedTaskID else { return nil }
         return allTasks.first { $0.persistentModelID == id }
     }
 
-    var body: some View {
-        @Bindable var appModel = appModel
+    private var selectedProject: Project? {
+        guard let id = appModel.selectedProjectID else { return nil }
+        return allProjects.first { $0.persistentModelID == id }
+    }
 
+    var body: some View {
         NavigationSplitView {
             SidebarPage()
         } detail: {
             if let task = selectedTask {
                 detailView(for: task)
+            } else if let project = selectedProject {
+                InlineTaskInputPage(project: project)
             } else {
                 ContentUnavailableView(
-                    "Select a Task",
-                    systemImage: "terminal",
-                    description: Text("Select a task from the sidebar to view its terminal.")
+                    "Select a Project",
+                    systemImage: "folder",
+                    description: Text("Add a project from the sidebar to get started.")
                 )
             }
         }
@@ -53,17 +58,12 @@ struct ContentView: View {
                         }
                     }
 
-                    if let project = task.project {
-                        Button {
-                            showNewTaskSheet = true
-                        } label: {
-                            Label("New Task", systemImage: "plus")
-                        }
-                        .keyboardShortcut("n", modifiers: .command)
-                        .sheet(isPresented: $showNewTaskSheet) {
-                            NewTaskSheet(project: project)
-                        }
+                    Button {
+                        appModel.selectedTaskID = nil
+                    } label: {
+                        Label("New Task", systemImage: "plus")
                     }
+                    .keyboardShortcut("n", modifiers: .command)
                 }
             }
         }
