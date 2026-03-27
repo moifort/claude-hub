@@ -61,6 +61,16 @@ struct ContentView: View {
                 appModel.selectedItemID = first.persistentModelID
             }
         }
+        .onChange(of: allTasks.map(\.status)) {
+            guard let id = appModel.selectedItemID else { return }
+            let taskStillVisible = allTasks.contains { $0.persistentModelID == id && $0.taskStatus != .archived }
+            let isProject = allProjects.contains { $0.persistentModelID == id }
+            if !taskStillVisible && !isProject {
+                // Selected task was archived — fall back to its project or first project
+                let parentProject = allTasks.first { $0.persistentModelID == id }?.project
+                appModel.selectedItemID = parentProject?.persistentModelID ?? allProjects.first?.persistentModelID
+            }
+        }
         .toolbar {
             if let task = selectedTask {
                 ToolbarItemGroup(placement: .primaryAction) {
