@@ -6,8 +6,18 @@ struct GeneralSettingsSection: View {
     @Binding var preferredIDE: String
     @Binding var gitPanelOpenByDefault: Bool
 
-    private var detectedPath: String {
-        CLIService.claudePath() ?? "Not found"
+    private var resolvedPath: String {
+        let custom = claudeBinaryPath.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !custom.isEmpty { return custom }
+        return CLIService.claudePath() ?? "Not found"
+    }
+
+    private var resolvedPathExists: Bool {
+        let custom = claudeBinaryPath.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !custom.isEmpty {
+            return FileManager.default.isExecutableFile(atPath: custom)
+        }
+        return CLIService.claudePath() != nil
     }
 
     private var selectedIDE: Binding<IDE> {
@@ -34,15 +44,23 @@ struct GeneralSettingsSection: View {
 
                 LabeledContent("Binary Path") {
                     HStack(spacing: 8) {
-                        TextField("Auto-detect: \(detectedPath)", text: $claudeBinaryPath)
+                        Text(resolvedPath)
                             .font(.system(.body, design: .monospaced))
+                            .foregroundColor(resolvedPathExists ? .primary : .red)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .textSelection(.enabled)
 
                         pathStatusIcon
 
-                        Button("Auto-detect") {
-                            claudeBinaryPath = ""
+                        Button("Edit") {
+                            pickBinary()
                         }
-                        .disabled(claudeBinaryPath.isEmpty)
+
+                        if !claudeBinaryPath.isEmpty {
+                            Button("Reset") {
+                                claudeBinaryPath = ""
+                            }
+                        }
                     }
                 }
             } header: {
@@ -54,26 +72,33 @@ struct GeneralSettingsSection: View {
 
     @ViewBuilder
     private var pathStatusIcon: some View {
-        let path = claudeBinaryPath.trimmingCharacters(in: .whitespacesAndNewlines)
-        if path.isEmpty {
-            if CLIService.claudePath() != nil {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundStyle(.green)
-                    .help("Auto-detected: \(detectedPath)")
-            } else {
-                Image(systemName: "xmark.circle.fill")
-                    .foregroundStyle(.red)
-                    .help("Claude CLI not found")
-            }
-        } else if FileManager.default.isExecutableFile(atPath: path) {
+        if resolvedPathExists {
             Image(systemName: "checkmark.circle.fill")
                 .foregroundStyle(.green)
-                .help("Binary found")
         } else {
             Image(systemName: "xmark.circle.fill")
                 .foregroundStyle(.red)
-                .help("Binary not found at this path")
+                .help("Claude CLI not found")
         }
+    }
+
+    private func pickBinary() {
+        let panel = NSOpenPanel()
+        panel.title = "Select Claude CLI Binary"
+        panel.allowsMultipleSelection = false
+        panel.canChooseDirectories = false
+        panel.canChooseFiles = true
+        panel.treatsFilePackagesAsDirectories = true
+
+        let custom = claudeBinaryPath.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !custom.isEmpty {
+            panel.directoryURL = URL(fileURLWithPath: custom).deletingLastPathComponent()
+        } else if let detected = CLIService.claudePath() {
+            panel.directoryURL = URL(fileURLWithPath: detected).deletingLastPathComponent()
+        }
+
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        claudeBinaryPath = url.path(percentEncoded: false)
     }
 }
 
