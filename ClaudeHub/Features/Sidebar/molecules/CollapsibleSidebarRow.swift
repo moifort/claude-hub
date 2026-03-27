@@ -2,19 +2,31 @@ import SwiftUI
 
 struct CollapsibleSidebarRow<Label: View, Content: View>: View {
     @Binding var isExpanded: Bool
+    var onTap: (() -> Void)?
     @ViewBuilder let label: () -> Label
     @ViewBuilder let content: () -> Content
 
     @State private var isHovering = false
 
     var body: some View {
-        Button {
-            withAnimation(.easeInOut(duration: 0.2)) {
-                isExpanded.toggle()
-            }
-        } label: {
-            HStack(spacing: 4) {
+        HStack(spacing: 4) {
+            Button {
+                onTap?()
+                if !isExpanded {
+                    withAnimation(.easeInOut(duration: 0.2)) {
+                        isExpanded = true
+                    }
+                }
+            } label: {
                 label()
+            }
+            .buttonStyle(.plain)
+
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isExpanded.toggle()
+                }
+            } label: {
                 Image(systemName: "chevron.right")
                     .font(.system(size: 10, weight: .semibold))
                     .foregroundStyle(.secondary)
@@ -23,8 +35,8 @@ struct CollapsibleSidebarRow<Label: View, Content: View>: View {
                     .animation(.easeInOut(duration: 0.15), value: isExpanded)
                     .animation(.easeInOut(duration: 0.15), value: isHovering)
             }
+            .buttonStyle(.plain)
         }
-        .buttonStyle(.plain)
         .onHover { hovering in
             isHovering = hovering
         }

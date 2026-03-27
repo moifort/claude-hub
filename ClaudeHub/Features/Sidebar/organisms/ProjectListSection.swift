@@ -27,7 +27,7 @@ struct ProjectListSection: View {
 
     var body: some View {
         ForEach(projects) { project in
-            CollapsibleSidebarRow(isExpanded: expandedBinding(for: project.id)) {
+            CollapsibleSidebarRow(isExpanded: expandedBinding(for: project.id), onTap: { onSelectProject(project.id) }) {
                 ProjectRow(
                     name: project.name,
                     taskCount: project.taskCount,
@@ -72,7 +72,6 @@ struct ProjectListSection: View {
                 } else {
                     expandedProjects.remove(id)
                 }
-                onSelectProject(id)
             }
         )
     }
