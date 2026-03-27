@@ -4,12 +4,11 @@ import SwiftData
 @Observable @MainActor
 final class InlineTaskInputViewModel {
     var prompt = ""
-    private(set) var isDecomposing = false
-    private(set) var subtaskCount: Int?
+    private(set) var isSummarizing = false
     private(set) var errorMessage: String?
 
     var canSubmit: Bool {
-        !prompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isDecomposing
+        !prompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isSummarizing
     }
 
     func submit(
@@ -22,56 +21,25 @@ final class InlineTaskInputViewModel {
         let trimmed = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
 
-        isDecomposing = true
+        isSummarizing = true
         errorMessage = nil
-        subtaskCount = nil
 
-        let tasks: [TaskItem]
-        do {
-            let decomposed = try await CLIService.decomposeTask(
-                prompt: trimmed,
-                projectPath: project.path
-            )
-            tasks = decomposed.map { item in
-                let slug = TaskItem.generateSlug(from: item.title)
-                let task = TaskItem(
-                    title: item.title,
-                    prompt: item.prompt,
-                    slug: slug,
-                    summary: item.summary,
-                    parentTaskTitle: String(trimmed.prefix(80)),
-                    project: project
-                )
-                context.insert(task)
-                return task
-            }
-            subtaskCount = decomposed.count
-        } catch {
-            let slug = TaskItem.generateSlug(from: String(trimmed.prefix(50)))
-            let task = TaskItem(
-                title: String(trimmed.prefix(80)),
-                prompt: trimmed,
-                slug: slug,
-                project: project
-            )
-            context.insert(task)
-            tasks = [task]
-            subtaskCount = 1
-            errorMessage = error.localizedDescription
-        }
+        let title = await SummarizationService.summarize(prompt: trimmed)
+        let slug = TaskItem.generateSlug(from: title)
+        let task = TaskItem(
+            title: title,
+            prompt: trimmed,
+            slug: slug,
+            project: project
+        )
+        context.insert(task)
 
-        isDecomposing = false
+        isSummarizing = false
 
-        for task in tasks {
-            await taskViewModel.launchTask(task, sessionManager: sessionManager)
-        }
-
-        if let first = tasks.first {
-            appModel.selectedItemID = first.persistentModelID
-        }
+        await taskViewModel.launchTask(task, sessionManager: sessionManager)
+        appModel.selectedItemID = task.persistentModelID
 
         prompt = ""
-        subtaskCount = nil
         errorMessage = nil
     }
 }

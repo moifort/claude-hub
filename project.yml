@@ -36,6 +36,7 @@ targets:
       - path: ClaudeHub
     dependencies:
       - package: SwiftTerm
+      - sdk: FoundationModels.framework
     settings:
       base:
         INFOPLIST_KEY_NSMainNibFile: ""

@@ -31,16 +31,24 @@ struct InlineTaskInputPage: View {
 
             TerminalPromptField(
                 text: $viewModel.prompt,
-                isDisabled: viewModel.isDecomposing,
+                isDisabled: viewModel.isSummarizing,
                 onSubmit: { submit() }
             )
             .frame(maxWidth: 600)
 
-            InlineDecompositionProgress(
-                isDecomposing: viewModel.isDecomposing,
-                subtaskCount: viewModel.subtaskCount,
-                errorMessage: viewModel.errorMessage
-            )
+            if viewModel.isSummarizing {
+                HStack(spacing: 8) {
+                    ProgressView()
+                        .controlSize(.small)
+                    Text("Summarizing...")
+                        .font(.system(.caption, design: .monospaced))
+                        .foregroundStyle(.green.opacity(0.7))
+                }
+            } else if let error = viewModel.errorMessage {
+                Text(error)
+                    .font(.system(.caption, design: .monospaced))
+                    .foregroundStyle(.orange)
+            }
 
             Spacer()
         }
