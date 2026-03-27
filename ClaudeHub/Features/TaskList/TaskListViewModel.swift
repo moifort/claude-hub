@@ -5,7 +5,7 @@ import SwiftData
 final class TaskListViewModel {
     private var archiveTimers: [PersistentIdentifier: Task<Void, Never>] = [:]
 
-    func launchTask(_ task: TaskItem, sessionManager: TerminalSessionManager) async {
+    func launchTask(_ task: TaskItem, sessionManager: TerminalSessionManager) {
         guard task.taskStatus == .pending, let project = task.project else { return }
         guard let claudePath = CLIService.claudePath() else { return }
 
@@ -20,12 +20,15 @@ final class TaskListViewModel {
         }
         arguments.append(contentsOf: ["--permission-mode", "plan", "--system-prompt", systemPrompt, task.prompt])
 
-        sessionManager.registerSession(
+        sessionManager.launchSession(
             for: task.slug,
             executable: claudePath,
             arguments: arguments,
             workingDirectory: project.path,
-            environment: env
+            environment: env,
+            onProcessTerminated: { [weak self] _ in
+                self?.completeTask(task)
+            }
         )
 
         task.taskStatus = .running
@@ -52,10 +55,10 @@ final class TaskListViewModel {
         cancelAutoArchive(for: task)
     }
 
-    func launchAllPending(for project: Project, sessionManager: TerminalSessionManager) async {
+    func launchAllPending(for project: Project, sessionManager: TerminalSessionManager) {
         let pendingTasks = project.tasks.filter { $0.taskStatus == .pending }
         for task in pendingTasks {
-            await launchTask(task, sessionManager: sessionManager)
+            launchTask(task, sessionManager: sessionManager)
         }
     }
 

@@ -13,21 +13,8 @@ struct TerminalInspectorPage: View {
 
     var body: some View {
         if let task = selectedTask,
-           let session = sessionManager.session(for: task.slug) {
-            TerminalContainer(
-                taskSlug: task.slug,
-                taskTitle: task.title,
-                status: task.taskStatus,
-                projectName: task.project?.name ?? "Unknown",
-                executable: session.executable,
-                arguments: session.arguments,
-                workingDirectory: session.workingDirectory,
-                environment: session.environment,
-                onProcessTerminated: { _ in
-                    task.taskStatus = .completed
-                    task.completedAt = .now
-                }
-            )
+           sessionManager.cachedTerminalView(for: task.slug) != nil {
+            TerminalContainer(taskSlug: task.slug)
         } else if let task = selectedTask {
             VStack(spacing: 12) {
                 TerminalHeader(

@@ -12,20 +12,37 @@ final class TerminalSessionManager {
 
     private(set) var activeSessions: [String: SessionInfo] = [:]
     private var terminalViews: [String: LocalProcessTerminalView] = [:]
+    private var delegates: [String: SessionDelegate] = [:]
 
-    func registerSession(
+    func launchSession(
         for slug: String,
         executable: String,
         arguments: [String],
         workingDirectory: String,
-        environment: [String]?
+        environment: [String]?,
+        onProcessTerminated: @MainActor @Sendable @escaping (Int32?) -> Void
     ) {
+        guard activeSessions[slug] == nil else { return }
+
         activeSessions[slug] = SessionInfo(
             executable: executable,
             arguments: arguments,
             workingDirectory: workingDirectory,
             environment: environment
         )
+
+        let terminal = LocalProcessTerminalView(frame: NSRect(x: 0, y: 0, width: 600, height: 400))
+        let delegate = SessionDelegate(onProcessTerminated: onProcessTerminated)
+        terminal.processDelegate = delegate
+        terminal.startProcess(
+            executable: executable,
+            args: arguments,
+            environment: environment,
+            currentDirectory: workingDirectory
+        )
+
+        delegates[slug] = delegate
+        terminalViews[slug] = terminal
     }
 
     func session(for slug: String) -> SessionInfo? {
@@ -36,17 +53,34 @@ final class TerminalSessionManager {
         terminalViews[slug]
     }
 
-    func storeTerminalView(_ view: LocalProcessTerminalView, for slug: String) {
-        terminalViews[slug] = view
-    }
-
     func removeSession(for slug: String) {
         activeSessions[slug] = nil
         terminalViews[slug] = nil
+        delegates[slug] = nil
     }
 
     func removeAll() {
         activeSessions.removeAll()
         terminalViews.removeAll()
+        delegates.removeAll()
+    }
+}
+
+final class SessionDelegate: NSObject, LocalProcessTerminalViewDelegate, @unchecked Sendable {
+    let onProcessTerminated: @MainActor @Sendable (Int32?) -> Void
+
+    init(onProcessTerminated: @MainActor @Sendable @escaping (Int32?) -> Void) {
+        self.onProcessTerminated = onProcessTerminated
+    }
+
+    func sizeChanged(source: LocalProcessTerminalView, newCols: Int, newRows: Int) {}
+    func setTerminalTitle(source: LocalProcessTerminalView, title: String) {}
+    func hostCurrentDirectoryUpdate(source: TerminalView, directory: String?) {}
+
+    func processTerminated(source: TerminalView, exitCode: Int32?) {
+        let callback = onProcessTerminated
+        Task { @MainActor in
+            callback(exitCode)
+        }
     }
 }

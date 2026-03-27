@@ -61,7 +61,7 @@ final class InlineTaskInputViewModel {
         }
 
         for task in createdTasks {
-            await taskViewModel.launchTask(task, sessionManager: sessionManager)
+            taskViewModel.launchTask(task, sessionManager: sessionManager)
         }
     }
 }

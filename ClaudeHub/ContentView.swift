@@ -73,7 +73,7 @@ struct ContentView: View {
                 if task.taskStatus == .pending {
                     ToolbarItem {
                         Button {
-                            Task { await viewModel.launchTask(task, sessionManager: sessionManager) }
+                            viewModel.launchTask(task, sessionManager: sessionManager)
                         } label: {
                             Label("Launch", systemImage: "play.fill")
                         }
@@ -172,37 +172,6 @@ struct ContentView: View {
         }
     }
 
-    private func reconstructSession(
-        for task: TaskItem,
-        project: Project
-    ) -> TerminalSessionManager.SessionInfo? {
-        guard let claudePath = CLIService.claudePath() else { return nil }
-        let customPrompt = UserDefaults.standard.string(forKey: "taskSystemPrompt")
-        let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug, customPrompt: customPrompt)
-        let env = CLIService.enrichedEnvironment().map { "\($0.key)=\($0.value)" }
-        let skipPermissions = UserDefaults.standard.object(forKey: "skipPermissions") as? Bool ?? true
-        var arguments = [String]()
-        if skipPermissions {
-            arguments.append("--allow-dangerously-skip-permissions")
-        }
-        arguments.append(contentsOf: ["--permission-mode", "plan", "--system-prompt", systemPrompt, task.prompt])
-
-        let info = TerminalSessionManager.SessionInfo(
-            executable: claudePath,
-            arguments: arguments,
-            workingDirectory: project.path,
-            environment: env
-        )
-        sessionManager.registerSession(
-            for: task.slug,
-            executable: info.executable,
-            arguments: info.arguments,
-            workingDirectory: info.workingDirectory,
-            environment: info.environment
-        )
-        return info
-    }
-
     private func syncTaskStates(_ states: [String: TerminalStateMonitor.DetectedState]) {
         for task in allTasks where task.taskStatus == .running || task.taskStatus == .waiting {
             guard let detected = states[task.slug] else { continue }
@@ -219,60 +188,29 @@ struct ContentView: View {
 
     @ViewBuilder
     private func detailView(for task: TaskItem) -> some View {
-        if let session = sessionManager.session(for: task.slug) {
-            TerminalContainer(
-                taskSlug: task.slug,
-                taskTitle: task.title,
-                status: task.taskStatus,
-                projectName: task.project?.name ?? "Unknown",
-                executable: session.executable,
-                arguments: session.arguments,
-                workingDirectory: session.workingDirectory,
-                environment: session.environment,
-                onProcessTerminated: { _ in
-                    viewModel.completeTask(task)
-                }
-            )
-        } else if (task.taskStatus == .running || task.taskStatus == .waiting), let project = task.project,
-                  let reconstructed = reconstructSession(for: task, project: project) {
-            TerminalContainer(
-                taskSlug: task.slug,
-                taskTitle: task.title,
-                status: task.taskStatus,
-                projectName: project.name,
-                executable: reconstructed.executable,
-                arguments: reconstructed.arguments,
-                workingDirectory: reconstructed.workingDirectory,
-                environment: reconstructed.environment,
-                onProcessTerminated: { _ in
-                    viewModel.completeTask(task)
-                }
-            )
-        } else {
+        if sessionManager.cachedTerminalView(for: task.slug) != nil {
+            TerminalContainer(taskSlug: task.slug)
+        } else if task.taskStatus == .pending {
             VStack(spacing: 16) {
                 Spacer()
-
-                if task.taskStatus == .pending {
-                    ContentUnavailableView {
-                        Label("Ready to Launch", systemImage: "play.circle")
-                    } description: {
-                        Text("Launch this task to start a Claude Code session.")
-                    } actions: {
-                        Button("Launch") {
-                            Task { await viewModel.launchTask(task, sessionManager: sessionManager) }
-                        }
-                        .buttonStyle(.glassProminent)
+                ContentUnavailableView {
+                    Label("Ready to Launch", systemImage: "play.circle")
+                } description: {
+                    Text("Launch this task to start a Claude Code session.")
+                } actions: {
+                    Button("Launch") {
+                        viewModel.launchTask(task, sessionManager: sessionManager)
                     }
-                } else {
-                    ContentUnavailableView(
-                        task.taskStatus.displayName,
-                        systemImage: task.taskStatus.iconName,
-                        description: Text("This task is \(task.taskStatus.displayName.lowercased()).")
-                    )
+                    .buttonStyle(.glassProminent)
                 }
-
                 Spacer()
             }
+        } else {
+            ContentUnavailableView(
+                task.taskStatus.displayName,
+                systemImage: task.taskStatus.iconName,
+                description: Text("This task is \(task.taskStatus.displayName.lowercased()).")
+            )
         }
     }
 }
