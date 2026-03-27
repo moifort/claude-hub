@@ -11,22 +11,34 @@ struct SidebarPage: View {
         order: .reverse
     ) private var archivedTasks: [TaskItem]
 
-    @State private var showFolderPicker = false
+    @State private var showNewTaskSheet = false
+    @State private var newTaskProject: Project?
 
     var body: some View {
         @Bindable var appModel = appModel
 
-        List(selection: $appModel.selectedProjectID) {
+        List(selection: $appModel.selectedTaskID) {
             ProjectListSection(
                 projects: projects.map { project in
                     .init(
                         id: project.persistentModelID,
                         name: project.name,
                         taskCount: project.activeTasks.count,
-                        hasRunningTask: project.runningTaskCount > 0
+                        hasRunningTask: project.runningTaskCount > 0,
+                        tasks: project.activeTasks.map { task in
+                            .init(
+                                id: task.persistentModelID,
+                                title: task.title,
+                                status: task.taskStatus
+                            )
+                        }
                     )
                 },
+                selectedTaskID: appModel.selectedTaskID,
                 onAdd: pickFolder,
+                onSelectTask: { id in
+                    appModel.selectedTaskID = id
+                },
                 onDelete: deleteProject
             )
 

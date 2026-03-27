@@ -2,22 +2,31 @@ import SwiftUI
 import SwiftData
 
 struct ProjectListSection: View {
+    struct TaskInfo: Identifiable {
+        let id: PersistentIdentifier
+        let title: String
+        let status: TaskStatus
+    }
+
     struct ProjectInfo: Identifiable {
         let id: PersistentIdentifier
         let name: String
         let taskCount: Int
         let hasRunningTask: Bool
+        let tasks: [TaskInfo]
     }
 
     let projects: [ProjectInfo]
+    let selectedTaskID: PersistentIdentifier?
     let onAdd: () -> Void
+    let onSelectTask: (PersistentIdentifier) -> Void
     let onDelete: (PersistentIdentifier) -> Void
 
     var body: some View {
         Section {
             if projects.isEmpty {
                 VStack(spacing: 12) {
-                    Image(systemName: "folder.badge.plus")
+                    Image(systemName: "plus.rectangle.on.folder")
                         .font(.system(size: 28))
                         .foregroundStyle(.secondary)
 
@@ -32,7 +41,17 @@ struct ProjectListSection: View {
                 .padding(.vertical, 20)
             } else {
                 ForEach(projects) { project in
-                    NavigationLink(value: project.id) {
+                    DisclosureGroup {
+                        ForEach(project.tasks) { task in
+                            SidebarTaskRow(
+                                title: task.title,
+                                status: task.status,
+                                isSelected: task.id == selectedTaskID
+                            )
+                            .tag(task.id)
+                            .onTapGesture { onSelectTask(task.id) }
+                        }
+                    } label: {
                         ProjectRow(
                             name: project.name,
                             taskCount: project.taskCount,
@@ -50,51 +69,29 @@ struct ProjectListSection: View {
             HStack {
                 Text("Projects")
                 Spacer()
-                Button {
-                    onAdd()
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.caption)
+                Button(action: onAdd) {
+                    Text("+")
+                        .font(.caption.monospacedDigit())
+                        .foregroundStyle(.primary)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 2)
+                        .glassEffect(.regular, in: .capsule)
                 }
                 .buttonStyle(.plain)
-                .foregroundStyle(.secondary)
             }
         }
     }
 }
 
 #Preview("Empty") {
-    @Previewable @State var selection: PersistentIdentifier?
-
-    NavigationSplitView {
-        List(selection: $selection) {
-            ProjectListSection(
-                projects: [],
-                onAdd: {},
-                onDelete: { _ in }
-            )
-        }
-    } detail: {
-        Text("Detail")
+    List {
+        ProjectListSection(
+            projects: [],
+            selectedTaskID: nil,
+            onAdd: {},
+            onSelectTask: { _ in },
+            onDelete: { _ in }
+        )
     }
-    .modelContainer(for: [Project.self, TaskItem.self], inMemory: true)
-    .frame(width: 600, height: 400)
-}
-
-#Preview("With projects") {
-    @Previewable @State var selection: PersistentIdentifier?
-
-    NavigationSplitView {
-        List(selection: $selection) {
-            ProjectListSection(
-                projects: [],
-                onAdd: {},
-                onDelete: { _ in }
-            )
-        }
-    } detail: {
-        Text("Detail")
-    }
-    .modelContainer(for: [Project.self, TaskItem.self], inMemory: true)
-    .frame(width: 600, height: 400)
+    .frame(width: 300, height: 400)
 }

@@ -6,31 +6,26 @@ struct ProjectRow: View {
     let hasRunningTask: Bool
 
     var body: some View {
-        Label {
-            HStack {
-                Text(name)
+        HStack {
+            Text(name)
 
-                Spacer()
+            Spacer()
 
-                if taskCount > 0 {
-                    Text("\(taskCount)")
-                        .font(.caption.monospacedDigit())
-                        .foregroundStyle(.primary)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .glassEffect(.regular, in: .capsule)
-                }
-
-                if hasRunningTask {
-                    Image(systemName: "circle.fill")
-                        .font(.system(size: 6))
-                        .foregroundStyle(.green)
-                        .symbolEffect(.pulse, isActive: true)
-                }
+            if taskCount > 0 {
+                Text("\(taskCount)")
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(.primary)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .glassEffect(.regular, in: .capsule)
             }
-        } icon: {
-            Image(systemName: "folder.fill")
-                .foregroundStyle(.blue)
+
+            if hasRunningTask {
+                Image(systemName: "circle.fill")
+                    .font(.system(size: 6))
+                    .foregroundStyle(.green)
+                    .symbolEffect(.pulse, isActive: true)
+            }
         }
     }
 }
