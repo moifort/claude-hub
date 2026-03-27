@@ -20,20 +20,31 @@ struct ContentView: View {
         return allProjects.first { $0.persistentModelID == id }
     }
 
+    private var currentProject: Project? {
+        selectedProject ?? selectedTask?.project
+    }
+
     var body: some View {
         NavigationSplitView {
             SidebarPage()
         } detail: {
-            if let task = selectedTask {
-                detailView(for: task)
-            } else if let project = selectedProject {
-                InlineTaskInputPage(project: project)
-            } else {
-                ContentUnavailableView(
-                    "Select a Project",
-                    systemImage: "folder",
-                    description: Text("Add a project from the sidebar to get started.")
-                )
+            HSplitView {
+                if let task = selectedTask {
+                    detailView(for: task)
+                } else if let project = selectedProject {
+                    InlineTaskInputPage(project: project)
+                } else {
+                    ContentUnavailableView(
+                        "Select a Project",
+                        systemImage: "folder",
+                        description: Text("Add a project from the sidebar to get started.")
+                    )
+                }
+
+                if appModel.showGitTree, let project = currentProject {
+                    GitTreePanel(repoPath: project.path, projectName: project.name)
+                        .frame(minWidth: 280, idealWidth: 380)
+                }
             }
         }
         .toolbar {
@@ -66,6 +77,17 @@ struct ContentView: View {
                         }
                         .keyboardShortcut("n", modifiers: .command)
                     }
+                }
+            }
+
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    appModel.showGitTree.toggle()
+                } label: {
+                    Label(
+                        "Git Tree",
+                        systemImage: "point.3.connected.trianglepath.dotted"
+                    )
                 }
             }
         }
