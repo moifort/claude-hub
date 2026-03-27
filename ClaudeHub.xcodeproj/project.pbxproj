@@ -9,25 +9,37 @@
 /* Begin PBXBuildFile section */
 		0BDEAD5A1226EB06EBA16712 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF5B536725F3FE0F5CB3C75 /* Project.swift */; };
 		24B010251B9D5021AF47F5CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7D5ABD7B5CEE983C86E68FD /* Assets.xcassets */; };
+		2C2F337009E30D2CB4FEA593 /* SidebarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBEAF21D37141F6B8D2393 /* SidebarPage.swift */; };
+		3E35FEE67D0DCB8887336645 /* ProjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */; };
 		41997149EED6C2E476174945 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE73BC9E92DC0E9B433E9A50 /* ContentView.swift */; };
 		52F36CE6C8BE7CA5D14F2662 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA1A24612A9B3469CB96DF4 /* Constants.swift */; };
 		67819BA976E1A0C456B97301 /* ClaudeHubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D90907D5270EB87B19ECF /* ClaudeHubApp.swift */; };
 		8FF8BBF32C482DF95D39605D /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = C99E2F394C1577041B89B00C /* SwiftTerm */; };
+		958E79649C8C02C5A200824E /* ArchivedTaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */; };
 		9A4BED3FD596CFA03D772A30 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F0B52AE076996305ABCD4F /* TaskItem.swift */; };
+		9AE7FB9E67D6769EFE23ABB6 /* ProjectListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411E9E2BA44BB6A0F68CFE20 /* ProjectListSection.swift */; };
+		C8BCBC863E5B3C5758C64481 /* GitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF932402F1B25CB4477312E /* GitService.swift */; };
 		E0A2DEF17E11DA77A52F400E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C00405DCDCA41363DF0F182 /* AppModel.swift */; };
+		F0FA4A31C6FAE5C78E486FB1 /* ArchivesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10BC07779766A4E8B53E495 /* ArchivesSection.swift */; };
 		FB91DC301654458805219BC4 /* DecomposedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3673B9E2AFD3D9E4AD59E73 /* DecomposedTask.swift */; };
 		FCA454AB74DF9834F5BA7A17 /* TaskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2AF83F33A48348EF5D4E6E /* TaskStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedTaskRow.swift; sourceTree = "<group>"; };
 		0A4C0DD93BFBD75D3AEF1C71 /* ClaudeHub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClaudeHub.entitlements; sourceTree = "<group>"; };
+		411E9E2BA44BB6A0F68CFE20 /* ProjectListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListSection.swift; sourceTree = "<group>"; };
+		54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRow.swift; sourceTree = "<group>"; };
 		580D90907D5270EB87B19ECF /* ClaudeHubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeHubApp.swift; sourceTree = "<group>"; };
 		5FA1A24612A9B3469CB96DF4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		66FBEAF21D37141F6B8D2393 /* SidebarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarPage.swift; sourceTree = "<group>"; };
 		75F0B52AE076996305ABCD4F /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
 		7D2AF83F33A48348EF5D4E6E /* TaskStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatus.swift; sourceTree = "<group>"; };
+		8CF932402F1B25CB4477312E /* GitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitService.swift; sourceTree = "<group>"; };
 		9C00405DCDCA41363DF0F182 /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
 		9F3E3E2321CE92167A28A373 /* ClaudeHub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClaudeHub.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3673B9E2AFD3D9E4AD59E73 /* DecomposedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecomposedTask.swift; sourceTree = "<group>"; };
+		E10BC07779766A4E8B53E495 /* ArchivesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivesSection.swift; sourceTree = "<group>"; };
 		F7D5ABD7B5CEE983C86E68FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FDF5B536725F3FE0F5CB3C75 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		FE73BC9E92DC0E9B433E9A50 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -62,6 +74,42 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		1D0473F92D50F6914C5D91ED /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				1DCAB939B3E8D9FDEC01797C /* molecules */,
+				57B8D9E3C6EB4E3734BCF60F /* organisms */,
+				23554D623AFEA043E1865CA2 /* pages */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+		1DCAB939B3E8D9FDEC01797C /* molecules */ = {
+			isa = PBXGroup;
+			children = (
+				0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */,
+				54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */,
+			);
+			path = molecules;
+			sourceTree = "<group>";
+		};
+		23554D623AFEA043E1865CA2 /* pages */ = {
+			isa = PBXGroup;
+			children = (
+				66FBEAF21D37141F6B8D2393 /* SidebarPage.swift */,
+			);
+			path = pages;
+			sourceTree = "<group>";
+		};
+		57B8D9E3C6EB4E3734BCF60F /* organisms */ = {
+			isa = PBXGroup;
+			children = (
+				E10BC07779766A4E8B53E495 /* ArchivesSection.swift */,
+				411E9E2BA44BB6A0F68CFE20 /* ProjectListSection.swift */,
+			);
+			path = organisms;
+			sourceTree = "<group>";
+		};
 		6758AEE2A80F023381052A2F = {
 			isa = PBXGroup;
 			children = (
@@ -77,10 +125,20 @@
 				0A4C0DD93BFBD75D3AEF1C71 /* ClaudeHub.entitlements */,
 				580D90907D5270EB87B19ECF /* ClaudeHubApp.swift */,
 				FE73BC9E92DC0E9B433E9A50 /* ContentView.swift */,
+				DEFF488EE37FEC092CC6E66D /* Features */,
 				A1652200FC4506FF868B526F /* Models */,
+				8496BCAD2F7DE2A566228064 /* Services */,
 				05CBD8C1265D509600C77618 /* Shared */,
 			);
 			path = ClaudeHub;
+			sourceTree = "<group>";
+		};
+		8496BCAD2F7DE2A566228064 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8CF932402F1B25CB4477312E /* GitService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		A1652200FC4506FF868B526F /* Models */ = {
@@ -94,39 +152,33 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		"TEMP_4BE6874A-5A70-4397-8E9D-84F4CF7F3A52" /* Sidebar */ = {
+		DEFF488EE37FEC092CC6E66D /* Features */ = {
 			isa = PBXGroup;
 			children = (
-			);
-			path = Sidebar;
-			sourceTree = "<group>";
-		};
-		"TEMP_51377304-3C50-47D6-9C30-D8467B44526C" /* Features */ = {
-			isa = PBXGroup;
-			children = (
+				1D0473F92D50F6914C5D91ED /* Sidebar */,
 			);
 			path = Features;
 			sourceTree = "<group>";
 		};
-		"TEMP_7EB39CB0-85A3-4399-B750-F3C757A4D460" /* NewTask */ = {
+		"TEMP_1628FF47-3C45-44B5-A303-24431B44D97F" /* NewTask */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = NewTask;
 			sourceTree = "<group>";
 		};
-		"TEMP_9E6BC1B2-7E01-4213-B684-A0E3A299B4FB" /* Terminal */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Terminal;
-			sourceTree = "<group>";
-		};
-		"TEMP_AF634E9F-6F25-404D-8803-7E3D6D0AC0A2" /* TaskList */ = {
+		"TEMP_238D4E62-06B4-4CD0-A440-F1522F5F40A8" /* TaskList */ = {
 			isa = PBXGroup;
 			children = (
 			);
 			path = TaskList;
+			sourceTree = "<group>";
+		};
+		"TEMP_745E553C-5BC0-453D-8140-112665055DF9" /* Terminal */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Terminal;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,11 +257,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				E0A2DEF17E11DA77A52F400E /* AppModel.swift in Sources */,
+				958E79649C8C02C5A200824E /* ArchivedTaskRow.swift in Sources */,
+				F0FA4A31C6FAE5C78E486FB1 /* ArchivesSection.swift in Sources */,
 				67819BA976E1A0C456B97301 /* ClaudeHubApp.swift in Sources */,
 				52F36CE6C8BE7CA5D14F2662 /* Constants.swift in Sources */,
 				41997149EED6C2E476174945 /* ContentView.swift in Sources */,
 				FB91DC301654458805219BC4 /* DecomposedTask.swift in Sources */,
+				C8BCBC863E5B3C5758C64481 /* GitService.swift in Sources */,
 				0BDEAD5A1226EB06EBA16712 /* Project.swift in Sources */,
+				9AE7FB9E67D6769EFE23ABB6 /* ProjectListSection.swift in Sources */,
+				3E35FEE67D0DCB8887336645 /* ProjectRow.swift in Sources */,
+				2C2F337009E30D2CB4FEA593 /* SidebarPage.swift in Sources */,
 				9A4BED3FD596CFA03D772A30 /* TaskItem.swift in Sources */,
 				FCA454AB74DF9834F5BA7A17 /* TaskStatus.swift in Sources */,
 			);

@@ -7,8 +7,7 @@ struct ContentView: View {
         @Bindable var appModel = appModel
 
         NavigationSplitView {
-            Text("Sidebar")
-                .navigationTitle("ClaudeHub")
+            SidebarPage()
         } detail: {
             if appModel.selectedProjectID != nil {
                 Text("Task List")
