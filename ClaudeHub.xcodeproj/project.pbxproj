@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0766D34B12C78A45C0C5D92B /* TerminalPromptField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18014169C34D61F64450543D /* TerminalPromptField.swift */; };
 		08099CE9D3B5C32B32E96A8C /* TerminalHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148C511A21CD674D4BACC8A1 /* TerminalHeader.swift */; };
 		0BDEAD5A1226EB06EBA16712 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDF5B536725F3FE0F5CB3C75 /* Project.swift */; };
 		138AEE93EB4453A0FC730BF0 /* TaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0463E2CD018A851163DC0BFF /* TaskRow.swift */; };
 		14CC60348B574F079A02AB92 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA14846B2BC4CA3A70CC5C0D /* TaskListViewModel.swift */; };
-		20852522C7E507174B5DD4CA /* NewTaskSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C008078041EC6D4C9CB409 /* NewTaskSheet.swift */; };
+		1DB7DB0FDD635CF5255FA9EE /* InlineDecompositionProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFC63176CEDA80A22F4BEF71 /* InlineDecompositionProgress.swift */; };
+		1E0C648AE37738822ECADC20 /* InlineTaskInputPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB253C0BF77D06E53BEA7174 /* InlineTaskInputPage.swift */; };
 		24B010251B9D5021AF47F5CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F7D5ABD7B5CEE983C86E68FD /* Assets.xcassets */; };
 		2C2F337009E30D2CB4FEA593 /* SidebarPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66FBEAF21D37141F6B8D2393 /* SidebarPage.swift */; };
-		2CE5024DBE00ABADA647BB4B /* NewTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06C713EBB36F6EB13B8637C /* NewTaskViewModel.swift */; };
 		3A0BFE40CF72E4B8AAEE2285 /* TerminalInspectorPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = A944B35A9A485DBB56AF2FA8 /* TerminalInspectorPage.swift */; };
 		3B44D196AEDB165070BF8BE0 /* TerminalSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADCB1F3E0F61A581448C7BF /* TerminalSessionManager.swift */; };
 		3E35FEE67D0DCB8887336645 /* ProjectRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */; };
@@ -23,13 +24,12 @@
 		41997149EED6C2E476174945 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE73BC9E92DC0E9B433E9A50 /* ContentView.swift */; };
 		4A921B4C0F307DA1E739B27C /* TaskListContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25AA62CD78CBFE36C2B8564 /* TaskListContent.swift */; };
 		52F36CE6C8BE7CA5D14F2662 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA1A24612A9B3469CB96DF4 /* Constants.swift */; };
-		65DB6FAC95FB5431F8602BDE /* DecompositionProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = E487F4B10B10B99583F09BFF /* DecompositionProgress.swift */; };
 		67819BA976E1A0C456B97301 /* ClaudeHubApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 580D90907D5270EB87B19ECF /* ClaudeHubApp.swift */; };
+		7A2A1D3507D95985FB3DF8FD /* CollapsibleSidebarRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C78854F7C6DE2744894F6BE7 /* CollapsibleSidebarRow.swift */; };
 		7B59E767E36D438FBC758242 /* SidebarTaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59D1D041E0E819F521ED574 /* SidebarTaskRow.swift */; };
 		8900A3F61A327FDF732A6856 /* CountdownBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15ADE5D00D3120DC74F4342 /* CountdownBadge.swift */; };
 		8FF8BBF32C482DF95D39605D /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = C99E2F394C1577041B89B00C /* SwiftTerm */; };
 		958E79649C8C02C5A200824E /* ArchivedTaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */; };
-		AA11BB22CC33DD44EE55FF66 /* CollapsibleSidebarRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF660011 /* CollapsibleSidebarRow.swift */; };
 		9A05F492DFCD127C068F2DFA /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FEE6CD846DC3E551CE199B /* StatusBadge.swift */; };
 		9A4BED3FD596CFA03D772A30 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F0B52AE076996305ABCD4F /* TaskItem.swift */; };
 		9AE7FB9E67D6769EFE23ABB6 /* ProjectListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411E9E2BA44BB6A0F68CFE20 /* ProjectListSection.swift */; };
@@ -37,8 +37,9 @@
 		A96CE5B074261BDB143B6B1C /* GlassStatusChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21B6D427A052A4EF4AE568F /* GlassStatusChip.swift */; };
 		C8BCBC863E5B3C5758C64481 /* GitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF932402F1B25CB4477312E /* GitService.swift */; };
 		CB423AD6623A450E29CCF1E0 /* TerminalContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED45712762D42D25FE30D76A /* TerminalContainer.swift */; };
-		DF187D4485030F7361D81AD0 /* TaskPromptEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FE2B23D248C8AA8EB80EEF3 /* TaskPromptEditor.swift */; };
+		D958B4E1391DE84DBE54C73D /* InlineTaskInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081E05C1391569EA2E495C52 /* InlineTaskInputViewModel.swift */; };
 		E0A2DEF17E11DA77A52F400E /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C00405DCDCA41363DF0F182 /* AppModel.swift */; };
+		EFD55E57F8CB129118D35009 /* TerminalCursor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 668511567CEE0DFC295D2181 /* TerminalCursor.swift */; };
 		F0FA4A31C6FAE5C78E486FB1 /* ArchivesSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10BC07779766A4E8B53E495 /* ArchivesSection.swift */; };
 		FB91DC301654458805219BC4 /* DecomposedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3673B9E2AFD3D9E4AD59E73 /* DecomposedTask.swift */; };
 		FCA454AB74DF9834F5BA7A17 /* TaskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2AF83F33A48348EF5D4E6E /* TaskStatus.swift */; };
@@ -47,19 +48,19 @@
 /* Begin PBXFileReference section */
 		0463E2CD018A851163DC0BFF /* TaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRow.swift; sourceTree = "<group>"; };
 		0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedTaskRow.swift; sourceTree = "<group>"; };
-		BB22CC33DD44EE55FF660011 /* CollapsibleSidebarRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleSidebarRow.swift; sourceTree = "<group>"; };
 		07BF2D6207996984B573C2D1 /* TaskListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListPage.swift; sourceTree = "<group>"; };
+		081E05C1391569EA2E495C52 /* InlineTaskInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTaskInputViewModel.swift; sourceTree = "<group>"; };
 		0A4C0DD93BFBD75D3AEF1C71 /* ClaudeHub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClaudeHub.entitlements; sourceTree = "<group>"; };
-		10C008078041EC6D4C9CB409 /* NewTaskSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskSheet.swift; sourceTree = "<group>"; };
 		148C511A21CD674D4BACC8A1 /* TerminalHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalHeader.swift; sourceTree = "<group>"; };
 		16FEE6CD846DC3E551CE199B /* StatusBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBadge.swift; sourceTree = "<group>"; };
+		18014169C34D61F64450543D /* TerminalPromptField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalPromptField.swift; sourceTree = "<group>"; };
 		1B3C0ADF53A23AEEB07F8523 /* TerminalRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalRepresentable.swift; sourceTree = "<group>"; };
 		411E9E2BA44BB6A0F68CFE20 /* ProjectListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectListSection.swift; sourceTree = "<group>"; };
 		54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRow.swift; sourceTree = "<group>"; };
 		55FDD00586136099B80DCB2A /* CLIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLIService.swift; sourceTree = "<group>"; };
 		580D90907D5270EB87B19ECF /* ClaudeHubApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClaudeHubApp.swift; sourceTree = "<group>"; };
 		5FA1A24612A9B3469CB96DF4 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		5FE2B23D248C8AA8EB80EEF3 /* TaskPromptEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskPromptEditor.swift; sourceTree = "<group>"; };
+		668511567CEE0DFC295D2181 /* TerminalCursor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalCursor.swift; sourceTree = "<group>"; };
 		66FBEAF21D37141F6B8D2393 /* SidebarPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarPage.swift; sourceTree = "<group>"; };
 		75F0B52AE076996305ABCD4F /* TaskItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskItem.swift; sourceTree = "<group>"; };
 		7D2AF83F33A48348EF5D4E6E /* TaskStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskStatus.swift; sourceTree = "<group>"; };
@@ -69,13 +70,14 @@
 		A21B6D427A052A4EF4AE568F /* GlassStatusChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassStatusChip.swift; sourceTree = "<group>"; };
 		A3673B9E2AFD3D9E4AD59E73 /* DecomposedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecomposedTask.swift; sourceTree = "<group>"; };
 		A944B35A9A485DBB56AF2FA8 /* TerminalInspectorPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalInspectorPage.swift; sourceTree = "<group>"; };
+		AB253C0BF77D06E53BEA7174 /* InlineTaskInputPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineTaskInputPage.swift; sourceTree = "<group>"; };
+		AFC63176CEDA80A22F4BEF71 /* InlineDecompositionProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InlineDecompositionProgress.swift; sourceTree = "<group>"; };
 		B15ADE5D00D3120DC74F4342 /* CountdownBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownBadge.swift; sourceTree = "<group>"; };
 		C59D1D041E0E819F521ED574 /* SidebarTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarTaskRow.swift; sourceTree = "<group>"; };
+		C78854F7C6DE2744894F6BE7 /* CollapsibleSidebarRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleSidebarRow.swift; sourceTree = "<group>"; };
 		CADCB1F3E0F61A581448C7BF /* TerminalSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalSessionManager.swift; sourceTree = "<group>"; };
-		D06C713EBB36F6EB13B8637C /* NewTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskViewModel.swift; sourceTree = "<group>"; };
 		D25AA62CD78CBFE36C2B8564 /* TaskListContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListContent.swift; sourceTree = "<group>"; };
 		E10BC07779766A4E8B53E495 /* ArchivesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivesSection.swift; sourceTree = "<group>"; };
-		E487F4B10B10B99583F09BFF /* DecompositionProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecompositionProgress.swift; sourceTree = "<group>"; };
 		ED45712762D42D25FE30D76A /* TerminalContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalContainer.swift; sourceTree = "<group>"; };
 		F7D5ABD7B5CEE983C86E68FD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FA14846B2BC4CA3A70CC5C0D /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
@@ -146,7 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */,
-				BB22CC33DD44EE55FF660011 /* CollapsibleSidebarRow.swift */,
+				C78854F7C6DE2744894F6BE7 /* CollapsibleSidebarRow.swift */,
 				54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */,
 				C59D1D041E0E819F521ED574 /* SidebarTaskRow.swift */,
 			);
@@ -178,6 +180,14 @@
 			path = atoms;
 			sourceTree = "<group>";
 		};
+		349206A062BF6927690ABBC0 /* pages */ = {
+			isa = PBXGroup;
+			children = (
+				AB253C0BF77D06E53BEA7174 /* InlineTaskInputPage.swift */,
+			);
+			path = pages;
+			sourceTree = "<group>";
+		};
 		3C3740E1C6C781A6770D0D28 /* Terminal */ = {
 			isa = PBXGroup;
 			children = (
@@ -193,6 +203,15 @@
 			isa = PBXGroup;
 			children = (
 				148C511A21CD674D4BACC8A1 /* TerminalHeader.swift */,
+			);
+			path = molecules;
+			sourceTree = "<group>";
+		};
+		4EACFDA364CD76EF7D2EFF24 /* molecules */ = {
+			isa = PBXGroup;
+			children = (
+				AFC63176CEDA80A22F4BEF71 /* InlineDecompositionProgress.swift */,
+				18014169C34D61F64450543D /* TerminalPromptField.swift */,
 			);
 			path = molecules;
 			sourceTree = "<group>";
@@ -255,15 +274,6 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		97694458BAABFEC31A273C2F /* molecules */ = {
-			isa = PBXGroup;
-			children = (
-				E487F4B10B10B99583F09BFF /* DecompositionProgress.swift */,
-				5FE2B23D248C8AA8EB80EEF3 /* TaskPromptEditor.swift */,
-			);
-			path = molecules;
-			sourceTree = "<group>";
-		};
 		A1652200FC4506FF868B526F /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,18 +294,21 @@
 			path = molecules;
 			sourceTree = "<group>";
 		};
-		BA63C9C9036D8CD68E3683A3 /* pages */ = {
+		B40FF2D87B18EB845C50D882 /* InlineTaskInput */ = {
 			isa = PBXGroup;
 			children = (
-				10C008078041EC6D4C9CB409 /* NewTaskSheet.swift */,
+				081E05C1391569EA2E495C52 /* InlineTaskInputViewModel.swift */,
+				E87B8A9B2DBDF1F0A0438637 /* atoms */,
+				4EACFDA364CD76EF7D2EFF24 /* molecules */,
+				349206A062BF6927690ABBC0 /* pages */,
 			);
-			path = pages;
+			path = InlineTaskInput;
 			sourceTree = "<group>";
 		};
 		DEFF488EE37FEC092CC6E66D /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				E49B01A652C5D468385D5B67 /* NewTask */,
+				B40FF2D87B18EB845C50D882 /* InlineTaskInput */,
 				1D0473F92D50F6914C5D91ED /* Sidebar */,
 				169CF833DF052C6591E1BC44 /* TaskList */,
 				3C3740E1C6C781A6770D0D28 /* Terminal */,
@@ -303,14 +316,12 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		E49B01A652C5D468385D5B67 /* NewTask */ = {
+		E87B8A9B2DBDF1F0A0438637 /* atoms */ = {
 			isa = PBXGroup;
 			children = (
-				D06C713EBB36F6EB13B8637C /* NewTaskViewModel.swift */,
-				97694458BAABFEC31A273C2F /* molecules */,
-				BA63C9C9036D8CD68E3683A3 /* pages */,
+				668511567CEE0DFC295D2181 /* TerminalCursor.swift */,
 			);
-			path = NewTask;
+			path = atoms;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,18 +402,18 @@
 				E0A2DEF17E11DA77A52F400E /* AppModel.swift in Sources */,
 				958E79649C8C02C5A200824E /* ArchivedTaskRow.swift in Sources */,
 				F0FA4A31C6FAE5C78E486FB1 /* ArchivesSection.swift in Sources */,
-				AA11BB22CC33DD44EE55FF66 /* CollapsibleSidebarRow.swift in Sources */,
 				3FB44F341F7C5C3C2FCE8577 /* CLIService.swift in Sources */,
 				67819BA976E1A0C456B97301 /* ClaudeHubApp.swift in Sources */,
+				7A2A1D3507D95985FB3DF8FD /* CollapsibleSidebarRow.swift in Sources */,
 				52F36CE6C8BE7CA5D14F2662 /* Constants.swift in Sources */,
 				41997149EED6C2E476174945 /* ContentView.swift in Sources */,
 				8900A3F61A327FDF732A6856 /* CountdownBadge.swift in Sources */,
 				FB91DC301654458805219BC4 /* DecomposedTask.swift in Sources */,
-				65DB6FAC95FB5431F8602BDE /* DecompositionProgress.swift in Sources */,
 				C8BCBC863E5B3C5758C64481 /* GitService.swift in Sources */,
 				A96CE5B074261BDB143B6B1C /* GlassStatusChip.swift in Sources */,
-				20852522C7E507174B5DD4CA /* NewTaskSheet.swift in Sources */,
-				2CE5024DBE00ABADA647BB4B /* NewTaskViewModel.swift in Sources */,
+				1DB7DB0FDD635CF5255FA9EE /* InlineDecompositionProgress.swift in Sources */,
+				1E0C648AE37738822ECADC20 /* InlineTaskInputPage.swift in Sources */,
+				D958B4E1391DE84DBE54C73D /* InlineTaskInputViewModel.swift in Sources */,
 				0BDEAD5A1226EB06EBA16712 /* Project.swift in Sources */,
 				9AE7FB9E67D6769EFE23ABB6 /* ProjectListSection.swift in Sources */,
 				3E35FEE67D0DCB8887336645 /* ProjectRow.swift in Sources */,
@@ -413,12 +424,13 @@
 				4A921B4C0F307DA1E739B27C /* TaskListContent.swift in Sources */,
 				A2BEEFFA0869FD8BA3D66C1B /* TaskListPage.swift in Sources */,
 				14CC60348B574F079A02AB92 /* TaskListViewModel.swift in Sources */,
-				DF187D4485030F7361D81AD0 /* TaskPromptEditor.swift in Sources */,
 				138AEE93EB4453A0FC730BF0 /* TaskRow.swift in Sources */,
 				FCA454AB74DF9834F5BA7A17 /* TaskStatus.swift in Sources */,
 				CB423AD6623A450E29CCF1E0 /* TerminalContainer.swift in Sources */,
+				EFD55E57F8CB129118D35009 /* TerminalCursor.swift in Sources */,
 				08099CE9D3B5C32B32E96A8C /* TerminalHeader.swift in Sources */,
 				3A0BFE40CF72E4B8AAEE2285 /* TerminalInspectorPage.swift in Sources */,
+				0766D34B12C78A45C0C5D92B /* TerminalPromptField.swift in Sources */,
 				3FFE0C163D6BB489B3DE7270 /* TerminalRepresentable.swift in Sources */,
 				3B44D196AEDB165070BF8BE0 /* TerminalSessionManager.swift in Sources */,
 			);
