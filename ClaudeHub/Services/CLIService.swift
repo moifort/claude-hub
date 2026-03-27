@@ -76,20 +76,20 @@ enum CLIService {
 
         try process.run()
 
-        // Timeout after 60 seconds
-        let timeoutTask = Task {
-            try await Task.sleep(for: .seconds(60))
-            if process.isRunning { process.terminate() }
+        // Non-blocking wait with 60s timeout
+        let status: Int32 = await withCheckedContinuation { continuation in
+            process.terminationHandler = { proc in
+                continuation.resume(returning: proc.terminationStatus)
+            }
         }
-
-        process.waitUntilExit()
-        timeoutTask.cancel()
 
         let data = stdoutPipe.fileHandleForReading.readDataToEndOfFile()
         let output = String(data: data, encoding: .utf8) ?? ""
 
-        guard process.terminationStatus == 0 else {
-            throw CLIError.decompositionFailed(output)
+        guard status == 0 else {
+            let errData = stderrPipe.fileHandleForReading.readDataToEndOfFile()
+            let stderr = String(data: errData, encoding: .utf8) ?? ""
+            throw CLIError.decompositionFailed(stderr.isEmpty ? output : stderr)
         }
 
         return try parseDecomposedTasks(from: output)

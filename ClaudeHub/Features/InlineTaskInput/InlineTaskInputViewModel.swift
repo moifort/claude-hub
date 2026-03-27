@@ -57,7 +57,7 @@ final class InlineTaskInputViewModel {
             context.insert(task)
             tasks = [task]
             subtaskCount = 1
-            errorMessage = "Decomposition failed — created single task"
+            errorMessage = error.localizedDescription
         }
 
         isDecomposing = false
