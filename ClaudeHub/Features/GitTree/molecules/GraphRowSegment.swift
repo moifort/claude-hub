@@ -5,7 +5,7 @@ struct GraphRowSegment: View {
     let isLast: Bool
     let color: Color
 
-    static let rowHeight: CGFloat = 32
+    static let rowHeight: CGFloat = 24
     static let laneWidth: CGFloat = 20
 
     var body: some View {
