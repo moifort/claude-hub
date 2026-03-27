@@ -9,24 +9,6 @@ enum GitService {
         (path as NSString).lastPathComponent
     }
 
-    static func createWorktree(repoPath: String, slug: String) async throws -> String {
-        let worktreePath = (repoPath as NSString).appendingPathComponent("task/\(slug)")
-        let branchName = "task/\(slug)"
-        try await runGit(in: repoPath, args: ["worktree", "add", worktreePath, "-b", branchName])
-        return worktreePath
-    }
-
-    static func removeWorktree(repoPath: String, slug: String) async throws {
-        let worktreePath = (repoPath as NSString).appendingPathComponent("task/\(slug)")
-        let branchName = "task/\(slug)"
-        try await runGit(in: repoPath, args: ["worktree", "remove", worktreePath, "--force"])
-        _ = try? await runGit(in: repoPath, args: ["branch", "-D", branchName])
-    }
-
-    static func worktreePath(repoPath: String, slug: String) -> String {
-        (repoPath as NSString).appendingPathComponent("task/\(slug)")
-    }
-
     // MARK: - Push
 
     static func pushMain(repoPath: String) async throws {

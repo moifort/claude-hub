@@ -96,21 +96,19 @@ enum CLIService {
     }
 
     static func buildTaskSystemPrompt(projectPath: String, slug: String) -> String {
-        let worktreePath = GitService.worktreePath(repoPath: projectPath, slug: slug)
+        """
+        You are working on the project at \(projectPath).
+        Your task branch is task/\(slug).
 
-        return """
-        You are working in an isolated git worktree at \(worktreePath).
-        Your branch is task/\(slug).
-
-        RULES:
-        - Work independently in this worktree. Do NOT modify the main branch directly.
-        - Make commits as you work on your branch task/\(slug).
-        - When your work is complete and verified:
-          1. git checkout main
-          2. git pull --rebase
-          3. git merge --ff-only task/\(slug)
-          4. git worktree remove \(worktreePath)
-          5. git branch -d task/\(slug)
+        WORKFLOW:
+        1. Create an isolated worktree: git worktree add task/\(slug) -b task/\(slug)
+        2. Work in the worktree directory. Make commits on your branch.
+        3. When complete and verified:
+           a. git checkout main (from the main repo)
+           b. git pull --rebase
+           c. git merge --ff-only task/\(slug)
+           d. git worktree remove task/\(slug)
+           e. git branch -d task/\(slug)
         - If the merge fails, rebase your branch first: git rebase main
         """
     }

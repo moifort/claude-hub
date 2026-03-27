@@ -7,26 +7,16 @@ final class TaskListViewModel {
 
     func launchTask(_ task: TaskItem, sessionManager: TerminalSessionManager) async {
         guard task.taskStatus == .pending, let project = task.project else { return }
-
-        let worktreeDir: String
-        do {
-            worktreeDir = try await GitService.createWorktree(repoPath: project.path, slug: task.slug)
-        } catch {
-            // Fallback: run in project directory
-            worktreeDir = project.path
-        }
-
         guard let claudePath = CLIService.claudePath() else { return }
 
         let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug)
-
         let env = CLIService.enrichedEnvironment().map { "\($0.key)=\($0.value)" }
 
         sessionManager.registerSession(
             for: task.slug,
             executable: claudePath,
             arguments: ["--allow-dangerously-skip-permissions", "--permission-mode", "plan", "--system-prompt", systemPrompt, task.prompt],
-            workingDirectory: worktreeDir,
+            workingDirectory: project.path,
             environment: env
         )
 
@@ -52,12 +42,6 @@ final class TaskListViewModel {
         task.taskStatus = .archived
         task.archivedAt = .now
         cancelAutoArchive(for: task)
-
-        if let project = task.project {
-            Task {
-                try? await GitService.removeWorktree(repoPath: project.path, slug: task.slug)
-            }
-        }
     }
 
     func launchAllPending(for project: Project, sessionManager: TerminalSessionManager) async {

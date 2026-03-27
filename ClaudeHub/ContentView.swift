@@ -187,13 +187,12 @@ struct ContentView: View {
         project: Project
     ) -> TerminalSessionManager.SessionInfo? {
         guard let claudePath = CLIService.claudePath() else { return nil }
-        let worktreeDir = GitService.worktreePath(repoPath: project.path, slug: task.slug)
         let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug)
         let env = CLIService.enrichedEnvironment().map { "\($0.key)=\($0.value)" }
         let info = TerminalSessionManager.SessionInfo(
             executable: claudePath,
-            arguments: ["--dangerously-skip-permissions", "--plan", "--system-prompt", systemPrompt, task.prompt],
-            workingDirectory: worktreeDir,
+            arguments: ["--allow-dangerously-skip-permissions", "--permission-mode", "plan", "--system-prompt", systemPrompt, task.prompt],
+            workingDirectory: project.path,
             environment: env
         )
         sessionManager.registerSession(
