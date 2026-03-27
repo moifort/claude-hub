@@ -17,17 +17,23 @@ struct GraphRowSegment: View {
                 var topLine = Path()
                 topLine.move(to: CGPoint(x: cx, y: 0))
                 topLine.addLine(to: CGPoint(x: cx, y: cy))
-                context.stroke(topLine, with: .color(color), lineWidth: 2)
+                context.stroke(topLine, with: .color(color), lineWidth: 1)
             }
 
             if !isLast {
                 var bottomLine = Path()
                 bottomLine.move(to: CGPoint(x: cx, y: cy))
                 bottomLine.addLine(to: CGPoint(x: cx, y: size.height))
-                context.stroke(bottomLine, with: .color(color), lineWidth: 2)
+                context.stroke(bottomLine, with: .color(color), lineWidth: 1)
             }
 
             let radius: CGFloat = 4
+            let glowRect = CGRect(
+                x: cx - radius - 3, y: cy - radius - 3,
+                width: (radius + 3) * 2, height: (radius + 3) * 2
+            )
+            context.fill(Circle().path(in: glowRect), with: .color(color.opacity(0.2)))
+
             let nodeRect = CGRect(
                 x: cx - radius, y: cy - radius,
                 width: radius * 2, height: radius * 2
