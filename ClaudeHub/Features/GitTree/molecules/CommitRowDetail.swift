@@ -10,6 +10,7 @@ struct CommitRowDetail: View {
         HStack(spacing: 6) {
             Text(subject)
                 .font(.caption)
+                .fontWeight(.bold)
                 .lineLimit(1)
                 .truncationMode(.tail)
                 .foregroundStyle(.primary)
