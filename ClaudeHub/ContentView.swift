@@ -43,7 +43,7 @@ struct ContentView: View {
 
                 if appModel.showGitTree, let project = currentProject {
                     GitTreePanel(repoPath: project.path, projectName: project.name)
-                        .frame(minWidth: 280, idealWidth: 380)
+                        .frame(minWidth: 300, idealWidth: 380)
                 }
             }
         }

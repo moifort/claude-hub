@@ -24,7 +24,7 @@ struct GitTreePanel: View {
 
     private var header: some View {
         HStack {
-            Label("Git History", systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90")
+            Label("It's History", systemImage: "clock.arrow.trianglehead.counterclockwise.rotate.90")
                 .font(.caption)
                 .foregroundStyle(.secondary)
 
