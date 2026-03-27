@@ -38,12 +38,25 @@ enum CLIService {
         }
 
         let systemPrompt = """
-        You are a task decomposition engine. Analyze the user's request and split it into \
-        independent, parallelizable subtasks. Each subtask must be executable in its own \
-        isolated git worktree without depending on other subtasks.
+        You are a task decomposition engine for a coding project. \
+        You have access to the project files in the current directory. \
+        Analyze the project structure, code, and the user's request.
+
+        Split the request into independent, parallelizable subtasks. \
+        Each subtask must be executable in its own isolated git worktree \
+        without depending on other subtasks.
+
+        For each subtask, provide:
+        - title: a short title (max 60 chars) for display
+        - summary: a 1-2 sentence description of what this subtask accomplishes
+        - prompt: detailed, actionable instructions for Claude Code. \
+          Include specific file paths, function names, patterns to follow, \
+          and acceptance criteria. The prompt must be self-contained — \
+          the executor will work in an isolated worktree with no knowledge \
+          of other subtasks.
 
         Return ONLY a JSON array, no explanation, no markdown:
-        [{"title": "short title", "prompt": "detailed instructions for Claude Code"}]
+        [{"title": "...", "summary": "...", "prompt": "..."}]
 
         If the task cannot be meaningfully split, return a single-element array.
         """
