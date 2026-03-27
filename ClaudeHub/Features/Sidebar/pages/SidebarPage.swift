@@ -32,6 +32,10 @@ struct SidebarPage: View {
                     )
                 },
                 selectedTaskID: appModel.selectedTaskID,
+                onSelectProject: { id in
+                    appModel.selectedProjectID = id
+                    appModel.selectedTaskID = nil
+                },
                 onSelectTask: { id in
                     appModel.selectedTaskID = id
                 },

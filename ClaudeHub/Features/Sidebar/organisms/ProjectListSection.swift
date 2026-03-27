@@ -18,6 +18,7 @@ struct ProjectListSection: View {
 
     let projects: [ProjectInfo]
     let selectedTaskID: PersistentIdentifier?
+    let onSelectProject: (PersistentIdentifier) -> Void
     let onSelectTask: (PersistentIdentifier) -> Void
     let onDelete: (PersistentIdentifier) -> Void
 
@@ -71,6 +72,7 @@ struct ProjectListSection: View {
                 } else {
                     expandedProjects.remove(id)
                 }
+                onSelectProject(id)
             }
         )
     }
@@ -81,6 +83,7 @@ struct ProjectListSection: View {
         ProjectListSection(
             projects: [],
             selectedTaskID: nil,
+            onSelectProject: { _ in },
             onSelectTask: { _ in },
             onDelete: { _ in }
         )
