@@ -17,5 +17,9 @@ struct ClaudeHubApp: App {
                 }
                 .frame(minWidth: 900, minHeight: 600)
         }
+
+        Settings {
+            SettingsPage()
+        }
     }
 }

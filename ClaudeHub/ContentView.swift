@@ -180,7 +180,8 @@ struct ContentView: View {
         project: Project
     ) -> TerminalSessionManager.SessionInfo? {
         guard let claudePath = CLIService.claudePath() else { return nil }
-        let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug)
+        let customPrompt = UserDefaults.standard.string(forKey: "taskSystemPrompt")
+        let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug, customPrompt: customPrompt)
         let env = CLIService.enrichedEnvironment().map { "\($0.key)=\($0.value)" }
         let info = TerminalSessionManager.SessionInfo(
             executable: claudePath,

@@ -96,8 +96,8 @@ enum CLIService {
         return try parseDecomposedTasks(from: output)
     }
 
-    static func buildTaskSystemPrompt(projectPath: String, slug: String) -> String {
-        """
+    static func buildTaskSystemPrompt(projectPath: String, slug: String, customPrompt: String? = nil) -> String {
+        var prompt = """
         You are working on the project at \(projectPath).
         Your task branch is task/\(slug).
 
@@ -112,6 +112,12 @@ enum CLIService {
            e. git branch -d task/\(slug)
         - If the merge fails, rebase your branch first: git rebase main
         """
+
+        if let custom = customPrompt, !custom.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            prompt += "\n\n" + custom
+        }
+
+        return prompt
     }
 
     static func enrichedEnvironment() -> [String: String] {

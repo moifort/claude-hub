@@ -9,7 +9,8 @@ final class TaskListViewModel {
         guard task.taskStatus == .pending, let project = task.project else { return }
         guard let claudePath = CLIService.claudePath() else { return }
 
-        let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug)
+        let customPrompt = UserDefaults.standard.string(forKey: "taskSystemPrompt")
+        let systemPrompt = CLIService.buildTaskSystemPrompt(projectPath: project.path, slug: task.slug, customPrompt: customPrompt)
         let env = CLIService.enrichedEnvironment().map { "\($0.key)=\($0.value)" }
 
         sessionManager.registerSession(
