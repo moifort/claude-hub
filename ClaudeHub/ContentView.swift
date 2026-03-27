@@ -192,6 +192,7 @@ struct ContentView: View {
     private func detailView(for task: TaskItem) -> some View {
         if sessionManager.cachedTerminalView(for: task.slug) != nil {
             TerminalContainer(taskSlug: task.slug)
+                .id(task.slug)
         } else if task.taskStatus == .pending {
             VStack(spacing: 16) {
                 Spacer()
