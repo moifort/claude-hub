@@ -61,17 +61,21 @@ struct ContentView: View {
             }
         }
         .toolbar {
+            ToolbarSpacer(.flexible)
+
             if let task = selectedTask {
-                ToolbarItemGroup(placement: .primaryAction) {
-                    if task.taskStatus == .pending {
+                if task.taskStatus == .pending {
+                    ToolbarItem {
                         Button {
                             Task { await viewModel.launchTask(task, sessionManager: sessionManager) }
                         } label: {
                             Label("Launch", systemImage: "play.fill")
                         }
                     }
+                }
 
-                    if task.taskStatus == .completed {
+                if task.taskStatus == .completed {
+                    ToolbarItem {
                         Button {
                             viewModel.pinTask(task)
                         } label: {
@@ -81,19 +85,19 @@ struct ContentView: View {
                             )
                         }
                     }
-
-
                 }
+
+                ToolbarSpacer(.fixed)
             }
 
-            ToolbarItem(placement: .automatic) {
-                if let project = currentProject {
+            if let project = currentProject {
+                ToolbarItem {
                     pushButton(repoPath: project.path)
                 }
-            }
 
-            ToolbarItem(placement: .automatic) {
-                if let project = currentProject {
+                ToolbarSpacer(.fixed)
+
+                ToolbarItem {
                     let ide = IDE(rawValue: preferredIDE) ?? .intellij
                     Button {
                         ide.open(path: project.path)
@@ -102,9 +106,11 @@ struct ContentView: View {
                     }
                     .help("Open in \(ide.displayName)")
                 }
+
+                ToolbarSpacer(.fixed)
             }
 
-            ToolbarItem(placement: .automatic) {
+            ToolbarItem {
                 Button {
                     appModel.showGitTree.toggle()
                 } label: {
@@ -115,6 +121,7 @@ struct ContentView: View {
                 }
             }
         }
+        .toolbar(removing: .title)
         .alert("Push Failed", isPresented: .init(
             get: { pushErrorMessage != nil },
             set: { if !$0 { pushErrorMessage = nil } }
