@@ -25,7 +25,7 @@ final class TaskListViewModel {
         sessionManager.registerSession(
             for: task.slug,
             executable: claudePath,
-            arguments: ["--dangerously-skip-permissions", "--permission-mode", "plan", "--system-prompt", systemPrompt, task.prompt],
+            arguments: ["--allow-dangerously-skip-permissions", "--permission-mode", "plan", "--system-prompt", systemPrompt, task.prompt],
             workingDirectory: worktreeDir,
             environment: env
         )
