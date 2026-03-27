@@ -11,6 +11,39 @@ struct SidebarPage: View {
         order: .reverse
     ) private var archivedTasks: [TaskItem]
 
+    private var projectInfos: [ProjectListSection.ProjectInfo] {
+        projects.map { project in
+            ProjectListSection.ProjectInfo(
+                id: project.persistentModelID,
+                name: project.name,
+                taskCount: project.activeTasks.count,
+                tasks: project.activeTasks
+                    .sorted { $0.taskStatus.sortPriority < $1.taskStatus.sortPriority }
+                    .map { task in
+                        ProjectListSection.TaskInfo(
+                            id: task.persistentModelID,
+                            title: task.summary ?? task.title,
+                            status: task.taskStatus,
+                            createdAt: task.createdAt,
+                            completedAt: task.completedAt,
+                            isPinned: task.isPinned
+                        )
+                    }
+            )
+        }
+    }
+
+    private var archiveInfos: [ArchivesSection.ArchiveInfo] {
+        Array(archivedTasks.prefix(Constants.maxArchivedVisible)).map { task in
+            ArchivesSection.ArchiveInfo(
+                id: task.persistentModelID,
+                title: task.title,
+                projectName: task.project?.name ?? "Unknown",
+                archivedAt: task.archivedAt ?? task.createdAt
+            )
+        }
+    }
+
     var body: some View {
         @Bindable var appModel = appModel
 
@@ -19,37 +52,18 @@ struct SidebarPage: View {
             set: { appModel.selectedItemID = $0 ?? appModel.selectedItemID }
         )) {
             ProjectListSection(
-                projects: projects.map { project in
-                    .init(
-                        id: project.persistentModelID,
-                        name: project.name,
-                        taskCount: project.activeTasks.count,
-                        tasks: project.activeTasks
-                            .sorted { $0.taskStatus.sortPriority < $1.taskStatus.sortPriority }
-                            .map { task in
-                            .init(
-                                id: task.persistentModelID,
-                                title: task.summary ?? task.title,
-                                status: task.taskStatus,
-                                createdAt: task.createdAt
-                            )
-                        }
-                    )
-                },
+                projects: projectInfos,
                 selectedItemID: appModel.selectedItemID,
                 onDelete: deleteProject,
-                onDeleteTask: deleteTask
+                onDeleteTask: deleteTask,
+                onKeepTask: { _ in }
             )
-
+        }
+        .safeAreaInset(edge: .bottom, spacing: 0) {
             ArchivesSection(
-                archives: Array(archivedTasks.prefix(Constants.maxArchivedVisible)).map { task in
-                    .init(
-                        id: task.persistentModelID,
-                        title: task.title,
-                        projectName: task.project?.name ?? "Unknown",
-                        archivedAt: task.archivedAt ?? task.createdAt
-                    )
-                }
+                archives: archiveInfos,
+                onDeleteAll: deleteAllArchives,
+                onRestore: restoreArchivedTask
             )
         }
         .navigationTitle("ClaudeHub")
@@ -97,6 +111,18 @@ struct SidebarPage: View {
         if appModel.selectedItemID == id {
             appModel.selectedItemID = task.project?.persistentModelID
         }
+    }
+
+    private func deleteAllArchives() {
+        for task in archivedTasks {
+            modelContext.delete(task)
+        }
+    }
+
+    private func restoreArchivedTask(_ id: PersistentIdentifier) {
+        guard let task = archivedTasks.first(where: { $0.persistentModelID == id }) else { return }
+        task.taskStatus = .completed
+        task.archivedAt = nil
     }
 
     private func deleteProject(_ id: PersistentIdentifier) {
