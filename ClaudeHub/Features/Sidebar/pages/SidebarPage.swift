@@ -11,9 +11,6 @@ struct SidebarPage: View {
         order: .reverse
     ) private var archivedTasks: [TaskItem]
 
-    @State private var showNewTaskSheet = false
-    @State private var newTaskProject: Project?
-
     var body: some View {
         @Bindable var appModel = appModel
 
@@ -35,7 +32,6 @@ struct SidebarPage: View {
                     )
                 },
                 selectedTaskID: appModel.selectedTaskID,
-                onAdd: pickFolder,
                 onSelectTask: { id in
                     appModel.selectedTaskID = id
                 },

@@ -29,6 +29,7 @@
 		8900A3F61A327FDF732A6856 /* CountdownBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = B15ADE5D00D3120DC74F4342 /* CountdownBadge.swift */; };
 		8FF8BBF32C482DF95D39605D /* SwiftTerm in Frameworks */ = {isa = PBXBuildFile; productRef = C99E2F394C1577041B89B00C /* SwiftTerm */; };
 		958E79649C8C02C5A200824E /* ArchivedTaskRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */; };
+		AA11BB22CC33DD44EE55FF66 /* CollapsibleSidebarRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB22CC33DD44EE55FF660011 /* CollapsibleSidebarRow.swift */; };
 		9A05F492DFCD127C068F2DFA /* StatusBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FEE6CD846DC3E551CE199B /* StatusBadge.swift */; };
 		9A4BED3FD596CFA03D772A30 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F0B52AE076996305ABCD4F /* TaskItem.swift */; };
 		9AE7FB9E67D6769EFE23ABB6 /* ProjectListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411E9E2BA44BB6A0F68CFE20 /* ProjectListSection.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		0463E2CD018A851163DC0BFF /* TaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRow.swift; sourceTree = "<group>"; };
 		0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivedTaskRow.swift; sourceTree = "<group>"; };
+		BB22CC33DD44EE55FF660011 /* CollapsibleSidebarRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleSidebarRow.swift; sourceTree = "<group>"; };
 		07BF2D6207996984B573C2D1 /* TaskListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListPage.swift; sourceTree = "<group>"; };
 		0A4C0DD93BFBD75D3AEF1C71 /* ClaudeHub.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClaudeHub.entitlements; sourceTree = "<group>"; };
 		10C008078041EC6D4C9CB409 /* NewTaskSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskSheet.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				0626798802B99EE0976140A5 /* ArchivedTaskRow.swift */,
+				BB22CC33DD44EE55FF660011 /* CollapsibleSidebarRow.swift */,
 				54D9406FBB9F44C7A299FD33 /* ProjectRow.swift */,
 				C59D1D041E0E819F521ED574 /* SidebarTaskRow.swift */,
 			);
@@ -388,6 +391,7 @@
 				E0A2DEF17E11DA77A52F400E /* AppModel.swift in Sources */,
 				958E79649C8C02C5A200824E /* ArchivedTaskRow.swift in Sources */,
 				F0FA4A31C6FAE5C78E486FB1 /* ArchivesSection.swift in Sources */,
+				AA11BB22CC33DD44EE55FF66 /* CollapsibleSidebarRow.swift in Sources */,
 				3FB44F341F7C5C3C2FCE8577 /* CLIService.swift in Sources */,
 				67819BA976E1A0C456B97301 /* ClaudeHubApp.swift in Sources */,
 				52F36CE6C8BE7CA5D14F2662 /* Constants.swift in Sources */,

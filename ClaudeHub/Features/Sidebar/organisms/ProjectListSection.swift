@@ -18,77 +18,69 @@ struct ProjectListSection: View {
 
     let projects: [ProjectInfo]
     let selectedTaskID: PersistentIdentifier?
-    let onAdd: () -> Void
     let onSelectTask: (PersistentIdentifier) -> Void
     let onDelete: (PersistentIdentifier) -> Void
 
+    @State private var expandedProjects: Set<PersistentIdentifier> = []
+    @State private var initialized = false
+
     var body: some View {
-        Section {
-            if projects.isEmpty {
-                VStack(spacing: 12) {
-                    Image(systemName: "plus.rectangle.on.folder")
-                        .font(.system(size: 28))
-                        .foregroundStyle(.secondary)
-
-                    Text("No projects yet")
-                        .foregroundStyle(.secondary)
-                        .font(.subheadline)
-
-                    Button("Add Project", action: onAdd)
-                        .buttonStyle(.bordered)
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 20)
-            } else {
-                ForEach(projects) { project in
-                    DisclosureGroup {
-                        ForEach(project.tasks) { task in
-                            SidebarTaskRow(
-                                title: task.title,
-                                status: task.status,
-                                isSelected: task.id == selectedTaskID
-                            )
-                            .tag(task.id)
-                            .onTapGesture { onSelectTask(task.id) }
-                        }
-                    } label: {
-                        ProjectRow(
-                            name: project.name,
-                            taskCount: project.taskCount,
-                            hasRunningTask: project.hasRunningTask
-                        )
-                    }
-                    .contextMenu {
-                        Button("Remove Project", role: .destructive) {
-                            onDelete(project.id)
-                        }
-                    }
+        ForEach(projects) { project in
+            CollapsibleSidebarRow(isExpanded: expandedBinding(for: project.id)) {
+                ProjectRow(
+                    name: project.name,
+                    taskCount: project.taskCount,
+                    hasRunningTask: project.hasRunningTask
+                )
+            } content: {
+                ForEach(project.tasks) { task in
+                    SidebarTaskRow(
+                        title: task.title,
+                        status: task.status,
+                        isSelected: task.id == selectedTaskID
+                    )
+                    .tag(task.id)
+                    .onTapGesture { onSelectTask(task.id) }
+                    .padding(.leading, 8)
                 }
             }
-        } header: {
-            HStack {
-                Text("Projects")
-                Spacer()
-                Button(action: onAdd) {
-                    Text("+")
-                        .font(.caption.monospacedDigit())
-                        .foregroundStyle(.primary)
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 2)
-                        .glassEffect(.regular, in: .capsule)
+            .contextMenu {
+                Button("Remove Project", role: .destructive) {
+                    onDelete(project.id)
                 }
-                .buttonStyle(.plain)
+            }
+        }
+        .onAppear {
+            guard !initialized else { return }
+            expandedProjects = Set(projects.map(\.id))
+            initialized = true
+        }
+        .onChange(of: projects.map(\.id)) { _, newIDs in
+            for id in newIDs where !expandedProjects.contains(id) {
+                expandedProjects.insert(id)
             }
         }
     }
+
+    private func expandedBinding(for id: PersistentIdentifier) -> Binding<Bool> {
+        Binding(
+            get: { expandedProjects.contains(id) },
+            set: { isExpanded in
+                if isExpanded {
+                    expandedProjects.insert(id)
+                } else {
+                    expandedProjects.remove(id)
+                }
+            }
+        )
+    }
 }
 
-#Preview("Empty") {
+#Preview("With Projects") {
     List {
         ProjectListSection(
             projects: [],
             selectedTaskID: nil,
-            onAdd: {},
             onSelectTask: { _ in },
             onDelete: { _ in }
         )
