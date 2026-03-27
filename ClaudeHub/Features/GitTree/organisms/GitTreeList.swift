@@ -11,18 +11,17 @@ struct GitTreeList: View {
                     HStack(spacing: 0) {
                         GraphRowSegment(
                             isMerge: row.commit.isMerge,
-                            isHead: row.commit.isHead,
+                            isHead: row.commit.isLocalHead,
                             isFirst: row.isFirst,
                             isLast: row.isLast,
                             color: color
                         )
 
                         CommitRowDetail(
-                            shortHash: row.commit.shortHash,
                             subject: row.commit.subject,
-                            authorName: row.commit.authorName,
                             date: row.commit.date,
-                            refs: row.commit.refs.map { ($0.name, $0.kind, $0.isCurrent) }
+                            isLocalHead: row.commit.isLocalHead,
+                            isRemoteHead: row.commit.isRemoteHead
                         )
                         .padding(.trailing, 12)
                     }
@@ -56,7 +55,7 @@ struct GitTreeList: View {
                 authorName: "Thibaut",
                 date: .now.addingTimeInterval(-3600),
                 subject: "Merge branch 'feature/auth' into main",
-                refs: []
+                refs: [GitRef(name: "origin/main", kind: .remoteBranch, isCurrent: false)]
             ),
             isFirst: false,
             isLast: false
@@ -67,9 +66,9 @@ struct GitTreeList: View {
                 id: "ccc333444555",
                 parentIDs: ["ddd"],
                 authorName: "Thibaut",
-                date: .now.addingTimeInterval(-7200),
+                date: .now.addingTimeInterval(-90000),
                 subject: "fix: resolve sidebar crash on empty project",
-                refs: [GitRef(name: "v1.0", kind: .tag, isCurrent: false)]
+                refs: []
             ),
             isFirst: false,
             isLast: true

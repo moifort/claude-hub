@@ -1,20 +1,19 @@
 import SwiftUI
 
 struct CommitRowDetail: View {
-    let shortHash: String
     let subject: String
-    let authorName: String
     let date: Date
-    let refs: [(name: String, kind: GitRefKind, isCurrent: Bool)]
+    let isLocalHead: Bool
+    let isRemoteHead: Bool
 
     var body: some View {
-        HStack(spacing: 8) {
-            CommitHash(hash: shortHash)
+        HStack(spacing: 6) {
+            if isLocalHead {
+                SyncBadge(position: .local)
+            }
 
-            if !refs.isEmpty {
-                ForEach(refs, id: \.name) { ref in
-                    BranchLabel(name: ref.name, kind: ref.kind, isCurrent: ref.isCurrent)
-                }
+            if isRemoteHead {
+                SyncBadge(position: .remote)
             }
 
             Text(subject)
@@ -25,24 +24,57 @@ struct CommitRowDetail: View {
 
             Spacer(minLength: 4)
 
-            Text(date, style: .relative)
+            Text(roundedTimeAgo(from: date))
                 .font(.caption2)
                 .foregroundStyle(.tertiary)
                 .fixedSize()
         }
     }
+
+    private func roundedTimeAgo(from date: Date) -> String {
+        let seconds = Date.now.timeIntervalSince(date)
+        let minutes = seconds / 60
+        let hours = minutes / 60
+        let days = hours / 24
+
+        if minutes < 10 {
+            return "now"
+        } else if minutes < 60 {
+            let rounded = Int(minutes / 10) * 10
+            return "\(rounded) min"
+        } else if hours < 24 {
+            return "\(Int(hours))h"
+        } else if days < 7 {
+            return "\(Int(days))d"
+        } else {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "d MMM"
+            return formatter.string(from: date)
+        }
+    }
 }
 
 #Preview {
-    CommitRowDetail(
-        shortHash: "a1b2c3d",
-        subject: "feat(git-tree): add commit graph visualization panel",
-        authorName: "Thibaut",
-        date: .now.addingTimeInterval(-3600),
-        refs: [
-            (name: "main", kind: .head, isCurrent: true),
-            (name: "origin/main", kind: .remoteBranch, isCurrent: false),
-        ]
-    )
+    VStack(alignment: .leading, spacing: 8) {
+        CommitRowDetail(
+            subject: "feat(git-tree): add commit graph visualization panel",
+            date: .now.addingTimeInterval(-120),
+            isLocalHead: true,
+            isRemoteHead: true
+        )
+        CommitRowDetail(
+            subject: "fix: resolve sidebar crash on empty project",
+            date: .now.addingTimeInterval(-3600),
+            isLocalHead: false,
+            isRemoteHead: false
+        )
+        CommitRowDetail(
+            subject: "refactor(state): unify selection model",
+            date: .now.addingTimeInterval(-90000),
+            isLocalHead: false,
+            isRemoteHead: false
+        )
+    }
     .padding()
+    .frame(width: 400)
 }

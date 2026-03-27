@@ -8,9 +8,9 @@ struct GitCommit: Identifiable, Sendable {
     let subject: String
     let refs: [GitRef]
 
-    var shortHash: String { String(id.prefix(7)) }
     var isMerge: Bool { parentIDs.count > 1 }
-    var isHead: Bool { refs.contains { $0.isCurrent } }
+    var isLocalHead: Bool { refs.contains { $0.kind == .head } }
+    var isRemoteHead: Bool { refs.contains { $0.kind == .remoteBranch } }
 }
 
 struct GitRef: Sendable {
