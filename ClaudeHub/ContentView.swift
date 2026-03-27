@@ -82,14 +82,7 @@ struct ContentView: View {
                         }
                     }
 
-                    if let project = task.project {
-                        Button {
-                            appModel.selectedItemID = project.persistentModelID
-                        } label: {
-                            Label("New Task", systemImage: "plus")
-                        }
-                        .keyboardShortcut("n", modifiers: .command)
-                    }
+
                 }
             }
 
