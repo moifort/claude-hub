@@ -14,7 +14,10 @@ struct SidebarPage: View {
     var body: some View {
         @Bindable var appModel = appModel
 
-        List(selection: $appModel.selectedItemID) {
+        List(selection: Binding(
+            get: { appModel.selectedItemID },
+            set: { appModel.selectedItemID = $0 ?? appModel.selectedItemID }
+        )) {
             ProjectListSection(
                 projects: projects.map { project in
                     .init(
