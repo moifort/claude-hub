@@ -4,7 +4,6 @@ import SwiftData
 struct InlineTaskInputPage: View {
     let project: Project
 
-    @Environment(AppModel.self) private var appModel
     @Environment(TerminalSessionManager.self) private var sessionManager
     @Environment(\.modelContext) private var modelContext
 
@@ -48,12 +47,21 @@ struct InlineTaskInputPage: View {
                 Text(error)
                     .font(.system(.caption, design: .monospaced))
                     .foregroundStyle(.orange)
+            } else if let title = viewModel.lastCreatedTaskTitle {
+                Text("✓ Task created: \(title)")
+                    .font(.system(.caption, design: .monospaced))
+                    .foregroundStyle(.green.opacity(0.7))
+                    .lineLimit(1)
+                    .truncationMode(.tail)
             }
 
             Spacer()
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onChange(of: viewModel.prompt) {
+            viewModel.clearConfirmation()
+        }
     }
 
     private func submit() {
@@ -63,21 +71,18 @@ struct InlineTaskInputPage: View {
                 project: project,
                 context: modelContext,
                 sessionManager: sessionManager,
-                taskViewModel: taskViewModel,
-                appModel: appModel
+                taskViewModel: taskViewModel
             )
         }
     }
 }
 
 #Preview {
-    @Previewable @State var appModel = AppModel()
     @Previewable @State var sessionManager = TerminalSessionManager()
 
     InlineTaskInputPage(
         project: Project(name: "my-project", path: "/tmp/my-project")
     )
-    .environment(appModel)
     .environment(sessionManager)
     .modelContainer(for: [Project.self, TaskItem.self], inMemory: true)
     .frame(width: 800, height: 600)

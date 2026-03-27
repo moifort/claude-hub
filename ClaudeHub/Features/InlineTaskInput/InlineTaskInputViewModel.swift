@@ -6,17 +6,21 @@ final class InlineTaskInputViewModel {
     var prompt = ""
     private(set) var isSummarizing = false
     private(set) var errorMessage: String?
+    private(set) var lastCreatedTaskTitle: String?
 
     var canSubmit: Bool {
         !prompt.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty && !isSummarizing
+    }
+
+    func clearConfirmation() {
+        lastCreatedTaskTitle = nil
     }
 
     func submit(
         project: Project,
         context: ModelContext,
         sessionManager: TerminalSessionManager,
-        taskViewModel: TaskListViewModel,
-        appModel: AppModel
+        taskViewModel: TaskListViewModel
     ) async {
         let trimmed = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
@@ -43,8 +47,8 @@ final class InlineTaskInputViewModel {
         isSummarizing = false
         prompt = ""
         errorMessage = nil
+        lastCreatedTaskTitle = title
 
-        appModel.selectedItemID = task.persistentModelID
         await taskViewModel.launchTask(task, sessionManager: sessionManager)
     }
 }
