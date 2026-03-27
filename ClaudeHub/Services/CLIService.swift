@@ -53,6 +53,13 @@ static func buildTaskSystemPrompt(projectPath: String, slug: String, customPromp
            d. git worktree remove task/\(slug)
            e. git branch -d task/\(slug)
         - If the merge fails, rebase your branch first: git rebase main
+
+        STATUS MARKERS (mandatory):
+        Print these markers on their own line to report your current state:
+        ◆ working — when you start a new step or tool call
+        ◆ waiting — when you need user input or ask a question
+        ◆ done — when you have completed the entire task
+        Always emit the appropriate marker. This is used by the orchestrator to track your progress.
         """
 
         if let custom = customPrompt, !custom.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {

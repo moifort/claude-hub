@@ -4,6 +4,7 @@ import SwiftData
 struct ContentView: View {
     @Environment(AppModel.self) private var appModel
     @Environment(TerminalSessionManager.self) private var sessionManager
+    @Environment(TerminalStateMonitor.self) private var stateMonitor
     @Environment(\.modelContext) private var modelContext
     @Query private var allTasks: [TaskItem]
     @Query private var allProjects: [Project]
@@ -59,6 +60,10 @@ struct ContentView: View {
             if appModel.selectedItemID == nil, let first = allProjects.first {
                 appModel.selectedItemID = first.persistentModelID
             }
+            stateMonitor.start(sessionManager: sessionManager)
+        }
+        .onChange(of: stateMonitor.detectedStates) { _, newStates in
+            syncTaskStates(newStates)
         }
         .toolbar {
             ToolbarSpacer(.flexible)
@@ -197,6 +202,20 @@ struct ContentView: View {
         return info
     }
 
+    private func syncTaskStates(_ states: [String: TerminalStateMonitor.DetectedState]) {
+        for task in allTasks where task.taskStatus == .running || task.taskStatus == .waiting {
+            guard let detected = states[task.slug] else { continue }
+            switch detected {
+            case .waiting:
+                if task.taskStatus != .waiting { task.taskStatus = .waiting }
+            case .working:
+                if task.taskStatus != .running { task.taskStatus = .running }
+            case .done:
+                break // handled by processTerminated
+            }
+        }
+    }
+
     @ViewBuilder
     private func detailView(for task: TaskItem) -> some View {
         if let session = sessionManager.session(for: task.slug) {
@@ -213,7 +232,7 @@ struct ContentView: View {
                     viewModel.completeTask(task)
                 }
             )
-        } else if task.taskStatus == .running, let project = task.project,
+        } else if (task.taskStatus == .running || task.taskStatus == .waiting), let project = task.project,
                   let reconstructed = reconstructSession(for: task, project: project) {
             TerminalContainer(
                 taskSlug: task.slug,
@@ -266,10 +285,12 @@ private enum PushState: Equatable {
 #Preview {
     @Previewable @State var appModel = AppModel()
     @Previewable @State var sessionManager = TerminalSessionManager()
+    @Previewable @State var stateMonitor = TerminalStateMonitor()
 
     ContentView()
         .environment(appModel)
         .environment(sessionManager)
+        .environment(stateMonitor)
         .modelContainer(for: [Project.self, TaskItem.self], inMemory: true)
         .frame(width: 1000, height: 700)
 }

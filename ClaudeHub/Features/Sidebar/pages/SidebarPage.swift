@@ -24,7 +24,9 @@ struct SidebarPage: View {
                         id: project.persistentModelID,
                         name: project.name,
                         taskCount: project.activeTasks.count,
-                        tasks: project.activeTasks.map { task in
+                        tasks: project.activeTasks
+                            .sorted { $0.taskStatus.sortPriority < $1.taskStatus.sortPriority }
+                            .map { task in
                             .init(
                                 id: task.persistentModelID,
                                 title: task.summary ?? task.title,

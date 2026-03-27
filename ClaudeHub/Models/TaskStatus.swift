@@ -36,4 +36,14 @@ enum TaskStatus: String, Codable, CaseIterable, Sendable {
         case .archived: .secondary
         }
     }
+
+    var sortPriority: Int {
+        switch self {
+        case .waiting: 0
+        case .running: 1
+        case .pending: 2
+        case .completed: 3
+        case .archived: 4
+        }
+    }
 }

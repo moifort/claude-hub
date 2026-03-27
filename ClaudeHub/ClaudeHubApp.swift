@@ -5,12 +5,14 @@ import SwiftData
 struct ClaudeHubApp: App {
     @State private var appModel = AppModel()
     @State private var sessionManager = TerminalSessionManager()
+    @State private var stateMonitor = TerminalStateMonitor()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .environment(appModel)
                 .environment(sessionManager)
+                .environment(stateMonitor)
                 .modelContainer(for: [Project.self, TaskItem.self])
                 .onGeometryChange(for: CGSize.self) { $0.size } action: {
                     appModel.windowSize = $0
