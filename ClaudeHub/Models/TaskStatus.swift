@@ -30,7 +30,7 @@ enum TaskStatus: String, Codable, CaseIterable, Sendable {
     var tintColor: Color {
         switch self {
         case .pending: .secondary
-        case .running: .blue
+        case .running: .green
         case .waiting: .orange
         case .completed: .green
         case .archived: .secondary
