@@ -7,6 +7,10 @@ struct ProjectRow: View {
 
     var body: some View {
         HStack {
+            Image(systemName: "folder.fill")
+                .font(.system(size: 14))
+                .foregroundStyle(.secondary)
+
             Text(name)
 
             Spacer()
