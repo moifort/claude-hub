@@ -48,6 +48,8 @@ final class GitTreeViewModel {
         } catch {
             // Silently ignore refresh errors — keep showing last known graph
         }
+        // Re-create monitors — FDs may be stale after git's atomic ref update
+        startWatching(repoPath: path)
     }
 
     func stopWatching() {
