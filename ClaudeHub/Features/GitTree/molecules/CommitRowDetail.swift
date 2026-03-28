@@ -25,10 +25,12 @@ struct CommitRowDetail: View {
 
             Spacer(minLength: 4)
 
-            Text(roundedTimeAgo(from: date))
-                .font(.caption2)
-                .foregroundStyle(.tertiary)
-                .fixedSize()
+            TimelineView(.periodic(from: .now, by: 5)) { _ in
+                Text(roundedTimeAgo(from: date))
+                    .font(.caption2)
+                    .foregroundStyle(.tertiary)
+                    .fixedSize()
+            }
         }
     }
 
@@ -38,15 +40,20 @@ struct CommitRowDetail: View {
         let hours = minutes / 60
         let days = hours / 24
 
-        if minutes < 10 {
+        if seconds < 10 {
             return "now"
+        } else if seconds < 60 {
+            let rounded = Int(seconds / 10) * 10
+            return "≈\(rounded)s"
+        } else if minutes < 10 {
+            return "≈\(Int(minutes))m"
         } else if minutes < 60 {
             let rounded = Int(minutes / 10) * 10
-            return "\(rounded) min"
+            return "≈\(rounded)m"
         } else if hours < 24 {
-            return "\(Int(hours))h"
+            return "≈\(Int(hours))h"
         } else if days < 7 {
-            return "\(Int(days))d"
+            return "≈\(Int(days))d"
         } else {
             let formatter = DateFormatter()
             formatter.dateFormat = "d MMM"
