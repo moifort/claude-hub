@@ -2,6 +2,7 @@ import SwiftUI
 
 struct UncommittedRowDetail: View {
     let count: Int
+    var onCommitAll: (() -> Void)? = nil
 
     var body: some View {
         HStack(spacing: 6) {
@@ -13,6 +14,18 @@ struct UncommittedRowDetail: View {
                 .foregroundStyle(.secondary)
 
             Spacer(minLength: 4)
+
+            if let onCommitAll {
+                Button(action: onCommitAll) {
+                    Image(systemName: "arrow.up.doc")
+                        .font(.caption2)
+                        .foregroundStyle(.orange)
+                        .padding(.horizontal, 6)
+                        .padding(.vertical, 4)
+                        .background(Color.orange.opacity(0.12), in: .capsule)
+                }
+                .buttonStyle(.plain)
+            }
         }
     }
 }

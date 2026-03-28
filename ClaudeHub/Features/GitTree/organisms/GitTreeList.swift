@@ -3,6 +3,7 @@ import SwiftUI
 struct GitTreeList: View {
     let rows: [GitGraphRow]
     var uncommittedCount: Int = 0
+    var onCommitAll: (() -> Void)? = nil
 
     private let commitColor: Color = .blue
     private let uncommittedColor: Color = .orange
@@ -20,7 +21,7 @@ struct GitTreeList: View {
                             color: uncommittedColor
                         )
 
-                        UncommittedRowDetail(count: uncommittedCount)
+                        UncommittedRowDetail(count: uncommittedCount, onCommitAll: onCommitAll)
                             .padding(.trailing, 12)
                     }
                     .frame(height: GraphRowSegment.rowHeight)

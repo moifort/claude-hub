@@ -4,6 +4,7 @@ struct GitTreePanel: View {
     let repoPath: String
     let projectName: String
     var refreshTrigger: Int = 0
+    var onCommitAll: (() -> Void)? = nil
 
     @State private var viewModel = GitTreeViewModel()
 
@@ -34,7 +35,7 @@ struct GitTreePanel: View {
                 description: Text(error)
             )
         } else if let graph = viewModel.graph, !graph.rows.isEmpty {
-            GitTreeList(rows: graph.rows, uncommittedCount: viewModel.uncommittedCount)
+            GitTreeList(rows: graph.rows, uncommittedCount: viewModel.uncommittedCount, onCommitAll: onCommitAll)
         } else {
             ContentUnavailableView(
                 "No commits",
