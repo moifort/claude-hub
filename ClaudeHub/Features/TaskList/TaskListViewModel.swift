@@ -4,6 +4,8 @@ import SwiftData
 @Observable @MainActor
 final class TaskListViewModel {
     var onSessionRemoved: ((String) -> Void)?
+    var modelContext: ModelContext?
+    var appModel: AppModel?
 
     private var archiveTimers: [PersistentIdentifier: Task<Void, Never>] = [:]
 
@@ -31,8 +33,12 @@ final class TaskListViewModel {
             workingDirectory: project.path,
             environment: env,
             initialSize: initialSize,
-            onProcessTerminated: { [weak self] _ in
-                self?.completeTask(task, sessionManager: sessionManager)
+            onProcessTerminated: { [weak self] exitCode in
+                if exitCode == 0 {
+                    self?.completeTask(task, sessionManager: sessionManager)
+                } else {
+                    self?.deleteTerminatedTask(task, sessionManager: sessionManager)
+                }
             }
         )
 
@@ -61,6 +67,18 @@ final class TaskListViewModel {
         cancelAutoArchive(for: task)
         sessionManager.removeSession(for: task.slug)
         onSessionRemoved?(task.slug)
+    }
+
+    func deleteTerminatedTask(_ task: TaskItem, sessionManager: TerminalSessionManager) {
+        guard task.modelContext != nil else { return }
+        let taskID = task.persistentModelID
+        let projectID = task.project?.persistentModelID
+        sessionManager.removeSession(for: task.slug)
+        onSessionRemoved?(task.slug)
+        if appModel?.selectedItemID == taskID {
+            appModel?.selectedItemID = projectID
+        }
+        modelContext?.delete(task)
     }
 
     func launchAllPending(for project: Project, sessionManager: TerminalSessionManager, containerSize: CGSize = .zero) {

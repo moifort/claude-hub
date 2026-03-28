@@ -4,9 +4,11 @@ import SwiftData
 struct InlineTaskInputPage: View {
     let project: Project
 
+    @Environment(AppModel.self) private var appModel
     @Environment(TerminalSessionManager.self) private var sessionManager
     @Environment(\.modelContext) private var modelContext
 
+    @AppStorage("useFoundationSplit") private var useFoundationSplit = true
     @State private var viewModel = InlineTaskInputViewModel()
     @State private var taskViewModel = TaskListViewModel()
 
@@ -28,11 +30,21 @@ struct InlineTaskInputPage: View {
                     .foregroundStyle(.tertiary)
             }
 
-            TerminalPromptField(
-                text: $viewModel.prompt,
-                isDisabled: viewModel.isSummarizing,
-                onSubmit: { submit() }
-            )
+            VStack(alignment: .trailing, spacing: 6) {
+                TerminalPromptField(
+                    text: $viewModel.prompt,
+                    isDisabled: viewModel.isSummarizing,
+                    onSubmit: { submit() }
+                )
+
+                Toggle(isOn: $useFoundationSplit) {
+                    Label("Auto-split", systemImage: "sparkles")
+                        .font(.system(.caption2, design: .monospaced))
+                }
+                .toggleStyle(.switch)
+                .controlSize(.mini)
+                .tint(.green.opacity(0.7))
+            }
             .frame(maxWidth: 600)
 
             if viewModel.isSummarizing {
@@ -59,6 +71,10 @@ struct InlineTaskInputPage: View {
         }
         .padding(32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .onAppear {
+            taskViewModel.modelContext = modelContext
+            taskViewModel.appModel = appModel
+        }
         .onChange(of: viewModel.prompt) {
             viewModel.clearConfirmation()
         }
@@ -71,7 +87,8 @@ struct InlineTaskInputPage: View {
                 project: project,
                 context: modelContext,
                 sessionManager: sessionManager,
-                taskViewModel: taskViewModel
+                taskViewModel: taskViewModel,
+                useFoundationSplit: useFoundationSplit
             )
         }
     }

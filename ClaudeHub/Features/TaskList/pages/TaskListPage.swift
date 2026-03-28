@@ -40,6 +40,10 @@ struct TaskListPage: View {
                 viewModel.launchTask(task, sessionManager: sessionManager, containerSize: appModel.windowSize)
             }
         )
+        .onAppear {
+            viewModel.modelContext = modelContext
+            viewModel.appModel = appModel
+        }
         .navigationTitle(project.name)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {

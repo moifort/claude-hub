@@ -52,7 +52,9 @@ struct ContentView: View {
         }
         .inspector(isPresented: $appModel.showGitTree) {
             if let project = currentProject {
-                GitTreePanel(repoPath: project.path, projectName: project.name, refreshTrigger: appModel.gitTreeRefreshTrigger)
+                GitTreePanel(repoPath: project.path, projectName: project.name, refreshTrigger: appModel.gitTreeRefreshTrigger, onCommitAll: {
+                    createCommitTask(for: project)
+                })
                     .inspectorColumnWidth(min: 250, ideal: 380, max: 600)
             }
         }
@@ -61,6 +63,8 @@ struct ContentView: View {
                 appModel.selectedItemID = first.persistentModelID
             }
             stateMonitor.start(sessionManager: sessionManager)
+            viewModel.modelContext = modelContext
+            viewModel.appModel = appModel
             viewModel.onSessionRemoved = { slug in
                 stateMonitor.removeState(for: slug)
             }
@@ -168,6 +172,20 @@ struct ContentView: View {
             pushState = .idle
             pushErrorMessage = error.localizedDescription
         }
+    }
+
+    private func createCommitTask(for project: Project) {
+        let prompt = "commit all remaining files"
+        let slug = TaskItem.generateSlug(from: prompt)
+        let task = TaskItem(
+            title: prompt,
+            prompt: prompt,
+            slug: slug,
+            project: project
+        )
+        modelContext.insert(task)
+        try? modelContext.save()
+        viewModel.launchTask(task, sessionManager: sessionManager, containerSize: appModel.windowSize)
     }
 
     private func syncTaskStates(_ states: [String: TerminalStateMonitor.DetectedState]) {
