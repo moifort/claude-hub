@@ -77,6 +77,7 @@ pending → running → completed → archived (auto after 60s, unless pinned)
 - **Pure components**: Views take primitives only, previews mandatory
 - **All code in English** — French only for i18n/user-facing values
 - **Liquid Glass design** — Use `.glassEffect()` modifiers, `GlassEffectContainer` for grouped elements
+- **README maintenance** — Update `README.md` when adding features or changing user-facing behavior
 
 ## Reference Project
 
