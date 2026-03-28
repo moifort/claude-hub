@@ -12,7 +12,7 @@ enum TaskStatus: String, Codable, CaseIterable, Sendable {
         switch self {
         case .pending: "Pending"
         case .running: "Running"
-        case .waiting: "Waiting"
+        case .waiting: "User Input"
         case .planReady: "Plan Ready"
         case .completed: "Completed"
         case .archived: "Archived"
@@ -21,12 +21,12 @@ enum TaskStatus: String, Codable, CaseIterable, Sendable {
 
     var iconName: String {
         switch self {
-        case .pending: "clock"
+        case .pending: "hourglass"
         case .running: "play.circle.fill"
-        case .waiting: "questionmark.circle.fill"
-        case .planReady: "doc.text.magnifyingglass"
-        case .completed: "checkmark.circle.fill"
-        case .archived: "archivebox.fill"
+        case .waiting: "bell.fill"
+        case .planReady: "list.clipboard.fill"
+        case .completed: "checkmark.seal.fill"
+        case .archived: "tray.full.fill"
         }
     }
 
@@ -34,7 +34,7 @@ enum TaskStatus: String, Codable, CaseIterable, Sendable {
         switch self {
         case .pending: .secondary
         case .running: .green
-        case .waiting: .orange
+        case .waiting: .blue
         case .planReady: .purple
         case .completed: .green
         case .archived: .secondary
