@@ -33,7 +33,7 @@ struct TaskListPage: View {
             },
             onPin: { id in
                 guard let task = projectTasks.first(where: { $0.persistentModelID == id }) else { return }
-                viewModel.pinTask(task)
+                viewModel.pinTask(task, sessionManager: sessionManager)
             },
             onLaunch: { id in
                 guard let task = projectTasks.first(where: { $0.persistentModelID == id }) else { return }

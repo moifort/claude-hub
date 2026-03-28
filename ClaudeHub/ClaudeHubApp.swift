@@ -20,6 +20,10 @@ struct ClaudeHubApp: App {
                     appModel.windowSize = $0
                 }
                 .frame(minWidth: 900, minHeight: 600)
+                .onReceive(NotificationCenter.default.publisher(for: NSApplication.willTerminateNotification)) { _ in
+                    stateMonitor.stop()
+                    sessionManager.removeAll()
+                }
                 .alert("Quit ClaudeHub?", isPresented: $showQuitConfirmation) {
                     Button("Quit", role: .destructive) {
                         NSApplication.shared.terminate(nil)
@@ -33,10 +37,10 @@ struct ClaudeHubApp: App {
         .commands {
             CommandGroup(replacing: .appTermination) {
                 Button("Quit ClaudeHub") {
-                    if sessionManager.activeSessions.isEmpty {
-                        NSApplication.shared.terminate(nil)
-                    } else {
+                    if sessionManager.hasRunningSessions {
                         showQuitConfirmation = true
+                    } else {
+                        NSApplication.shared.terminate(nil)
                     }
                 }
                 .keyboardShortcut("q")

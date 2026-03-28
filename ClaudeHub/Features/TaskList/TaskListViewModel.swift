@@ -3,6 +3,8 @@ import SwiftData
 
 @Observable @MainActor
 final class TaskListViewModel {
+    var onSessionRemoved: ((String) -> Void)?
+
     private var archiveTimers: [PersistentIdentifier: Task<Void, Never>] = [:]
 
     func launchTask(_ task: TaskItem, sessionManager: TerminalSessionManager) {
@@ -27,32 +29,34 @@ final class TaskListViewModel {
             workingDirectory: project.path,
             environment: env,
             onProcessTerminated: { [weak self] _ in
-                self?.completeTask(task)
+                self?.completeTask(task, sessionManager: sessionManager)
             }
         )
 
         task.taskStatus = .running
     }
 
-    func completeTask(_ task: TaskItem) {
+    func completeTask(_ task: TaskItem, sessionManager: TerminalSessionManager) {
         task.taskStatus = .completed
         task.completedAt = .now
-        startAutoArchive(for: task)
+        startAutoArchive(for: task, sessionManager: sessionManager)
     }
 
-    func pinTask(_ task: TaskItem) {
+    func pinTask(_ task: TaskItem, sessionManager: TerminalSessionManager) {
         task.isPinned.toggle()
         if task.isPinned {
             cancelAutoArchive(for: task)
         } else if task.taskStatus == .completed {
-            startAutoArchive(for: task)
+            startAutoArchive(for: task, sessionManager: sessionManager)
         }
     }
 
-    func archiveTask(_ task: TaskItem) {
+    func archiveTask(_ task: TaskItem, sessionManager: TerminalSessionManager) {
         task.taskStatus = .archived
         task.archivedAt = .now
         cancelAutoArchive(for: task)
+        sessionManager.removeSession(for: task.slug)
+        onSessionRemoved?(task.slug)
     }
 
     func launchAllPending(for project: Project, sessionManager: TerminalSessionManager) {
@@ -67,7 +71,7 @@ final class TaskListViewModel {
         archiveTimers.removeAll()
     }
 
-    private func startAutoArchive(for task: TaskItem) {
+    private func startAutoArchive(for task: TaskItem, sessionManager: TerminalSessionManager) {
         let id = task.persistentModelID
         cancelAutoArchive(for: task)
 
@@ -76,7 +80,7 @@ final class TaskListViewModel {
             try? await Task.sleep(for: .seconds(delay * 60))
             guard !Task.isCancelled else { return }
             guard !task.isPinned, task.taskStatus == .completed else { return }
-            self?.archiveTask(task)
+            self?.archiveTask(task, sessionManager: sessionManager)
         }
     }
 

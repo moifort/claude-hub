@@ -61,6 +61,9 @@ struct ContentView: View {
                 appModel.selectedItemID = first.persistentModelID
             }
             stateMonitor.start(sessionManager: sessionManager)
+            viewModel.onSessionRemoved = { slug in
+                stateMonitor.removeState(for: slug)
+            }
         }
         .onChange(of: stateMonitor.detectedStates) { _, newStates in
             syncTaskStates(newStates)
@@ -78,7 +81,7 @@ struct ContentView: View {
 
                     if task.taskStatus == .completed {
                         Button {
-                            viewModel.pinTask(task)
+                            viewModel.pinTask(task, sessionManager: sessionManager)
                         } label: {
                             Label(
                                 task.isPinned ? "Unpin" : "Pin",
@@ -173,7 +176,7 @@ struct ContentView: View {
             case .working:
                 if task.taskStatus != .running { task.taskStatus = .running }
             case .done:
-                viewModel.completeTask(task)
+                viewModel.completeTask(task, sessionManager: sessionManager)
             }
         }
     }
