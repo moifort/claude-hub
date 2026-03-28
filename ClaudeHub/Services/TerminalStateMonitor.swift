@@ -7,12 +7,24 @@ final class TerminalStateMonitor {
 
     private var timer: Timer?
     private weak var sessionManager: TerminalSessionManager?
+    private var previousSnapshots: [String: String] = [:]
+    private var stablePolls: [String: Int] = [:]
+    private let stableThreshold = 3
 
     enum DetectedState: Sendable {
         case working
         case waiting
         case planReady
         case done
+
+        var priority: Int {
+            switch self {
+            case .working: 4
+            case .planReady: 3
+            case .done: 2
+            case .waiting: 1
+            }
+        }
     }
 
     func start(sessionManager: TerminalSessionManager) {
@@ -32,6 +44,8 @@ final class TerminalStateMonitor {
 
     func removeState(for slug: String) {
         detectedStates[slug] = nil
+        previousSnapshots[slug] = nil
+        stablePolls[slug] = nil
     }
 
     private func scanAllSessions() {
@@ -50,7 +64,7 @@ final class TerminalStateMonitor {
     private func loadPatterns() -> [(keyword: String, state: DetectedState)] {
         let defaults = UserDefaults.standard
         let working = defaults.string(forKey: "markersWorking") ?? "◆ working"
-        let waiting = defaults.string(forKey: "markersWaiting") ?? "◆ waiting,Chat about this,Skip interview,❯"
+        let waiting = defaults.string(forKey: "markersWaiting") ?? "◆ waiting,Chat about this,Skip interview"
         let planReady = defaults.string(forKey: "markersPlanReady") ?? "Ready to code?,bypass permissions,manually approve edits"
         let done = defaults.string(forKey: "markersDone") ?? "◆ done"
 
@@ -70,17 +84,42 @@ final class TerminalStateMonitor {
         let linesToScan = min(30, rows)
         let patterns = loadPatterns()
 
-        // 1. Keyword detection — last match in buffer wins
-        var lastMarkerState: DetectedState?
+        // 1. Keyword detection — highest priority wins
+        var bufferLines: [String] = []
+        var bestMarkerState: DetectedState?
         for row in (rows - linesToScan)..<rows {
             guard let line = terminal.getLine(row: row) else { continue }
             let text = line.translateToString(trimRight: true)
+            bufferLines.append(text)
             for (keyword, state) in patterns where text.contains(keyword) {
-                lastMarkerState = state
+                if state.priority > (bestMarkerState?.priority ?? 0) {
+                    bestMarkerState = state
+                }
                 break
             }
         }
 
-        return lastMarkerState
+        if let bestMarkerState {
+            previousSnapshots[slug] = nil
+            stablePolls[slug] = 0
+            return bestMarkerState
+        }
+
+        // 2. Instability fallback — compare buffer snapshots between polls
+        let currentSnapshot = bufferLines.joined(separator: "\n")
+        defer { previousSnapshots[slug] = currentSnapshot }
+
+        guard let previousSnapshot = previousSnapshots[slug] else {
+            return nil
+        }
+
+        if currentSnapshot != previousSnapshot {
+            stablePolls[slug] = 0
+            return .working
+        }
+
+        let count = (stablePolls[slug] ?? 0) + 1
+        stablePolls[slug] = count
+        return count >= stableThreshold ? .waiting : nil
     }
 }
