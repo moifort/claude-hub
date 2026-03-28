@@ -17,7 +17,7 @@ struct UncommittedRowDetail: View {
 
             if let onCommitAll {
                 Button(action: onCommitAll) {
-                    Image(systemName: "arrow.up.doc")
+                    Text("Commit")
                         .font(.caption2)
                         .foregroundStyle(.orange)
                         .padding(.horizontal, 6)
