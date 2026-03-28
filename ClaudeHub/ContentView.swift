@@ -78,7 +78,7 @@ struct ContentView: View {
                 ToolbarItemGroup(placement: .primaryAction) {
                     if task.taskStatus == .pending {
                         Button {
-                            viewModel.launchTask(task, sessionManager: sessionManager)
+                            viewModel.launchTask(task, sessionManager: sessionManager, containerSize: appModel.windowSize)
                         } label: {
                             Label("Launch", systemImage: "play.fill")
                         }
@@ -200,7 +200,7 @@ struct ContentView: View {
                     Text("Launch this task to start a Claude Code session.")
                 } actions: {
                     Button("Launch") {
-                        viewModel.launchTask(task, sessionManager: sessionManager)
+                        viewModel.launchTask(task, sessionManager: sessionManager, containerSize: appModel.windowSize)
                     }
                     .buttonStyle(.glassProminent)
                 }

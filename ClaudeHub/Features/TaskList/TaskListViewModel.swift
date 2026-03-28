@@ -7,7 +7,7 @@ final class TaskListViewModel {
 
     private var archiveTimers: [PersistentIdentifier: Task<Void, Never>] = [:]
 
-    func launchTask(_ task: TaskItem, sessionManager: TerminalSessionManager) {
+    func launchTask(_ task: TaskItem, sessionManager: TerminalSessionManager, containerSize: CGSize = .zero) {
         guard task.taskStatus == .pending, let project = task.project else { return }
         guard let claudePath = CLIService.claudePath() else { return }
 
@@ -22,12 +22,15 @@ final class TaskListViewModel {
         }
         arguments.append(contentsOf: ["--permission-mode", "plan", "--system-prompt", systemPrompt, task.prompt])
 
+        let initialSize = containerSize.width > 1 ? containerSize : CGSize(width: 600, height: 400)
+
         sessionManager.launchSession(
             for: task.slug,
             executable: claudePath,
             arguments: arguments,
             workingDirectory: project.path,
             environment: env,
+            initialSize: initialSize,
             onProcessTerminated: { [weak self] _ in
                 self?.completeTask(task, sessionManager: sessionManager)
             }
@@ -59,10 +62,10 @@ final class TaskListViewModel {
         onSessionRemoved?(task.slug)
     }
 
-    func launchAllPending(for project: Project, sessionManager: TerminalSessionManager) {
+    func launchAllPending(for project: Project, sessionManager: TerminalSessionManager, containerSize: CGSize = .zero) {
         let pendingTasks = project.tasks.filter { $0.taskStatus == .pending }
         for task in pendingTasks {
-            launchTask(task, sessionManager: sessionManager)
+            launchTask(task, sessionManager: sessionManager, containerSize: containerSize)
         }
     }
 

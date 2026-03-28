@@ -37,7 +37,7 @@ struct TaskListPage: View {
             },
             onLaunch: { id in
                 guard let task = projectTasks.first(where: { $0.persistentModelID == id }) else { return }
-                viewModel.launchTask(task, sessionManager: sessionManager)
+                viewModel.launchTask(task, sessionManager: sessionManager, containerSize: appModel.windowSize)
             }
         )
         .navigationTitle(project.name)
@@ -46,7 +46,7 @@ struct TaskListPage: View {
                 HStack(spacing: 8) {
                     if projectTasks.contains(where: { $0.taskStatus == .pending }) {
                         Button {
-                            viewModel.launchAllPending(for: project, sessionManager: sessionManager)
+                            viewModel.launchAllPending(for: project, sessionManager: sessionManager, containerSize: appModel.windowSize)
                         } label: {
                             Label("Launch All", systemImage: "play.fill")
                         }

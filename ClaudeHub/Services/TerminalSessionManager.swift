@@ -20,6 +20,7 @@ final class TerminalSessionManager {
         arguments: [String],
         workingDirectory: String,
         environment: [String]?,
+        initialSize: CGSize = CGSize(width: 600, height: 400),
         onProcessTerminated: @MainActor @Sendable @escaping (Int32?) -> Void
     ) {
         guard activeSessions[slug] == nil else { return }
@@ -31,7 +32,7 @@ final class TerminalSessionManager {
             environment: environment
         )
 
-        let terminal = LocalProcessTerminalView(frame: NSRect(x: 0, y: 0, width: 600, height: 400))
+        let terminal = LocalProcessTerminalView(frame: NSRect(origin: .zero, size: initialSize))
         let delegate = SessionDelegate(onProcessTerminated: onProcessTerminated)
         terminal.processDelegate = delegate
         terminal.startProcess(
