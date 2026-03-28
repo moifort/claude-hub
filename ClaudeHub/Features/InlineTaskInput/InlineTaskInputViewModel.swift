@@ -20,7 +20,8 @@ final class InlineTaskInputViewModel {
         project: Project,
         context: ModelContext,
         sessionManager: TerminalSessionManager,
-        taskViewModel: TaskListViewModel
+        taskViewModel: TaskListViewModel,
+        useFoundationSplit: Bool
     ) async {
         let trimmed = prompt.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return }
@@ -28,7 +29,9 @@ final class InlineTaskInputViewModel {
         errorMessage = nil
         isSummarizing = true
 
-        let taskPrompts = await SummarizationService.splitTasks(from: trimmed)
+        let taskPrompts = useFoundationSplit
+            ? await SummarizationService.splitTasks(from: trimmed)
+            : [trimmed]
 
         var createdTasks: [TaskItem] = []
         for taskPrompt in taskPrompts {
