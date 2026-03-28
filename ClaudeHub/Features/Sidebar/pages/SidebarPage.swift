@@ -56,7 +56,7 @@ struct SidebarPage: View {
                 selectedItemID: appModel.selectedItemID,
                 onDelete: deleteProject,
                 onDeleteTask: deleteTask,
-                onKeepTask: { _ in }
+                onKeepTask: keepTask
             )
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -123,6 +123,12 @@ struct SidebarPage: View {
         guard let task = archivedTasks.first(where: { $0.persistentModelID == id }) else { return }
         task.taskStatus = .completed
         task.archivedAt = nil
+    }
+
+    private func keepTask(_ id: PersistentIdentifier) {
+        let allTasks = projects.flatMap(\.tasks)
+        guard let task = allTasks.first(where: { $0.persistentModelID == id }) else { return }
+        task.isPinned = true
     }
 
     private func deleteProject(_ id: PersistentIdentifier) {

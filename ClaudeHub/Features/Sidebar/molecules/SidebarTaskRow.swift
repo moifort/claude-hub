@@ -13,6 +13,16 @@ struct SidebarTaskRow: View {
         status == .completed && !isPinned && completedAt != nil
     }
 
+    private func formattedCountdown(_ seconds: Int) -> String {
+        if seconds < 10 { return "now" }
+        if seconds < 60 {
+            let rounded = (seconds / 10) * 10
+            return "≈\(rounded)s"
+        }
+        let minutes = seconds / 60
+        return "≈\(minutes)m"
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title)
@@ -41,14 +51,15 @@ struct SidebarTaskRow: View {
                                     .font(.caption2)
                                     .foregroundStyle(.primary)
 
-                                Text("\(remaining)s")
-                                    .font(.caption2.monospacedDigit())
-                                    .foregroundStyle(.primary)
-
-                                Button("Keep", action: onKeep)
-                                    .buttonStyle(.plain)
-                                    .font(.caption2)
-                                    .foregroundStyle(.primary)
+                                Button(action: onKeep) {
+                                    Text("Keep \(formattedCountdown(remaining))")
+                                        .font(.caption2)
+                                        .foregroundStyle(.green)
+                                        .padding(.horizontal, 6)
+                                        .padding(.vertical, 2)
+                                        .background(Color.green.opacity(0.12), in: .capsule)
+                                }
+                                .buttonStyle(.plain)
                             }
                         }
                     }
