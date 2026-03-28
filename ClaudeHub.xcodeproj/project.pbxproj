@@ -46,6 +46,7 @@
 		A2BE1F262C6CB68408967E68 /* StatusMarkersSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08086DA32E4C7A1E6E38C8 /* StatusMarkersSection.swift */; };
 		A2BEEFFA0869FD8BA3D66C1B /* TaskListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF2D6207996984B573C2D1 /* TaskListPage.swift */; };
 		A96CE5B074261BDB143B6B1C /* GlassStatusChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21B6D427A052A4EF4AE568F /* GlassStatusChip.swift */; };
+		BAE998D55DEF1155B0D4EFF8 /* UncommittedRowDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C950CC2CF4C6BADE1CC5A368 /* UncommittedRowDetail.swift */; };
 		C0CFCB5D8AA2D6F1FC2C3F2E /* TerminalStateMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BC837DA35D719446D9F2A98 /* TerminalStateMonitor.swift */; };
 		C8BCBC863E5B3C5758C64481 /* GitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CF932402F1B25CB4477312E /* GitService.swift */; };
 		CB423AD6623A450E29CCF1E0 /* TerminalContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED45712762D42D25FE30D76A /* TerminalContainer.swift */; };
@@ -101,6 +102,7 @@
 		BAAD8F520969E12B38DBEEA0 /* IDE.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IDE.swift; sourceTree = "<group>"; };
 		C59D1D041E0E819F521ED574 /* SidebarTaskRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarTaskRow.swift; sourceTree = "<group>"; };
 		C78854F7C6DE2744894F6BE7 /* CollapsibleSidebarRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollapsibleSidebarRow.swift; sourceTree = "<group>"; };
+		C950CC2CF4C6BADE1CC5A368 /* UncommittedRowDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UncommittedRowDetail.swift; sourceTree = "<group>"; };
 		CADCB1F3E0F61A581448C7BF /* TerminalSessionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TerminalSessionManager.swift; sourceTree = "<group>"; };
 		D25AA62CD78CBFE36C2B8564 /* TaskListContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListContent.swift; sourceTree = "<group>"; };
 		E10BC07779766A4E8B53E495 /* ArchivesSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivesSection.swift; sourceTree = "<group>"; };
@@ -298,6 +300,7 @@
 			children = (
 				1FFBD79D2450BBC13C62C71D /* CommitRowDetail.swift */,
 				2774474D29775E02A6ADCC0A /* GraphRowSegment.swift */,
+				C950CC2CF4C6BADE1CC5A368 /* UncommittedRowDetail.swift */,
 			);
 			path = molecules;
 			sourceTree = "<group>";
@@ -569,6 +572,7 @@
 				3FFE0C163D6BB489B3DE7270 /* TerminalRepresentable.swift in Sources */,
 				3B44D196AEDB165070BF8BE0 /* TerminalSessionManager.swift in Sources */,
 				C0CFCB5D8AA2D6F1FC2C3F2E /* TerminalStateMonitor.swift in Sources */,
+				BAE998D55DEF1155B0D4EFF8 /* UncommittedRowDetail.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
