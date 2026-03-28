@@ -27,6 +27,13 @@ private final class TerminalWrapperView: NSView {
         super.init(frame: terminal.frame)
         terminal.autoresizingMask = [.width, .height]
         addSubview(terminal)
+
+        for subview in terminal.subviews {
+            if let scroller = subview as? NSScroller {
+                scroller.scrollerStyle = .overlay
+                scroller.alphaValue = 0.5
+            }
+        }
     }
 
     @available(*, unavailable)

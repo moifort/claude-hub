@@ -54,7 +54,10 @@ final class TerminalStateMonitor {
         var hasRunning = false
         for slug in sessionManager.activeSessions.keys {
             guard let terminalView = sessionManager.cachedTerminalView(for: slug),
-                  terminalView.process.running else { continue }
+                  terminalView.process.running else {
+                removeState(for: slug)
+                continue
+            }
             hasRunning = true
             let state = scanBuffer(terminalView, slug: slug)
             if let state {

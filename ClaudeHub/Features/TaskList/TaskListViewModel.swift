@@ -40,6 +40,7 @@ final class TaskListViewModel {
     }
 
     func completeTask(_ task: TaskItem, sessionManager: TerminalSessionManager) {
+        guard task.taskStatus == .running || task.taskStatus == .waiting || task.taskStatus == .planReady else { return }
         task.taskStatus = .completed
         task.completedAt = .now
         startAutoArchive(for: task, sessionManager: sessionManager)
