@@ -7,10 +7,6 @@ struct SettingsPage: View {
     @AppStorage("gitPanelOpenByDefault") private var gitPanelOpenByDefault = true
     @AppStorage("archiveDelayMinutes") private var archiveDelayMinutes = 5.0
     @AppStorage("taskSystemPrompt") private var taskSystemPrompt = DefaultSystemPrompt.taskSystemPrompt
-    @AppStorage("markersWorking") private var markersWorking = "◆ working"
-    @AppStorage("markersWaiting") private var markersWaiting = "◆ waiting,Chat about this,Skip interview,❯"
-    @AppStorage("markersPlanReady") private var markersPlanReady = "Ready to code?,bypass permissions,manually approve edits"
-    @AppStorage("markersDone") private var markersDone = "◆ done"
 
     var body: some View {
         TabView {
@@ -20,10 +16,6 @@ struct SettingsPage: View {
 
             Tab("Tasks", systemImage: "terminal") {
                 TaskSettingsSection(systemPrompt: $taskSystemPrompt)
-            }
-
-            Tab("Status", systemImage: "circle.badge.checkmark") {
-                StatusMarkersSection(markersWorking: $markersWorking, markersWaiting: $markersWaiting, markersPlanReady: $markersPlanReady, markersDone: $markersDone)
             }
         }
         .frame(width: 600, height: 500)

@@ -43,7 +43,6 @@
 		9A4BED3FD596CFA03D772A30 /* TaskItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75F0B52AE076996305ABCD4F /* TaskItem.swift */; };
 		9AE7FB9E67D6769EFE23ABB6 /* ProjectListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 411E9E2BA44BB6A0F68CFE20 /* ProjectListSection.swift */; };
 		9C8C0ADB9AE4624C88AD6FA4 /* SettingsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DEB35445C7B278E2EFDCC03 /* SettingsPage.swift */; };
-		A2BE1F262C6CB68408967E68 /* StatusMarkersSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE08086DA32E4C7A1E6E38C8 /* StatusMarkersSection.swift */; };
 		A2BEEFFA0869FD8BA3D66C1B /* TaskListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07BF2D6207996984B573C2D1 /* TaskListPage.swift */; };
 		A96CE5B074261BDB143B6B1C /* GlassStatusChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A21B6D427A052A4EF4AE568F /* GlassStatusChip.swift */; };
 		BAE998D55DEF1155B0D4EFF8 /* UncommittedRowDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = C950CC2CF4C6BADE1CC5A368 /* UncommittedRowDetail.swift */; };
@@ -113,7 +112,6 @@
 		FA14846B2BC4CA3A70CC5C0D /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
 		FBB958220F36DA25D0904901 /* GitGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitGraph.swift; sourceTree = "<group>"; };
 		FDF5B536725F3FE0F5CB3C75 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
-		FE08086DA32E4C7A1E6E38C8 /* StatusMarkersSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMarkersSection.swift; sourceTree = "<group>"; };
 		FE73BC9E92DC0E9B433E9A50 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		FF66B7C1860EB074669874E8 /* CommitNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitNode.swift; sourceTree = "<group>"; };
 		FFA05A2B23C53C6939EA1FC8 /* GeneralSettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsSection.swift; sourceTree = "<group>"; };
@@ -196,7 +194,6 @@
 			isa = PBXGroup;
 			children = (
 				FFA05A2B23C53C6939EA1FC8 /* GeneralSettingsSection.swift */,
-				FE08086DA32E4C7A1E6E38C8 /* StatusMarkersSection.swift */,
 				655789890351C71100F34FC8 /* TaskSettingsSection.swift */,
 			);
 			path = organisms;
@@ -555,7 +552,6 @@
 				2C2F337009E30D2CB4FEA593 /* SidebarPage.swift in Sources */,
 				7B59E767E36D438FBC758242 /* SidebarTaskRow.swift in Sources */,
 				9A05F492DFCD127C068F2DFA /* StatusBadge.swift in Sources */,
-				A2BE1F262C6CB68408967E68 /* StatusMarkersSection.swift in Sources */,
 				FD54850D12984A76FF650058 /* SummarizationService.swift in Sources */,
 				9A4BED3FD596CFA03D772A30 /* TaskItem.swift in Sources */,
 				4A921B4C0F307DA1E739B27C /* TaskListContent.swift in Sources */,
