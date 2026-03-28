@@ -57,8 +57,8 @@ final class GitTreeViewModel {
         refMonitor = nil
         indexMonitor?.cancel()
         indexMonitor = nil
-        if refFD >= 0 { close(refFD); refFD = -1 }
-        if indexFD >= 0 { close(indexFD); indexFD = -1 }
+        refFD = -1
+        indexFD = -1
     }
 
     private func startWatching(repoPath: String) {
