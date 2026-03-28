@@ -2,17 +2,36 @@ import SwiftUI
 
 struct GitTreeList: View {
     let rows: [GitGraphRow]
-    let color: Color = .blue
+    var uncommittedCount: Int = 0
+
+    private let commitColor: Color = .blue
+    private let uncommittedColor: Color = .orange
+
+    private var hasUncommitted: Bool { uncommittedCount > 0 }
 
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 0) {
+                if hasUncommitted {
+                    HStack(spacing: 0) {
+                        GraphRowSegment(
+                            isFirst: true,
+                            isLast: rows.isEmpty,
+                            color: uncommittedColor
+                        )
+
+                        UncommittedRowDetail(count: uncommittedCount)
+                            .padding(.trailing, 12)
+                    }
+                    .frame(height: GraphRowSegment.rowHeight)
+                }
+
                 ForEach(rows) { row in
                     HStack(spacing: 0) {
                         GraphRowSegment(
-                            isFirst: row.isFirst,
+                            isFirst: !hasUncommitted && row.isFirst,
                             isLast: row.isLast,
-                            color: color
+                            color: commitColor
                         )
 
                         CommitRowDetail(
@@ -73,6 +92,6 @@ struct GitTreeList: View {
         ),
     ]
 
-    GitTreeList(rows: sampleRows)
+    GitTreeList(rows: sampleRows, uncommittedCount: 3)
         .frame(width: 400, height: 300)
 }

@@ -34,7 +34,7 @@ struct GitTreePanel: View {
                 description: Text(error)
             )
         } else if let graph = viewModel.graph, !graph.rows.isEmpty {
-            GitTreeList(rows: graph.rows)
+            GitTreeList(rows: graph.rows, uncommittedCount: viewModel.uncommittedCount)
         } else {
             ContentUnavailableView(
                 "No commits",

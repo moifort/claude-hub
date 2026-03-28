@@ -9,6 +9,15 @@ enum GitService {
         (path as NSString).lastPathComponent
     }
 
+    // MARK: - Status
+
+    static func fetchUncommittedCount(repoPath: String) async throws -> Int {
+        let output = try await runGit(in: repoPath, args: ["status", "--porcelain"])
+        return output
+            .split(separator: "\n", omittingEmptySubsequences: true)
+            .count
+    }
+
     // MARK: - Push
 
     static func pushMain(repoPath: String) async throws {
