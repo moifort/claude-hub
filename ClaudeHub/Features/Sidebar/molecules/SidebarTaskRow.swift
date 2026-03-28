@@ -35,6 +35,7 @@ struct SidebarTaskRow: View {
             }
         }
         .padding(.vertical, 2)
+        .opacity(status == .completed ? 0.5 : 1.0)
     }
 }
 
