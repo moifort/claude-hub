@@ -7,6 +7,8 @@ struct ProjectListSection: View {
         let title: String
         let status: TaskStatus
         let createdAt: Date
+        let completedAt: Date?
+        let isPinned: Bool
     }
 
     struct ProjectInfo: Identifiable {
@@ -20,6 +22,7 @@ struct ProjectListSection: View {
     let selectedItemID: PersistentIdentifier?
     let onDelete: (PersistentIdentifier) -> Void
     let onDeleteTask: (PersistentIdentifier) -> Void
+    let onKeepTask: (PersistentIdentifier) -> Void
 
     var body: some View {
         ForEach(projects) { project in
@@ -39,7 +42,10 @@ struct ProjectListSection: View {
                     title: task.title,
                     status: task.status,
                     createdAt: task.createdAt,
-                    isSelected: task.id == selectedItemID
+                    completedAt: task.completedAt,
+                    isPinned: task.isPinned,
+                    isSelected: task.id == selectedItemID,
+                    onKeep: { onKeepTask(task.id) }
                 )
                 .tag(task.id)
                 .padding(.leading, 4)
@@ -59,7 +65,8 @@ struct ProjectListSection: View {
             projects: [],
             selectedItemID: nil,
             onDelete: { _ in },
-            onDeleteTask: { _ in }
+            onDeleteTask: { _ in },
+            onKeepTask: { _ in }
         )
     }
     .frame(width: 300, height: 400)
