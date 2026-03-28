@@ -17,10 +17,10 @@ struct SidebarTaskRow: View {
         if seconds < 10 { return "now" }
         if seconds < 60 {
             let rounded = (seconds / 10) * 10
-            return "≈\(rounded)s"
+            return "\(rounded)s"
         }
         let minutes = seconds / 60
-        return "≈\(minutes)m"
+        return "\(minutes)m"
     }
 
     var body: some View {
