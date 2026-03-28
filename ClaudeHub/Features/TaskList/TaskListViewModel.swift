@@ -33,10 +33,14 @@ final class TaskListViewModel {
             workingDirectory: project.path,
             environment: env,
             initialSize: initialSize,
-            onProcessTerminated: { [weak self] exitCode in
-                if exitCode == 0 {
-                    self?.completeTask(task, sessionManager: sessionManager)
+            onProcessTerminated: { [weak self] _ in
+                if task.taskStatus == .completed || task.taskStatus == .archived {
+                    // Task already marked complete by state monitor (◆ done detected).
+                    // Just clean up terminal session; archive flow is already running.
+                    sessionManager.removeSession(for: task.slug)
+                    self?.onSessionRemoved?(task.slug)
                 } else {
+                    // Process exited before completion — user quit manually. Delete task.
                     self?.deleteTerminatedTask(task, sessionManager: sessionManager)
                 }
             }
