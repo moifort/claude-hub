@@ -65,6 +65,11 @@ struct ContentView: View {
                 stateMonitor.removeState(for: slug)
             }
         }
+        .onChange(of: sessionManager.activeSessions.count) { old, new in
+            if new > 0, old == 0 {
+                stateMonitor.start(sessionManager: sessionManager)
+            }
+        }
         .onChange(of: stateMonitor.detectedStates) { _, newStates in
             syncTaskStates(newStates)
         }
