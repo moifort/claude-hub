@@ -53,13 +53,21 @@ final class TerminalSessionManager {
         terminalViews[slug]
     }
 
+    var hasRunningSessions: Bool {
+        terminalViews.values.contains { $0.process.running }
+    }
+
     func removeSession(for slug: String) {
+        terminalViews[slug]?.terminate()
         activeSessions[slug] = nil
         terminalViews[slug] = nil
         delegates[slug] = nil
     }
 
     func removeAll() {
+        for view in terminalViews.values {
+            view.terminate()
+        }
         activeSessions.removeAll()
         terminalViews.removeAll()
         delegates.removeAll()
